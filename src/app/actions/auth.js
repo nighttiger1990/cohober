@@ -1,10 +1,10 @@
 import * as types from '../constants/ActionTypes';
-import {NavigationActions} from 'react-navigation';
+import { NavigationActions } from 'react-navigation';
 import Toast from 'react-native-toast-native';
-import {AsyncStorage, Platform} from 'react-native';
+import { AsyncStorage, Platform } from 'react-native';
 import validation from 'validate.js';
-import {AccessToken, LoginManager} from 'react-native-fbsdk';
-import {getProfile} from './user';
+import { AccessToken, LoginManager } from 'react-native-fbsdk';
+import { getProfile } from './user';
 
 const DeviceInfo = require('react-native-device-info');
 const constraints = {
@@ -56,7 +56,7 @@ export const loginSuccess = (user) => {
     }
 };
 export const deviceInfo = () => {
-    const device = {deviceId: '0', platform: 'web'};
+    const device = { deviceId: '0', platform: 'web' };
     if (Platform.OS === 'ios') {
         device.deviceId = DeviceInfo.getUniqueID();
         device.platform = "IOS";
@@ -125,9 +125,11 @@ export const signUpAsync = async (data) => {
 };
 export const signInAsync = async (data) => {
     try {
-        //  console.log(JSON.stringify(data))
+        console.log("run")
         let lang = await AsyncStorage.getItem('lang');
+        console.log("lang", lang);
         const device = deviceInfo();
+        console.log("device", device);
 
         return await fetch('https://api.cohober.vn/api/users/login', {
             method: 'POST',
@@ -152,13 +154,17 @@ export const signInAsync = async (data) => {
                 'name': data.name
             })
         }).then(async (response) => {
+            console.log("response", response)
             return await response.json();
         }).then(async (res) => {
+            console.log("res", res)
             return await res
-        });
+        }).catch((err) => {
+            console.log("loi", err);
+        })
 
     } catch (error) {
-        console.log(error)
+        console.log("err", error)
     }
 
 };
@@ -185,13 +191,13 @@ export const refeshToken = () => {
                 try {
                     let tokens = await refreshTokenAsync(token);
                     if (tokens.token) {
-                          console.log(tokens.token)
+                        console.log(tokens.token)
                         AsyncStorage.setItem("token", tokens.token);
                         dispatch(getProfile());
                         const resetAction = NavigationActions.reset({
                             index: 0,
                             actions: [
-                                NavigationActions.navigate({routeName: 'Home'})
+                                NavigationActions.navigate({ routeName: 'Home' })
                             ]
                         });
                         dispatch(loginSuccess(tokens));
@@ -222,7 +228,7 @@ export const refeshToken = () => {
 export const signIn = (data) => {
     return async (dispatch) => {
         try {
-            console.log(JSON.stringify(data));
+            console.log("xxx", JSON.stringify(data));
 
             let lang = await AsyncStorage.getItem('lang');
             if (data.password !== null && (data.password + "").length >= 6) {
@@ -232,38 +238,39 @@ export const signIn = (data) => {
                     //console.log(JSON.stringify(data));
 
                     let user = await signInAsync(data);
-                    setTimeout(() => {
-                        if (user.id) {
+                    console.log("user info", user);
+                    // setTimeout(() => {
+                    //     if (user.id) {
 
-                            AsyncStorage.setItem('token', user.token);
-                            dispatch(loginSuccess(user));
-                            dispatch(getProfile());
+                    //         AsyncStorage.setItem('token', user.token);
+                    //         dispatch(loginSuccess(user));
+                    //         dispatch(getProfile());
 
-                            const resetAction = NavigationActions.reset({
-                                index: 0,
-                                actions: [
-                                    NavigationActions.navigate({routeName: 'Home'})
-                                ]
-                            });
-                            dispatch(resetAction);
-                        } else {
-                            let m = "";
-                            for (msg of user) {
-                                m = m + msg.msg + "\n"
-                            }
+                    //         const resetAction = NavigationActions.reset({
+                    //             index: 0,
+                    //             actions: [
+                    //                 NavigationActions.navigate({routeName: 'Home'})
+                    //             ]
+                    //         });
+                    //         dispatch(resetAction);
+                    //     } else {
+                    //         let m = "";
+                    //         for (msg of user) {
+                    //             m = m + msg.msg + "\n"
+                    //         }
 
-                            Toast.show('' + m, Toast.SHORT, Toast.TOP, {
-                                height: 50,
-                                width: 400,
-                                backgroundColor: '#ffca00',
-                                opacity: 0.5,
-                                textAlign: 'center',
-                                lines: 1,
-                                borderRadius: 3
-                            });
-                            dispatch(loginFail());
-                        }
-                    }, 5000);
+                    //         Toast.show('' + m, Toast.SHORT, Toast.TOP, {
+                    //             height: 50,
+                    //             width: 400,
+                    //             backgroundColor: '#ffca00',
+                    //             opacity: 0.5,
+                    //             textAlign: 'center',
+                    //             lines: 1,
+                    //             borderRadius: 3
+                    //         });
+                    //         dispatch(loginFail());
+                    //     }
+                    // }, 5000);
 
                     console.log(JSON.stringify(user))
                 } catch (error) {
@@ -345,7 +352,7 @@ export const loginFB = () => {
                         const resetAction = NavigationActions.reset({
                             index: 0,
                             actions: [
-                                NavigationActions.navigate({routeName: 'Home'})
+                                NavigationActions.navigate({ routeName: 'Home' })
                             ]
                         });
                         dispatch(resetAction);
@@ -555,7 +562,7 @@ export const forgotPasswordAsync = async (email) => {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: lang ? JSON.stringify({"email": email, "language": lang}) : JSON.stringify({"email": email})
+            body: lang ? JSON.stringify({ "email": email, "language": lang }) : JSON.stringify({ "email": email })
         }).then(async (response) => {
             return await response.json();
         }).then(async (res) => {

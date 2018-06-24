@@ -7,14 +7,12 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.react.ReactApplication;
-import com.imagepicker.ImagePickerPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.facebook.soloader.SoLoader;
-import com.geektime.rnonesignalandroid.ReactNativeOneSignalPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.toast.RCTToastPackage;
@@ -36,9 +34,7 @@ public class MainApplication extends Application implements ReactApplication {
             return Arrays.<ReactPackage>asList(
                     new RNDeviceInfo(),
                     new MainReactPackage(),
-                    new ImagePickerPackage(),
                     new PickerPackage(),
-                    new ReactNativeOneSignalPackage(),
                     new FBSDKPackage(mCallbackManager),
                     new VectorIconsPackage(),
                     new MapsPackage(),
