@@ -90,7 +90,8 @@ export const signUpAsync = async (data) => {
     try {
         const device = deviceInfo();
         let lang = await AsyncStorage.getItem('lang');
-        return await fetch('https://api.cohober.vn/api/users/registers', {
+        console.log("data", data, device, lang);
+        return await fetch('http://api.cohober.vn/api/users/registers', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -114,12 +115,14 @@ export const signUpAsync = async (data) => {
             })
         })
             .then(async (response) => {
+                console.log("response", response)
                 return await response.json();
             }).then(async (res) => {
+                console.log("res", res)
                 return await res
             })
     } catch (error) {
-        console.log(error)
+        console.log("err", error)
     }
 
 };
@@ -131,7 +134,7 @@ export const signInAsync = async (data) => {
         const device = deviceInfo();
         console.log("device", device);
 
-        return await fetch('https://api.cohober.vn/api/users/login', {
+        return await fetch('http://api.cohober.vn/api/users/login', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -169,7 +172,7 @@ export const signInAsync = async (data) => {
 
 };
 export const refreshTokenAsync = async (token) => {
-    return await fetch("https://api.cohober.vn/api/users/token", {
+    return await fetch("http://api.cohober.vn/api/users/token", {
         method: 'POST',
         headers: {
             "Authorization": token,
@@ -239,38 +242,38 @@ export const signIn = (data) => {
 
                     let user = await signInAsync(data);
                     console.log("user info", user);
-                    // setTimeout(() => {
-                    //     if (user.id) {
+                    setTimeout(() => {
+                        if (user.id) {
 
-                    //         AsyncStorage.setItem('token', user.token);
-                    //         dispatch(loginSuccess(user));
-                    //         dispatch(getProfile());
+                            AsyncStorage.setItem('token', user.token);
+                            dispatch(loginSuccess(user));
+                            dispatch(getProfile());
 
-                    //         const resetAction = NavigationActions.reset({
-                    //             index: 0,
-                    //             actions: [
-                    //                 NavigationActions.navigate({routeName: 'Home'})
-                    //             ]
-                    //         });
-                    //         dispatch(resetAction);
-                    //     } else {
-                    //         let m = "";
-                    //         for (msg of user) {
-                    //             m = m + msg.msg + "\n"
-                    //         }
+                            const resetAction = NavigationActions.reset({
+                                index: 0,
+                                actions: [
+                                    NavigationActions.navigate({routeName: 'Home'})
+                                ]
+                            });
+                            dispatch(resetAction);
+                        } else {
+                            let m = "";
+                            for (msg of user) {
+                                m = m + msg.msg + "\n"
+                            }
 
-                    //         Toast.show('' + m, Toast.SHORT, Toast.TOP, {
-                    //             height: 50,
-                    //             width: 400,
-                    //             backgroundColor: '#ffca00',
-                    //             opacity: 0.5,
-                    //             textAlign: 'center',
-                    //             lines: 1,
-                    //             borderRadius: 3
-                    //         });
-                    //         dispatch(loginFail());
-                    //     }
-                    // }, 5000);
+                            Toast.show('' + m, Toast.SHORT, Toast.TOP, {
+                                height: 50,
+                                width: 400,
+                                backgroundColor: '#ffca00',
+                                opacity: 0.5,
+                                textAlign: 'center',
+                                lines: 1,
+                                borderRadius: 3
+                            });
+                            dispatch(loginFail());
+                        }
+                    }, 5000);
 
                     console.log(JSON.stringify(user))
                 } catch (error) {
@@ -301,7 +304,7 @@ export const loginFBAsync = async (token) => {
         let lang = await AsyncStorage.getItem('lang');
         const device = deviceInfo();
 
-        return await fetch("https://api.cohober.vn/api/users/loginWithFacebook", {
+        return await fetch("http://api.cohober.vn/api/users/loginWithFacebook", {
             method: 'POST',
             headers: {
                 "Authorization": token,
@@ -485,7 +488,7 @@ export const signup = (data) => {
     }
 };
 export const updatePasswordAsync = async (data, token) => {
-    return await fetch("https://api.cohober.vn/api/users/changePassword", {
+    return await fetch("http://api.cohober.vn/api/users/changePassword", {
         method: 'POST',
         headers: {
             "Authorization": token,
@@ -556,7 +559,7 @@ export const updatePassword = (data) => {
 export const forgotPasswordAsync = async (email) => {
     try {
         let lang = await AsyncStorage.getItem('lang');
-        return await fetch("https://api.cohober.vn/api/users/forgotPassword", {
+        return await fetch("http://api.cohober.vn/api/users/forgotPassword", {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -598,7 +601,7 @@ export const forgotPassword = (email) => {
 export const logOutAsync = async (token) => {
     const device = deviceInfo();
 
-    return await fetch("https://api.cohober.vn/api/users/logout", {
+    return await fetch("http://api.cohober.vn/api/users/logout", {
         method: 'POST',
         headers: {
             "Authorization": token,

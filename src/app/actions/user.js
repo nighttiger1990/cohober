@@ -18,7 +18,7 @@ export const getProfileSuccess = (data) => {
     }
 };
 export const getProfileAsync = async (token) => {
-    return await fetch('https://api.cohober.vn/api/users/me', {
+    return await fetch('http://api.cohober.vn/api/users/me', {
         method: 'GET',
         headers: {
             'Authorization': token
@@ -49,7 +49,7 @@ export const getProfile = () => {
     }
 };
 export const getProfileByIdAsync = async (id, token) => {
-    return await fetch('https://api.cohober.vn/api/users/me/' + id, {
+    return await fetch('http://api.cohober.vn/api/users/me/' + id, {
         method: 'GET',
         headers: {
             'Authorization': token
@@ -80,7 +80,7 @@ export const getProfileById = (id) => {
 };
 export const updateProfileAsync = async (data, token) => {
     //console.log(JSON.stringify(data));
-    return await fetch('https://api.cohober.vn/api/users/update', {
+    return await fetch('http://api.cohober.vn/api/users/update', {
         method: 'POST',
         headers: {
             'Authorization': token,

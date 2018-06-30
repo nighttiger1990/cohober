@@ -24,7 +24,7 @@ export const getDetail = (data) => {
     }
 };
 export const getNotificationAsync = async (token) => {
-    return await fetch('https://api.cohober.vn/api/notifications?populate=project,user,fromUser&limit=10', {
+    return await fetch('http://api.cohober.vn/api/notifications?populate=project,user,fromUser&limit=10', {
         method: 'GET',
         headers: {
             'Authorization': token,
@@ -53,7 +53,7 @@ export const getNotification = () => {
     }
 };
 export const getNotificationByIdAsync = async (id, token) => {
-    return await fetch('https://api.cohober.vn/api/notifications/' + id + "?populate=project,user,fromUser", {
+    return await fetch('http://api.cohober.vn/api/notifications/' + id + "?populate=project,user,fromUser", {
         method: 'GET',
         headers: {
             'Authorization': token,
