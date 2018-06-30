@@ -1,4 +1,4 @@
-import {ActivityIndicator, AsyncStorage, Image, Text, TouchableOpacity, View} from "react-native";
+import { ActivityIndicator, AsyncStorage, Image, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import styles from './login.style';
 import * as g from '../../util';
@@ -29,7 +29,7 @@ class Login extends React.PureComponent {
     }
 
     componentDidMount() {
-        setTimeout(() => this.setState({isLoading: false}), 3000)
+        setTimeout(() => this.setState({ isLoading: false }), 3000)
     }
 
     render() {
@@ -45,8 +45,8 @@ class Login extends React.PureComponent {
                     position: 'absolute'
                 }}>
                     <Image
-                        style={{width: 105 * g.rw, height: 65, resizeMode: 'contain', alignSelf: 'center'}}
-                        source={require('../../assets/image/logo_cohober.png')}/>
+                        style={{ width: 105 * g.rw, height: 65, resizeMode: 'contain', alignSelf: 'center' }}
+                        source={require('../../assets/image/logo_cohober.png')} />
                     <Text style={{
                         fontFamily: 'UTM Colossalis',
                         color: '#332401',
@@ -63,13 +63,13 @@ class Login extends React.PureComponent {
                         fontSize: 20,
                         backgroundColor: 'rgba(255,255,255,0)'
                     }}>Kết nối thành công</Text>
-                    <ActivityIndicator color={'#ff0000'} style={{position: 'absolute'}} animating={true}/>
+                    <ActivityIndicator color={'#ff0000'} style={{ position: 'absolute' }} animating={true} />
                 </View>
             )
         } else {
             return (
 
-                <View style={{backgroundColor: '#ffffff', width: g.sw, height: g.sh, alignItems: 'center'}}>
+                <View style={{ backgroundColor: '#ffffff', width: g.sw, height: g.sh, alignItems: 'center' }}>
 
                     <Image style={{
                         height: 160 * g.rh,
@@ -78,7 +78,7 @@ class Login extends React.PureComponent {
                         resizeMode: 'stretch',
                         position: 'absolute',
                         alignSelf: 'center'
-                    }} source={require('../../assets/image/bg_logo.png')}/>
+                    }} source={require('../../assets/image/bg_logo.png')} />
                     <Image
                         style={{
                             marginTop: 105 * g.rh,
@@ -87,7 +87,7 @@ class Login extends React.PureComponent {
                             resizeMode: 'contain',
                             alignSelf: 'center'
                         }}
-                        source={require('../../assets/image/logo_cohober.png')}/>
+                        source={require('../../assets/image/logo_cohober.png')} />
                     <Text style={{
                         fontFamily: 'UTM Colossalis',
                         color: '#332401',
@@ -105,8 +105,8 @@ class Login extends React.PureComponent {
                         backgroundColor: 'rgba(255,255,255,0)'
                     }}>Kết nối thành công</Text>
 
-                    <TouchableOpacity style={{marginTop: g.rh * 55,}}
-                                      onPress={() => this.props.navigation.navigate('SignIn')}>
+                    <TouchableOpacity style={{ marginTop: g.rh * 55, }}
+                        onPress={() => this.props.navigation.navigate('SignIn')}>
                         <View>
                             <Image
                                 style={[styles.button, {
@@ -114,7 +114,7 @@ class Login extends React.PureComponent {
                                     height: g.sw * 0.8 * 190 / 900,
                                     alignSelf: 'center',
                                 }]}
-                                source={require('../../assets/bg_ln_ac.png')}/>
+                                source={require('../../assets/bg_ln_ac.png')} />
                             <View style={{
                                 position: 'absolute',
                                 flexDirection: 'row',
@@ -125,14 +125,14 @@ class Login extends React.PureComponent {
                                 paddingRight: 10 * (g.rh + g.rw)
                             }}>
                                 <Image source={require('../../assets/icons/icon_account.png')}
-                                       style={styles.icAccount}/>
+                                    style={styles.icAccount} />
                                 <Text
                                     style={styles.txtAccount}>{(this.props.lang.content.loginAc + '').toUpperCase()}</Text>
                             </View>
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={{marginTop: 15 * g.rh}} onPress={() => this.props.onLoginFB()}>
+                    <TouchableOpacity style={{ marginTop: 15 * g.rh }} onPress={() => this.props.onLoginFB()}>
                         <View>
                             <Image
                                 style={[styles.button, {
@@ -140,7 +140,7 @@ class Login extends React.PureComponent {
                                     height: g.sw * 0.8 * 190 / 900,
                                     alignSelf: 'center',
                                 }]}
-                                source={require('../../assets/bg_ln_fb.png')}/>
+                                source={require('../../assets/bg_ln_fb.png')} />
                             <View style={{
                                 position: 'absolute',
                                 flexDirection: 'row',
@@ -150,27 +150,16 @@ class Login extends React.PureComponent {
                                 paddingLeft: 5 * (g.rh + g.rw),
                                 paddingRight: 10 * (g.rh + g.rw)
                             }}>
-                                <Image source={require('../../assets/icons/icon_fb.png')} style={styles.icAccount}/>
+                                <Image source={require('../../assets/icons/icon_fb.png')} style={styles.icAccount} />
                                 <Text
                                     style={styles.txtAccount}>{(this.props.lang.content.loginFb + '').toUpperCase()}</Text>
                             </View>
                         </View>
                     </TouchableOpacity>
 
-                    {/* <TouchableOpacity onPress={() => this.props.navigation.navigate('Register')}>
-                    <View>
-
-                    <Image
-                        style={[styles.button, { marginTop: g.sh/20, width: g.sw*0.8, height:g.sw*0.8*190/900, alignSelf: 'center' }]}
-                        source={require('../assets/image_button_register.png')}
-                    />
-                    <Text style={{fontFamily:'Roboto-BoldCondensed',color:'#fff',position:"absolute",bottom:20*g.rh,left:135*g.rw,fontSize:15,backgroundColor:'rgba(255,255,255,0)'}}>ĐĂNG KÝ</Text>
-                    </View>
-                </TouchableOpacity>    */}
-
-                    <TouchableOpacity style={{marginTop: g.rh * 20}}
-                                      onPress={() => this.props.navigation.navigate('ForgetPassword')}>
-                        <View style={{borderRadius: 10}}>
+                    <TouchableOpacity style={{ marginTop: g.rh * 20 }}
+                        onPress={() => this.props.navigation.navigate('ForgetPassword')}>
+                        <View style={{ borderRadius: 10 }}>
                             <Text style={{
                                 textAlign: 'center',
                                 color: '#383838',

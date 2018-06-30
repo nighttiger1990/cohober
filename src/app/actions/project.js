@@ -1,5 +1,5 @@
-import {NavigationActions} from 'react-navigation';
-import {AsyncStorage} from 'react-native'
+import { NavigationActions } from 'react-navigation';
+import { AsyncStorage } from 'react-native'
 import Toast from 'react-native-toast-native';
 
 export const getDataSuccess = (data) => {
@@ -30,30 +30,30 @@ export const nearbyMe = (data) => {
         data
     }
 };
-function typeName(data){
-  //  'bds_sell', 'bds_buy', 'bds_thue', 'bds_doi', 'docu'
-     switch(data.type){
-         case "raiseFunding":
-         return  JSON.stringify({
-            "name": data.name,
-            "detail": data.detail,
-            "type": data.type,
-            "startDate": data.startDate,
-            "endDate": data.endDate,
-            "location": data.location,
-            "category": data.category,
-            "raiseMoney": data.raiseMoney
-        })
+function typeName(data) {
+    //  'bds_sell', 'bds_buy', 'bds_thue', 'bds_doi', 'docu'
+    switch (data.type) {
+        case "raiseFunding":
+            return JSON.stringify({
+                "name": data.name,
+                "detail": data.detail,
+                "type": data.type,
+                "startDate": data.startDate,
+                "endDate": data.endDate,
+                "location": data.location,
+                "category": data.category,
+                "raiseMoney": data.raiseMoney
+            })
         case 'idea':
-        return JSON.stringify({
-            "name": data.name,
-            "detail": data.detail,
-            "type": data.type,
-            "startDate": data.startDate,
-            "endDate": data.endDate,
-            "location": data.location,
-            "category": data.category
-        })
+            return JSON.stringify({
+                "name": data.name,
+                "detail": data.detail,
+                "type": data.type,
+                "startDate": data.startDate,
+                "endDate": data.endDate,
+                "location": data.location,
+                "category": data.category
+            })
         case 'bds_sell': return JSON.stringify({
             "name": data.name,
             "detail": data.detail,
@@ -62,87 +62,87 @@ function typeName(data){
             "endDate": data.endDate,
             "location": data.location,
             "huong": data.direction,
-            "address":data.address,
-            "dienTich":data.area,
-            "price":data.price,
-            "images":data.image
+            "address": data.address,
+            "dienTich": data.area,
+            "price": data.price,
+            "images": data.image
         })
         case 'bds_buy':
-         return JSON.stringify({
-            "name": data.name,
-            "detail": data.detail,
-            "type": data.type,
-            "startDate": data.startDate,
-            "endDate": data.endDate,
-            "location": data.location,
-            "huong": data.direction,
-            "address":data.address,
-            "dienTich":data.area,
-            "price":data.price,
-            "images":data.image
-        })
+            return JSON.stringify({
+                "name": data.name,
+                "detail": data.detail,
+                "type": data.type,
+                "startDate": data.startDate,
+                "endDate": data.endDate,
+                "location": data.location,
+                "huong": data.direction,
+                "address": data.address,
+                "dienTich": data.area,
+                "price": data.price,
+                "images": data.image
+            })
         case 'bds_thue':
-         return JSON.stringify({
-            "name": data.name,
-            "detail": data.detail,
-            "type": data.type,
-            "startDate": data.startDate,
-            "endDate": data.endDate,
-            "location": data.location,
-            "huong": data.direction,
-            "address":data.address,
-            "dienTich":data.area,
-            "price":data.price,
-            "images":data.image
-        })
+            return JSON.stringify({
+                "name": data.name,
+                "detail": data.detail,
+                "type": data.type,
+                "startDate": data.startDate,
+                "endDate": data.endDate,
+                "location": data.location,
+                "huong": data.direction,
+                "address": data.address,
+                "dienTich": data.area,
+                "price": data.price,
+                "images": data.image
+            })
         case 'bds_doi':
-         return JSON.stringify({
-            "name": data.name,
-            "detail": data.detail,
-            "type": data.type,
-            "startDate": data.startDate,
-            "endDate": data.endDate,
-            "location": data.location,
-            "huong": data.direction,
-            "address":data.address,
-            "dienTich":data.area,
-            "price":data.price,
-            "images":data.image
-        })
+            return JSON.stringify({
+                "name": data.name,
+                "detail": data.detail,
+                "type": data.type,
+                "startDate": data.startDate,
+                "endDate": data.endDate,
+                "location": data.location,
+                "huong": data.direction,
+                "address": data.address,
+                "dienTich": data.area,
+                "price": data.price,
+                "images": data.image
+            })
         case 'docu':
-         return JSON.stringify({
-            "name": data.name,
-            "detail": data.detail,
-            "type": data.type,
-            "startDate": data.startDate,
-            "endDate": data.endDate,
-            "location": data.location,
-            "price":data.price,
-            "images":data.image,
-            "address":data.address
-        })
-        default:{
-        return (JSON.stringify({
-            "name": data.name,
-            "detail": data.detail,
-            "type": data.type,
-            "startDate": data.startDate,
-            "endDate": data.endDate,
-            "location": data.location,
-            "category": data.category
-        }))
+            return JSON.stringify({
+                "name": data.name,
+                "detail": data.detail,
+                "type": data.type,
+                "startDate": data.startDate,
+                "endDate": data.endDate,
+                "location": data.location,
+                "price": data.price,
+                "images": data.image,
+                "address": data.address
+            })
+        default: {
+            return (JSON.stringify({
+                "name": data.name,
+                "detail": data.detail,
+                "type": data.type,
+                "startDate": data.startDate,
+                "endDate": data.endDate,
+                "location": data.location,
+                "category": data.category
+            }))
+        }
     }
-     }
- } 
+}
 export const createProjectAsync = async (data, token) => {
-    console.log("a:"+JSON.stringify(JSON.parse( typeName(data))))
+    console.log("a:" + JSON.stringify(JSON.parse(typeName(data))))
     try {
-        return await fetch('https://api.cohober.vn/api/projects', {
+        return await fetch('http://api.cohober.vn/api/projects', {
             method: 'POST',
             headers: {
                 'Authorization': token
             },
-            body:JSON.stringify(JSON.parse( typeName(data)))
+            body: JSON.stringify(JSON.parse(typeName(data)))
         }).then(async (response) => {
             return await response.json();
         }).then(async (res) => {
@@ -151,7 +151,7 @@ export const createProjectAsync = async (data, token) => {
     } catch (error) {
         console.log(error)
     }
-   
+
 };
 export const createProject = (data) => {
     return async (dispatch) => {
@@ -172,16 +172,16 @@ export const createProject = (data) => {
                     lines: 1,
                     borderRadius: 3
                 });
-                if(data.type=='idea'){
+                if (data.type == 'idea') {
                     dispatch(getProjects("idea"));
-                }else if(data.type=='raiseFunding'){
+                } else if (data.type == 'raiseFunding') {
                     dispatch(getProjects("raiseFunding"));
-                }else if(data.type==='docu'){
+                } else if (data.type === 'docu') {
                     dispatch(getProjects("docu"));
-                }else{
-                    dispatch(getProjects(["bds_sell","bds_thue","bds_buy","bds_doi"]));
+                } else {
+                    dispatch(getProjects(["bds_sell", "bds_thue", "bds_buy", "bds_doi"]));
                 }
-               
+
             } else {
                 dispatch(getDataFail());
                 try {
@@ -189,15 +189,6 @@ export const createProject = (data) => {
                     for (project of projects) {
                         message += project.msg
                     }
-                    // Toast.show(message,3000,Toast.TOP,{ backgroundColor: "#ddd",
-                    // width: 300,
-                    // height: 50,
-                    // color: "#ffffff",
-                    // fontSize: 15,
-                    // lineHeight: 2,
-                    // lines: 4,
-                    // borderRadius: 15,
-                    // yOffset: 40});
                     Toast.show(message, Toast.SHORT, Toast.TOP, {
                         height: 50,
                         width: 400,
@@ -218,18 +209,18 @@ export const createProject = (data) => {
 };
 export const getProjectsAsync = async (type, token) => {
     try {
-        return await fetch('https://api.cohober.vn/api/projects?where=' + JSON.stringify({
-            "type":type
-        }) , {
-            method: 'GET',
-            headers: {
-                'Authorization': token
-            }
-        }).then(async (response) => {
-            return await response.json()
-        }).then(async (res) => {
-            return await res
-        })
+        return await fetch('http://api.cohober.vn/api/projects?where=' + JSON.stringify({
+            "type": type
+        }), {
+                method: 'GET',
+                headers: {
+                    'Authorization': token
+                }
+            }).then(async (response) => {
+                return await response.json()
+            }).then(async (res) => {
+                return await res
+            })
     } catch (error) {
         return error;
     }
@@ -241,8 +232,8 @@ export const getProjects = (type) => {
             let token = await AsyncStorage.getItem('token');
             // let typeAsync = type === 0 ? 'raiseFunding' : 'idea';
             //if(type==='realEstale')
-            let projects = await getProjectsAsync(type==='realEstale'?["bds_sell","bds_buy","bds_thue","bds_doi"]:type, token);
-            dispatch({type: type});
+            let projects = await getProjectsAsync(type === 'realEstale' ? ["bds_sell", "bds_buy", "bds_thue", "bds_doi"] : type, token);
+            dispatch({ type: type });
             if (projects) {
                 // {coordinate:{latitude:21.004934,longitude: 105.7808754},title:'Khách sạn xanh',price:100000000,detail:''},
                 // {coordinate:{latitude:21.020803,longitude: 105.8053493},title:'Nuôi lợn sạch',price:500000000,detail:'Mô hình chăn lợn'}
@@ -285,7 +276,7 @@ export const getProjects = (type) => {
 };
 export const getProjectIDAsync = async (id, token) => {
     try {
-        return await fetch("https://api.cohober.vn/api/projects/" + id+"?populate=owner,category" , {
+        return await fetch("http://api.cohober.vn/api/projects/" + id + "?populate=owner,category", {
             method: 'GET',
             headers: {
                 'Authorization': token
@@ -306,7 +297,7 @@ export const getProjectID = (id) => {
             let token = await AsyncStorage.getItem('token');
             let projects = await getProjectIDAsync(id, token);
             if (projects.id) {
-                dispatch({type:'FETCH_PROJECT_DETAIL_SUCCESS',data:projects})
+                dispatch({ type: 'FETCH_PROJECT_DETAIL_SUCCESS', data: projects })
             }
         } catch (error) {
             console.log(error)
@@ -314,7 +305,7 @@ export const getProjectID = (id) => {
     }
 };
 export const followProjectAsync = async (id, token) => {
-    return await fetch('https://api.cohober.vn/api/projects/follow', {
+    return await fetch('http://api.cohober.vn/api/projects/follow', {
         method: 'POST',
         headers: {
             'Authorization': token
@@ -344,7 +335,7 @@ export const followProject = (id) => {
 };
 export const getProjectByNearMeAsync = async (data, type, token) => {
     console.log(data);
-    return await fetch('https://api.cohober.vn/api/projects/nearMe?where=' + JSON.stringify({
+    return await fetch('http://api.cohober.vn/api/projects/nearMe?where=' + JSON.stringify({
         "location": data,
         "type": type
     }) + "&populate=owner,category"
@@ -354,10 +345,10 @@ export const getProjectByNearMeAsync = async (data, type, token) => {
                 'Authorization': token
             }
         }).then(async (response) => {
-        return await response.json()
-    }).then(async (res) => {
-        return await res
-    })
+            return await response.json()
+        }).then(async (res) => {
+            return await res
+        })
 };
 export const measure = (lat1, lon1, lat2, lon2) => {
     const R = 6378.137; // Radius of earth in KM
@@ -374,7 +365,7 @@ export const getProjectByNearMeProject = (type) => {
         try {
             let data = [];
             let token = await AsyncStorage.getItem('token');
-            dispatch({type: type});
+            dispatch({ type: type });
             navigator.geolocation.getCurrentPosition(async (position) => {
                 try {
                     let lnglat = {
@@ -382,7 +373,7 @@ export const getProjectByNearMeProject = (type) => {
                         2: position.coords.latitude,
                     };
                     let dataLL = Object.values(lnglat);
-                    let projects = await getProjectByNearMeAsync(dataLL,type==='realEstale'?["bds_sell","bds_buy","bds_thue","bds_doi"]:type, token);
+                    let projects = await getProjectByNearMeAsync(dataLL, type === 'realEstale' ? ["bds_sell", "bds_buy", "bds_thue", "bds_doi"] : type, token);
                     // dispatch({type:type});
 
                     if (projects) {
@@ -398,13 +389,10 @@ export const getProjectByNearMeProject = (type) => {
                             value.sort((a, b) => {
                                 return a.distance - b.distance;
                             });
-                             console.log(value)
+                            console.log(value)
                             dispatch(nearbyMe(value))
                         });
-
-
                     }
-
                 } catch (error) {
                     console.log(error)
                 }
@@ -415,3 +403,11 @@ export const getProjectByNearMeProject = (type) => {
         }
     }
 };
+
+export const getProjectByIdUser = (type) => {
+    return (dispatch) => {
+        //fetch data o day
+        dispatch({ type: type }) //chuyen type cua cno
+        //get data
+    }
+}

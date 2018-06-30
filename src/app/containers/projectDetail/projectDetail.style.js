@@ -119,7 +119,6 @@ const styles = StyleSheet.create({
     },
     header: {
         padding: 5 * (g.rh + g.rw),
-        height: 320 * g.rh,
         width: g.sw - 60 * g.rw,
         backgroundColor: '#eef',
         alignSelf: 'center',

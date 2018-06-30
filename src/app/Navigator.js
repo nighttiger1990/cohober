@@ -1,4 +1,4 @@
-import {StackNavigator} from 'react-navigation';
+import { StackNavigator } from 'react-navigation';
 import Login from './containers/login/login';
 import Home from './containers/homes/home';
 import Register from './containers/registers/register';
@@ -19,8 +19,13 @@ import Around from './containers/nearby/nearby';
 import RealEstale from './containers/realEstale/realEstale'
 import SecondHand from './containers/secondHand/secondHand';
 import ProjectDetail from './containers/projectDetail/projectDetail';
+import QuanLyDangTin from './containers/quan-ly-dang-tin/index';
 
 const AppNavigator = StackNavigator({
+    // Home: {
+    //     screen: Home,
+    //     navigationOptions: null
+    // },
     Login: {
         screen: Login
     },
@@ -79,14 +84,17 @@ const AppNavigator = StackNavigator({
     SecondHand: {
         screen: SecondHand
     },
-    ProjectDetail:{
-        screen:ProjectDetail
-    }
-}, {
-    initialRouteName: 'Login',
-    navigationOptions: {
-        gesturesEnabled: false
+    ProjectDetail: {
+        screen: ProjectDetail
     },
+    QuanLyDangTin: {
+        screen: QuanLyDangTin
+    },
+}, {
+        initialRouteName: 'Login',
+        navigationOptions: {
+            gesturesEnabled: false
+        },
 
-});
+    });
 export default AppNavigator;

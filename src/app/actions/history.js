@@ -23,7 +23,7 @@ export const getDataFail = () => {
     }
 };
 export const getHistoryAsync = async (token) => {
-    return await fetch('https://api.cohober.vn/api/histories?populate=project,user&limit=10', {
+    return await fetch('http://api.cohober.vn/api/histories?populate=project,user&limit=10', {
         method: 'GET',
         headers: {
             'Authorization': token
@@ -50,7 +50,7 @@ export const getHistory = () => {
     }
 };
 export const getHistoryByIdAsync = async (id, token) => {
-    return await fetch('https://api.cohober.vn/api/histories/' + id + "?populate=project,user", {
+    return await fetch('http://api.cohober.vn/api/histories/' + id + "?populate=project,user", {
         method: 'GET',
         headers: {
             'Authorization': token

@@ -25,7 +25,7 @@ export const addSuccess = () => {
     }
 };
 export const getCategoryAsync = async (token) => {
-    return await fetch("https://api.cohober.vn/api/categories", {
+    return await fetch("http://api.cohober.vn/api/categories", {
         method: 'GET',
         headers: {
             'Authorization': token,
@@ -60,7 +60,7 @@ export const getCategories = () => {
     }
 };
 export const getCategoryByIdAsync = async (id, token) => {
-    return await fetch("https://api.cohober.vn/api/categories/" + id, {
+    return await fetch("http://api.cohober.vn/api/categories/" + id, {
         method: 'GET',
         headers: {
             'Authorization': token,
@@ -88,7 +88,7 @@ export const getCategoryById = (id) => {
 };
 export const createCategoryAsync = async (data, token) => {
 
-    return await fetch('https://api.cohober.vn/api/categories', {
+    return await fetch('http://api.cohober.vn/api/categories', {
         method: 'POST',
         headers: {
             'Authorization': token

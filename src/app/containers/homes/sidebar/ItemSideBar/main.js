@@ -1,5 +1,5 @@
-import React, {PureComponent} from 'react';
-import {Alert, AsyncStorage, Image, Modal, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React, { PureComponent } from 'react';
+import { Alert, AsyncStorage, Image, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 let g = require('../../../../util/index');
 export default class MainSideBar extends PureComponent {
@@ -35,14 +35,14 @@ export default class MainSideBar extends PureComponent {
 
     iconLang() {
         if (this.props.lang) {
-            return (<View style={{flexDirection: 'row'}}>
+            return (<View style={{ flexDirection: 'row' }}>
                 <View style={{
                     borderWidth: this.props.lang.type === 'vi' ? 2 : 0,
                     borderColor: '#ffca00',
                     marginRight: 2 * g.rw
                 }}>
                     <Image source={require('../../../../assets/icons/icon_vn.png')}
-                           style={{width: 40 * g.rw, height: 40 * g.rh, resizeMode: 'contain'}}/>
+                        style={{ width: 40 * g.rw, height: 40 * g.rh, resizeMode: 'contain' }} />
                 </View>
                 <View style={{
                     borderWidth: this.props.lang.type === 'en' ? 2 : 0,
@@ -50,24 +50,20 @@ export default class MainSideBar extends PureComponent {
                     marginLeft: 2 * g.rw
                 }}>
                     <Image source={require('../../../../assets/icons/icon_english.png')}
-                           style={{width: 40 * g.rw, height: 40 * g.rh, resizeMode: 'contain'}}/>
+                        style={{ width: 40 * g.rw, height: 40 * g.rh, resizeMode: 'contain' }} />
                 </View>
-                {/* <Image source={require('../../../assets/icons/icon_english.png')} style={{width:40*g.rw,height:40*g.rh,resizeMode:'contain',}}/> */}
 
             </View>)
-            // if(this.props.lang.type=='vi'){
-
-            //     return(
-            //          <Image source={require('../../../assets/icons/icon_vn.png')} style={{width:40*g.rw,height:40*g.rh,resizeMode:'contain'}}/>)
-            // }else return( <Image source={require('../../../assets/icons/icon_english.png')} style={{width:40*g.rw,height:40*g.rh,resizeMode:'contain',}}/>)
-        } else return (<View/>)
+            
+        } else return (<View />)
     }
 
     render() {
+        console.log("lang",this.props.lang)
         try {
             if (this.props.user) {
                 if ((this.props.user.email + "").toLowerCase() === 'quoctoan.ipp@gmail.com') {
-                    this.setState({isAdmin: true})
+                    this.setState({ isAdmin: true })
                 } else {
                     console.log(this.props.user)
                 }
@@ -77,41 +73,55 @@ export default class MainSideBar extends PureComponent {
             console.log(error)
         }
         return (
-            <View style={{flex: 1, backgroundColor: '#fff'}}>
-                <View style={{backgroundColor: '#cfcfcf', height: 40 * g.rh}}>
+            <View style={{ flex: 1, backgroundColor: '#fff' }}>
+                <View style={{ backgroundColor: '#cfcfcf', height: 40 * g.rh }}>
                 </View>
                 <View style={styles.mainList}>
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('History')}>
                         <View style={styles.item}>
                             <Image style={styles.iconLeft}
-                                   source={require('../../../../assets/icons/icon_history.png')}/>
+                                source={require('../../../../assets/icons/icon_history.png')} />
                             <Text style={styles.textTitle}>{this.props.lang.content.history}</Text>
-                            <Image style={styles.iconRight} source={require('../../../../assets/icons/home_next.png')}/>
+                            <Image style={styles.iconRight} source={require('../../../../assets/icons/home_next.png')} />
                         </View>
                     </TouchableOpacity>
-                    <View style={styles.hr}/>
+                    <View style={styles.hr} />
                 </View>
                 <View style={styles.mainList}>
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('Notification')}>
                         <View style={styles.item}>
-                            <Image style={styles.iconLeft} source={require('../../../../assets/icons/icon_bell.png')}/>
+                            <Image style={styles.iconLeft} source={require('../../../../assets/icons/icon_bell.png')} />
                             <Text style={styles.textTitle}>{this.props.lang.content.notification + ""}</Text>
-                            <Image style={styles.iconRight} source={require('../../../../assets/icons/home_next.png')}/>
+                            <Image style={styles.iconRight} source={require('../../../../assets/icons/home_next.png')} />
                         </View>
                     </TouchableOpacity>
-                    <View style={styles.hr}/>
+                    <View style={styles.hr} />
+                </View>
+                <View style={styles.mainList}>
+                    <TouchableOpacity
+                        onPress={() => {
+                            this.props.navigation.navigate('QuanLyDangTin')
+                        }}>
+                        <View style={styles.item}>
+                            <Image style={styles.iconLeft}
+                                source={require('../../../../assets/icons/icon_book.png')} />
+                            <Text style={styles.textTitle}>{this.props.lang.content.quanlydangtin}</Text>
+                            <Image style={styles.iconRight} source={require('../../../../assets/icons/home_next.png')} />
+                        </View>
+                    </TouchableOpacity>
+                    <View style={styles.hr} />
                 </View>
                 {this.state.isAdmin && <View style={styles.mainList}>
                     <TouchableOpacity onPress={() => {
                         this.props.navigation.navigate('Category')
                     }}>
                         <View style={styles.item}>
-                            <Image style={styles.iconLeft} source={require('../../../../assets/icons/icon_book.png')}/>
+                            <Image style={styles.iconLeft} source={require('../../../../assets/icons/icon_book.png')} />
                             <Text style={styles.textTitle}>{this.props.lang.content.category}</Text>
-                            <Image style={styles.iconRight} source={require('../../../../assets/icons/home_next.png')}/>
+                            <Image style={styles.iconRight} source={require('../../../../assets/icons/home_next.png')} />
                         </View>
                     </TouchableOpacity>
-                    <View style={styles.hr}/>
+                    <View style={styles.hr} />
                 </View>
                 }
                 <View style={styles.mainList}>
@@ -120,12 +130,12 @@ export default class MainSideBar extends PureComponent {
                     })}>
                         <View style={styles.item}>
                             <Image style={styles.iconLeft}
-                                   source={require('../../../../assets/icons/icon_settings.png')}/>
+                                source={require('../../../../assets/icons/icon_settings.png')} />
                             <Text style={styles.textTitle}>{this.props.lang.content.setup}</Text>
-                            <Image style={styles.iconRight} source={require('../../../../assets/icons/home_next.png')}/>
+                            <Image style={styles.iconRight} source={require('../../../../assets/icons/home_next.png')} />
                         </View>
                     </TouchableOpacity>
-                    <View style={styles.hr}/>
+                    <View style={styles.hr} />
                 </View>
                 <View style={styles.mainList}>
                     <TouchableOpacity onPress={() => requestAnimationFrame(() => {
@@ -133,12 +143,12 @@ export default class MainSideBar extends PureComponent {
                     })}>
                         <View style={styles.item}>
                             <Image style={styles.iconLeft}
-                                   source={require('../../../../assets/icons/icon_location.png')}/>
+                                source={require('../../../../assets/icons/icon_location.png')} />
                             <Text style={styles.textTitle}>{this.props.lang.content.nearby + ""}</Text>
-                            <Image style={styles.iconRight} source={require('../../../../assets/icons/home_next.png')}/>
+                            <Image style={styles.iconRight} source={require('../../../../assets/icons/home_next.png')} />
                         </View>
                     </TouchableOpacity>
-                    <View style={styles.hr}/>
+                    <View style={styles.hr} />
                 </View>
                 <View style={styles.mainList}>
                     <TouchableOpacity onPress={() => requestAnimationFrame(() => {
@@ -159,40 +169,40 @@ export default class MainSideBar extends PureComponent {
                         ])
                     })}>
                         <View style={styles.item}>
-                            <Image style={styles.iconLeft} source={require('../../../../assets/icons/logout.png')}/>
+                            <Image style={styles.iconLeft} source={require('../../../../assets/icons/logout.png')} />
                             <Text style={styles.textTitle}>{this.props.lang.content.logout}</Text>
-                            <Image style={styles.iconRight} source={require('../../../../assets/icons/home_next.png')}/>
+                            <Image style={styles.iconRight} source={require('../../../../assets/icons/home_next.png')} />
                         </View>
                     </TouchableOpacity>
-                    <View style={styles.hr}/>
+                    <View style={styles.hr} />
                 </View>
                 <TouchableOpacity
-                    style={{marginLeft: 20 * g.rw, position: 'absolute', bottom: 0, marginBottom: 20 * g.rh}}
+                    style={{ marginLeft: 20 * g.rw, position: 'absolute', bottom: 0, marginBottom: 20 * g.rh }}
                     onPress={this.handleChaneLang}>
                     {
                         this.iconLang()
                     }
                 </TouchableOpacity>
                 {this.state.modalVisiable &&
-                <Modal animated={true} transparent={true} visible={this.state.modalVisiable}
-                       onRequestClose={() => requestAnimationFrame(() => this.setState({modalVisiable: false}))}>
-                    <View style={{
-                        backgroundColor: 'rgba(0,0,0,0.5)',
-                        flex: 1,
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                    }}>
+                    <Modal animated={true} transparent={true} visible={this.state.modalVisiable}
+                        onRequestClose={() => requestAnimationFrame(() => this.setState({ modalVisiable: false }))}>
                         <View style={{
-                            height: 120 * g.rh,
-                            width: g.sw - 60 * g.rw,
-                            backgroundColor: '#DDD',
-                            borderRadius: 5 * (g.rh + g.rw)
+                            backgroundColor: 'rgba(0,0,0,0.5)',
+                            flex: 1,
+                            alignItems: 'center',
+                            justifyContent: 'center'
                         }}>
+                            <View style={{
+                                height: 120 * g.rh,
+                                width: g.sw - 60 * g.rw,
+                                backgroundColor: '#DDD',
+                                borderRadius: 5 * (g.rh + g.rw)
+                            }}>
+
+                            </View>
 
                         </View>
-
-                    </View>
-                </Modal>
+                    </Modal>
                 }
             </View>)
     }
