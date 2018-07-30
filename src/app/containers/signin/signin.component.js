@@ -1,10 +1,11 @@
-import Toast from "react-native-toast-native";
 import { ActivityIndicator, Image, StatusBar, Text, TouchableOpacity, View } from 'react-native';
 import { Button, Container, Content, Form, Header, Input, Item, Left, Right, Title } from 'native-base'
 import styles from './signin.style';
 import HComponent from "../common/HComponent";
 import * as g from '../../util';
 import React from "react";
+import reactotronReactNative from "reactotron-react-native";
+import Toast, { DURATION } from 'react-native-easy-toast'
 
 export default class SignIn extends React.PureComponent {
     static navigationOptions = {
@@ -30,20 +31,13 @@ export default class SignIn extends React.PureComponent {
     }
 
     signIn() {
-        console.log("user name", this.state.username);
-        console.log("pass ", this.state.password);
+        reactotronReactNative.log("dataxxx", this.state, this.props.lang);
+        reactotronReactNative.log("data111", this.validate(this.state.username));
+
+        
         if (!this.validate(this.state.username)) {
             // email lỗi
-            Toast.show(this.props.lang.type === 'vi' ? "Email không hợp lệ" : 'Email is wrong', Toast.SHORT, Toast.TOP, {
-                height: 50,
-                width: 400,
-                backgroundColor: '#ffca00',
-                opacity: 0.5,
-                textAlign: 'center',
-                lines: 1,
-                borderRadius: 3
-            });
-
+            this.refs.toast.show(this.props.lang.type === 'vi' ? "Email không hợp lệ" : 'Email is wrong');
         } else {
             if ((this.state.username + "").trim() != null && (this.state.password + "").trim() != null) {
                 let data = {
@@ -52,15 +46,7 @@ export default class SignIn extends React.PureComponent {
                 };
                 this.props.onSignIn(data);
             } else {
-                Toast.show(this.props.lang.type === 'vi' ? "Vui lòng kiểm tra lại" : 'Please check again', Toast.SHORT, Toast.TOP, {
-                    height: 50,
-                    width: 400,
-                    backgroundColor: '#ffca00',
-                    opacity: 0.5,
-                    textAlign: 'center',
-                    lines: 1,
-                    borderRadius: 3
-                });
+                this.refs.toast.show(this.props.lang.type === 'vi' ? "Vui lòng kiểm tra lại" : 'Please check again');
             }
         }
 
@@ -223,7 +209,10 @@ export default class SignIn extends React.PureComponent {
                             }}>{this.props.lang.content.signupAc + ""}</Text>
                         </View>
                     </TouchableOpacity>
-
+                    <Toast
+                        ref="toast"
+                        position='top'
+                        positionValue={10} />
                 </View>
             );
         }

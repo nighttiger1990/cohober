@@ -1,6 +1,8 @@
 import actions from "../../actions";
+import reactotronReactNative from "reactotron-react-native";
 
 const mapStateToProps = (state) => {
+    // reactotronReactNative.log("lang",state.language.lang);
     return {
         user: state.user.info,
         project: state.project,

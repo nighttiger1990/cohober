@@ -1,6 +1,6 @@
 import React from 'react';
 import { ActivityIndicator, Image, Linking, StatusBar, TouchableOpacity, View, LayoutAnimation } from 'react-native';
-import { Body, Button, Content, Drawer, Fab, Header, Icon, Left, Right, Segment, Title } from 'native-base';
+import { Body, Button, Drawer, Header, Left, Right, Title } from 'native-base';
 import SideBar from './sidebar/index';
 import ActionButton from 'react-native-action-button';
 import styles from './home.style';
@@ -8,8 +8,10 @@ import SearchBox from './component/searchBox/searchBox';
 import SearchResult from './component/searchResult/searchResult';
 import TypeFunction from '../components/typeFunctions/type';
 import MapContainer from './component/maps/mapscontainer';
-import ProjectDetail from './projectsdetail/projectdetail';
+// import ProjectDetail from './projectsdetail/projectdetail';
 import * as g from '../../util';
+import reactotronReactNative from 'reactotron-react-native';
+import { NavigationActions } from 'react-navigation';
 
 export default class Home extends React.PureComponent {
     static navigationOptions = {
@@ -47,6 +49,22 @@ export default class Home extends React.PureComponent {
         requestAnimationFrame(() => this.setState({ modalVisible: false }))
         LayoutAnimation.configureNext(LayoutAnimation.easeInEaseOut);
     };
+    onPressImages(listImages, index, isEmptyImages) {
+        // this.props.navigation.navigate('FullScreenImage');
+        const navigateAction = NavigationActions.navigate({
+            routeName: 'FullScreenImage',
+
+            params: {
+                listImages: listImages,
+                index: index,
+                isEmptyImages: isEmptyImages
+            },
+
+            // action: NavigationActions.navigate({ routeName: 'SubProfileRoute' }),
+        });
+
+        this.props.navigation.dispatch(navigateAction);
+    }
     constructor(props) {
         super(props);
         this.state = {
@@ -91,6 +109,9 @@ export default class Home extends React.PureComponent {
         //     this.setState({region:nextState.region})
         // }
     }
+    goToDetail = (id) => {
+        this.props.navigation.navigate('ProjectDetail', { id: id })
+    }
 
     render() {
         console.log("Man hinh Home")
@@ -134,10 +155,14 @@ export default class Home extends React.PureComponent {
                                     region={this.state.region}
                                     onRegionChange={(region) => this.setState({ region: region })}
                                     data={this.props.project.data}
-                                    makerPress={(value) => this.setState({
-                                        modalVisible: value.modalVisible
-                                    })}
-                                    getProjectID={this.props.getProjectID}
+                                    makerPress={(value) => {
+                                        reactotronReactNative.log("value", value);
+                                        this.setState({
+                                            modalVisible: value.modalVisible
+                                        })
+                                    }
+                                    }
+                                    getProjectID={this.goToDetail}
                                 />
                             }
                             <SearchBox getAddressPredictions={this.props.getAddressPredictions} />
@@ -187,16 +212,19 @@ export default class Home extends React.PureComponent {
                                 <Image source={require('../../assets/icons/location.png')} resizeMethod={'auto'}
                                     style={styles.imgLocation} />
                             </TouchableOpacity>
-                            {
+                            {/* {
                                 this.state.modalVisible &&
                                 <ProjectDetail modalVisible={this.state.modalVisible}
                                     onRequestClose={(modal) => this.setState({ modalVisible: modal })}
-                                    lang={this.props.lang} dataModal={this.props.project.project}
+                                    lang={this.props.lang}
+                                    dataModal={this.props.project.project}
                                     handleClose={this.handleClose}
                                     handleSave={this.handleSave}
                                     handleCall={this.handleCall}
-                                    handleMessage={this.handleMessage} />
-                            }
+                                    handleMessage={this.handleMessage}
+                                    onPressImages={(listImages, index, isEmptyImages) => this.onPressImages(listImages, index, isEmptyImages)}
+                                />
+                            } */}
                         </View>
                         <Header style={{ backgroundColor: '#ffca00', height: 72 * g.rh }}
                             androidStatusBarColor="#ffca00">

@@ -20,6 +20,7 @@ import RealEstale from './containers/realEstale/realEstale'
 import SecondHand from './containers/secondHand/secondHand';
 import ProjectDetail from './containers/projectDetail/projectDetail';
 import QuanLyDangTin from './containers/quan-ly-dang-tin/index';
+import FullScreenImage from './containers/fullscreen-image';
 
 const AppNavigator = StackNavigator({
     // Home: {
@@ -90,6 +91,9 @@ const AppNavigator = StackNavigator({
     QuanLyDangTin: {
         screen: QuanLyDangTin
     },
+    FullScreenImage: {
+        screen: FullScreenImage
+    }
 }, {
         initialRouteName: 'Login',
         navigationOptions: {
