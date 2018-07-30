@@ -38,9 +38,9 @@ const MapContainer = ({onCurrentLocation, region, onRegionChange, data, makerPre
                 identifier={value.key}
                 onPress={() => requestAnimationFrame(() => {
                     try {
-                        makerPress({
-                            modalVisible: true
-                        });
+                        // makerPress({
+                        //     modalVisible: true
+                        // });
                         getProjectID(value.key)
                     } catch (error) {
                         console.log(error)

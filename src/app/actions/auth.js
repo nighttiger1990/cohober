@@ -5,6 +5,7 @@ import { AsyncStorage, Platform } from 'react-native';
 import validation from 'validate.js';
 import { AccessToken, LoginManager } from 'react-native-fbsdk';
 import { getProfile } from './user';
+import reactotronReactNative from 'reactotron-react-native';
 
 const DeviceInfo = require('react-native-device-info');
 const constraints = {
@@ -229,19 +230,17 @@ export const refeshToken = () => {
     }
 };
 export const signIn = (data) => {
+    reactotronReactNative.log("data",data);
     return async (dispatch) => {
         try {
-            console.log("xxx", JSON.stringify(data));
-
+            
             let lang = await AsyncStorage.getItem('lang');
             if (data.password !== null && (data.password + "").length >= 6) {
 
                 dispatch(loading());
                 try {
-                    //console.log(JSON.stringify(data));
-
                     let user = await signInAsync(data);
-                    console.log("user info", user);
+                    reactotronReactNative.log("user info", user);
                     setTimeout(() => {
                         if (user.id) {
 
@@ -408,6 +407,7 @@ export const loginFB = () => {
     }
 };
 export const signup = (data) => {
+    reactotronReactNative.log("data",data);
     return async (dispatch) => {
         try {
             dispatch(loading());
@@ -435,6 +435,7 @@ export const signup = (data) => {
             } else {
                 if (data.password === data.confirmPassword) {
                     let user = await signUpAsync(data);
+                    reactotronReactNative.log("user",user);
                     try {
                         if (user.id) {
                             Toast.show(lang === 'vi' ? "Đăng ký thành công. Vui lòng vào mail kích hoạt tài khoản" : "Registration successful. Please  check mail to activation account", Toast.SHORT, Toast.TOP, {

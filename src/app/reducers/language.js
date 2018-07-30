@@ -59,7 +59,8 @@ const defaultState = {
             realEstale: 'Real estale',
             secondHand: 'Second hand',
             docu:"Second hand",
-            quanlydangtin:"Manager dang tin"
+            quanlydangtin:"Manager dang tin",
+            images:"Images"
         }
     }
 };
@@ -129,7 +130,8 @@ export default function reducer(state = defaultState, action) {
                         realEstale: 'Real estale',
                         secondHand: 'Second hand',
                         docu:"Second hand",
-                        quanlydangtin:"Manager dang tin"
+                        quanlydangtin:"Manager dang tin",
+                        images:"Images"
                     }
                 }
             };
@@ -196,7 +198,8 @@ export default function reducer(state = defaultState, action) {
                         realEstale: 'Bất động sản',
                         secondHand: 'Đồ cũ',
                         docu:"Đồ cũ",
-                        quanlydangtin:"Quản lý đăng tin"
+                        quanlydangtin:"Quản lý đăng tin",
+                        images:"Ảnh"
                     }
                 }
             };

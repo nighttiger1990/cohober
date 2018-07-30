@@ -1,11 +1,11 @@
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import ProjectDetail from "./projectDetail.component";
 import actions from "../../actions";
 
 const mapStateToProps = (state) => {
     return {
         project: state.project.project,
-        lang:state.language
+        lang: state.language
     };
 };
 const mapDispatchToProps = (dispatch) => {
