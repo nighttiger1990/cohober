@@ -1,6 +1,7 @@
 import { NavigationActions } from 'react-navigation';
 import { AsyncStorage } from 'react-native'
 import Toast from 'react-native-toast-native';
+import reactotronReactNative from 'reactotron-react-native';
 
 export const getDataSuccess = (data) => {
     return {
@@ -135,7 +136,8 @@ function typeName(data) {
     }
 }
 export const createProjectAsync = async (data, token) => {
-    console.log("a:" + JSON.stringify(JSON.parse(typeName(data))))
+    reactotronReactNative.log("createProjectAsync data",data);
+    reactotronReactNative.log("createProjectAsync token",token);
     try {
         return await fetch('http://api.cohober.vn/api/projects', {
             method: 'POST',
