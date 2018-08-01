@@ -13,6 +13,7 @@
     "run": "react-native start"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "moment": "2.20.1",
     "native-base": "2.3.7",
     "prop-types": "^15.6.0",

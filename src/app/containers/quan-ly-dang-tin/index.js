@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import actions from "../../actions";
-import { StyleSheet } from "react-native";
+import { StyleSheet, AsyncStorage } from "react-native";
 import * as g from '../../util';
 import Toast from 'react-native-toast-native';
 import { Content } from 'native-base';
 import TypeFunction from '../components/typeFunctions/type';
-import { ActivityIndicator, FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
 import Header from './Header';
 import { connect } from 'react-redux';
+import reactotronReactNative from 'reactotron-react-native';
+import { fetchMyProject } from '../../actions/quan-ly-dang-tin';
 const data = [
     {
         type: 'idea',
@@ -37,6 +39,26 @@ class QuanLyDangTin extends Component {
     static navigationOptions = {
         header: null
     };
+    componentDidMount() {
+        AsyncStorage.getItem("token", (err, result) => {
+            if (err) {
+                reactotronReactNative.log("err get token QLDT", err);
+                return;
+            } else {
+                let axios = {
+                    headers: {
+                        "Content-Type": "application/json; charset=utf-8",
+                        "Accept": "application/json",
+                        "Authorization": result,
+                        "Accept": "application/json"
+                    },
+                    method: 'GET',
+                    url: "http://api.cohober.vn/myproject"
+                }
+                this.props.getMyProject(axios)
+            }
+        })
+    }
     renderTitle() {
         const data = this.props.lang.content;
         let title = "";
@@ -89,12 +111,14 @@ class QuanLyDangTin extends Component {
             </TouchableOpacity>
         )
     }
-    getData(){
-        
+    getData() {
+
     }
 
     render() {
-        console.log("xxx", this.props);
+        reactotronReactNative.log("xxx", this.props);
+        let {isLoading,isLoaded,data} = this.props.myproject;
+        if(isLoading===true)return<View><Text>Loading...!!!</Text></View>
         return (
             <View style={styles.container}>
                 <Header
@@ -137,13 +161,15 @@ const mapStateToProps = (state) => {
     return {
         lang: state.language.lang,
         project: state.project,
-        functions: state.functions
+        functions: state.functions,
+        myproject: state.myproject
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onFetch: (type) => dispatch(actions.getProjectByIdUser(type))
+        onFetch: (type) => dispatch(actions.getProjectByIdUser(type)),
+        getMyProject: (axios) => dispatch(fetchMyProject(axios))
     }
 };
 export default connect(mapStateToProps, mapDispatchToProps)(QuanLyDangTin);

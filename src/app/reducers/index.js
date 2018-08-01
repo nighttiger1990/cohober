@@ -8,6 +8,7 @@ import history from './history';
 import language from './language';
 import functions from './functions';
 import locations from './locations';
+import myproject from './quan-ly-dang-tin';
 import AppNavigator from '../Navigator';
 
 import {NavigationActions} from 'react-navigation';
@@ -31,7 +32,8 @@ const appReducer = combineReducers({
     notification,
     language,
     functions,
-    locations
+    locations,
+    myproject
 });
 const rootReducer = (state, action) => {
     if (action.type === types.LOGGED_OUT) {
