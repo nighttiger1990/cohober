@@ -10,6 +10,7 @@ import Header from './Header';
 import { connect } from 'react-redux';
 import reactotronReactNative from 'reactotron-react-native';
 import { fetchMyProject } from '../../actions/quan-ly-dang-tin';
+import Loading from '../components/loading';
 const data = [
     {
         type: 'idea',
@@ -27,7 +28,7 @@ const data = [
         type: 'idea',
         name: 'xxxxx'
     }
-]
+];
 class QuanLyDangTin extends Component {
     constructor(props) {
         super(props);
@@ -86,11 +87,13 @@ class QuanLyDangTin extends Component {
                 break;
         }
     }
+    goToDetail(id) {
+        this.props.navigation.navigate('ProjectDetail', { id: id });
+    }
 
     renderItem(item) {
-        console.log("item", item)
         return (
-            <TouchableOpacity style={{ paddingLeft: 15 * g.rw }}>
+            <TouchableOpacity style={{ paddingLeft: 15 * g.rw }} onPress={() => this.goToDetail(item.id)}>
                 <View style={{ height: 55 * g.rh, flexDirection: 'row', alignItems: 'center' }}>
                     <Image
                         source={this.imageMaker(item.type)}
@@ -111,14 +114,11 @@ class QuanLyDangTin extends Component {
             </TouchableOpacity>
         )
     }
-    getData() {
-
-    }
 
     render() {
         reactotronReactNative.log("xxx", this.props);
-        let {isLoading,isLoaded,data} = this.props.myproject;
-        if(isLoading===true)return<View><Text>Loading...!!!</Text></View>
+        let { isLoading, isLoaded, data } = this.props.myproject;
+        if (isLoading === true) return <Loading/>
         return (
             <View style={styles.container}>
                 <Header
@@ -133,8 +133,6 @@ class QuanLyDangTin extends Component {
                         style={{ flex: 1, paddingLeft: 15 * g.rw, marginBottom: 28 * g.rh }}
                         renderItem={item => this.renderItem(item.item)}
                         data={data}
-                        refreshing={this.props.project.isLoading}
-                        onRefresh={() => this.getData()}
                         shouldRasterizeIOS={true}
                         renderToHardwareTextureAndroid={true}
                         keyExtractor={item => item.id}
@@ -160,7 +158,6 @@ class QuanLyDangTin extends Component {
 const mapStateToProps = (state) => {
     return {
         lang: state.language.lang,
-        project: state.project,
         functions: state.functions,
         myproject: state.myproject
     };

@@ -17,7 +17,6 @@ export default class Home extends React.PureComponent {
     static navigationOptions = {
         header: null,
     };
-    // }
     closeDrawer = () => {
         this.drawer._root.close()
     };
@@ -78,7 +77,8 @@ export default class Home extends React.PureComponent {
             },
             modalVisible: false,
             dataModal: null,
-            typeFunctionVisible: false
+            typeFunctionVisible: false,
+            showSearch:false
 
         }
     }
@@ -165,19 +165,36 @@ export default class Home extends React.PureComponent {
                                     getProjectID={this.goToDetail}
                                 />
                             }
-                            <SearchBox getAddressPredictions={this.props.getAddressPredictions} />
-                            {this.props.locations.resultList.length !== 0 &&
-                                <SearchResult predictions={this.props.locations.resultList}
-                                    getSelectedAddress={this.props.getSelectedAddress} />}
-                            {this.state.typeFunctionVisible && <TypeFunction txtIdea={this.props.lang.content.idea}
-                                txtRaiseFunding={this.props.lang.content.raiseFunding}
-                                txtRealEstale={this.props.lang.content.realEstale}
-                                txtSecondHand={this.props.lang.content.secondHand}
-                                getListProject={this.props.getListProject}
-                                onChangeFunction={this.props.onChangeFunction}
-                                currentFunction={this.props.functions.type}
-                                typeFunctionVisible={(res) => this.setState({ typeFunctionVisible: res })}
-                            />}
+                            <SearchBox
+                                getAddressPredictions={(text) => {
+                                    this.setState({ showSearch: true })
+                                    this.props.getAddressPredictions(text);
+                                }
+                                }
+                            />
+                            {
+                                (this.props.locations.resultList.length !== 0 && this.state.showSearch === true) ?
+                                    <SearchResult
+                                        predictions={this.props.locations.resultList}
+                                        getSelectedAddress={(placeID) => {
+                                            this.setState({ showSearch: false })
+                                            this.props.getSelectedAddress(placeID)
+                                        }}
+                                    /> : null
+                            }
+                            {
+                                this.state.typeFunctionVisible &&
+                                <TypeFunction
+                                    txtIdea={this.props.lang.content.idea}
+                                    txtRaiseFunding={this.props.lang.content.raiseFunding}
+                                    txtRealEstale={this.props.lang.content.realEstale}
+                                    txtSecondHand={this.props.lang.content.secondHand}
+                                    getListProject={this.props.getListProject}
+                                    onChangeFunction={this.props.onChangeFunction}
+                                    currentFunction={this.props.functions.type}
+                                    typeFunctionVisible={(res) => this.setState({ typeFunctionVisible: res })}
+                                />
+                            }
                             <ActionButton
                                 style={[styles.btnFabAdd]}
                                 buttonColor="#ffca00" onPress={() => requestAnimationFrame(() => {
@@ -212,19 +229,6 @@ export default class Home extends React.PureComponent {
                                 <Image source={require('../../assets/icons/location.png')} resizeMethod={'auto'}
                                     style={styles.imgLocation} />
                             </TouchableOpacity>
-                            {/* {
-                                this.state.modalVisible &&
-                                <ProjectDetail modalVisible={this.state.modalVisible}
-                                    onRequestClose={(modal) => this.setState({ modalVisible: modal })}
-                                    lang={this.props.lang}
-                                    dataModal={this.props.project.project}
-                                    handleClose={this.handleClose}
-                                    handleSave={this.handleSave}
-                                    handleCall={this.handleCall}
-                                    handleMessage={this.handleMessage}
-                                    onPressImages={(listImages, index, isEmptyImages) => this.onPressImages(listImages, index, isEmptyImages)}
-                                />
-                            } */}
                         </View>
                         <Header style={{ backgroundColor: '#ffca00', height: 72 * g.rh }}
                             androidStatusBarColor="#ffca00">

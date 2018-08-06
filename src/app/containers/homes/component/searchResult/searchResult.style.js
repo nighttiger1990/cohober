@@ -1,14 +1,16 @@
-import {StyleSheet} from 'react-native'
+import { StyleSheet } from 'react-native'
 
 const g = require('../../../../util/index');
 export default StyleSheet.create({
     searchResultsWrapper: {
         top: 160 * g.rh,
         position: "absolute",
-        width: g.sw,
+        width: g.sw -25,
         height: 1000 * g.rh,
         backgroundColor: "#fff",
-        opacity: 0.9
+        opacity: 0.9,
+        marginLeft: 15,
+        marginRight: 10
     },
     primaryText: {
         fontWeight: "bold",

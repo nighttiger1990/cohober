@@ -7,7 +7,7 @@ import Reactotron, {
 } from 'reactotron-react-native'
 Reactotron
   .configure({
-    host: '192.168.0.101'
+    host: '192.168.1.18'
   }) // controls connection & communication settings
   .use(trackGlobalErrors())
   .use(openInEditor())
