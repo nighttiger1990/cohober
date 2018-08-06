@@ -8,7 +8,7 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
     return {
-        onAdd: (data) => dispatch(actions.createProject(data)),
+        onAdd: (data, callback) => dispatch(actions.createProject(data, callback)),
     }
 };
-export default {mapStateToProps, mapDispatchToProps};
+export default { mapStateToProps, mapDispatchToProps };

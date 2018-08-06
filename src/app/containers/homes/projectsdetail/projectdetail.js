@@ -335,7 +335,9 @@ const PROJECT_DETAIL = ({ modalVisible, onRequestClose, lang, dataModal, handleC
                         height: 100 * g.rh,
                         position: 'absolute'
                     }}>
-                        <Text style={{ fontFamily: 'UTM Colossalis', color: '#b32b30', fontSize: 25, textAlign: 'center', transform: [{ rotate: '30deg' }] }}> {lang.type === 'vi' ? "Đã Hết hạn".toUpperCase() : "Expired".toUpperCase()}</Text>
+                        <Text style={{ fontFamily: 'UTM Colossalis', color: '#b32b30', fontSize: 25, textAlign: 'center', transform: [{ rotate: '30deg' }] }}>
+                            {lang.type === 'vi' ? "Đã Hết hạn".toUpperCase() : "Expired".toUpperCase()}
+                        </Text>
                     </View>
                 ) : null}
 

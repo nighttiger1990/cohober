@@ -7,6 +7,7 @@ import imagesDefault from '../../assets/image/no-image.png';
 import reactotronReactNative from 'reactotron-react-native';
 import configUrl from '../../util/configUrl';
 import { NavigationActions } from 'react-navigation';
+import Loading from '../components/loading';
 
 export default class ProjectDetail extends React.PureComponent {
     static navigationOptions = {
@@ -41,7 +42,6 @@ export default class ProjectDetail extends React.PureComponent {
     }
     onPressImages(listImages, index, isEmptyImages) {
         reactotronReactNative.log("navigate", this.props.navigation);
-        // this.props.navigation.navigate('FullScreenImage');
         const navigateAction = NavigationActions.navigate({
             routeName: 'FullScreenImage',
 
@@ -50,21 +50,13 @@ export default class ProjectDetail extends React.PureComponent {
                 index: index,
                 isEmptyImages: isEmptyImages
             },
-
-            // action: NavigationActions.navigate({ routeName: 'SubProfileRoute' }),
         });
-
         this.props.navigation.dispatch(navigateAction);
     }
 
     componentDidMount() {
         const { id } = this.props.navigation.state.params;
-        const dataModal = this.props.project;
-        if (dataModal === null || dataModal.id !== id) {
-            this.props.getProjectID(id);
-        } else if (dataModal.id === id) {
-            this.setState({ loading: false })
-        }
+        this.props.getProjectID(id);
     }
     componentWillReceiveProps(nextProps) {
         //da fecth data thanh cong
@@ -105,13 +97,91 @@ export default class ProjectDetail extends React.PureComponent {
 
         }
     }
+    checkNullOrUndefined(obj) {
+        return obj === null || obj === undefined;
+    }
+    renderOwner() {
+        let { lang } = this.props.lang;
+        let dataModal = this.props.project;
+        if (dataModal.owner === null || dataModal.owner === undefined) return null;
+        let { name, email, phoneNumber } = dataModal.owner;
+
+        return (
+            <View style={{ backgroundColor: 'transparent', paddingLeft: 15 * g.rw, marginTop: 13 }}>
+                <View style={{ flexDirection: 'row' }}>
+                    <Text
+                        style={[styles.txtContent, {
+                            fontSize: 13 * g.rh
+                        }]}
+                        numberOfLines={1}
+                    >
+                        {(lang.content.name + "") + ": "}
+                    </Text>
+                    {
+                        (!this.checkNullOrUndefined(name)) ?
+                            <Text
+                                style={[styles.txtContent, {
+                                    fontFamily: 'Roboto-Regular',
+                                    fontSize: 13 * g.rh
+                                }]}
+                                numberOfLines={1}
+                                textDecorationLine={'underline'}>
+                                {dataModal.owner.name}
+                            </Text> : null
+                    }
+                    
+                </View>
+                <View style={{ flexDirection: 'row' }}>
+                    <Text
+                        style={[styles.txtContent, {
+                            fontSize: 13 * g.rh
+                        }]}
+                        numberOfLines={1}
+                    >
+                        {("Mail") + ": "}
+                    </Text>
+                    {
+                        dataModal.owner.email && <Text
+                            style={[styles.txtContent, {
+                                fontFamily: 'Roboto-Regular', fontSize: 13 * g.rh
+                            }]}
+                            numberOfLines={1}
+                            textDecorationLine={'underline'}
+                        >{dataModal.owner.email}</Text>
+                    }
+                </View>
+                <View style={{ flexDirection: 'row' }}>
+                    <Text
+                        style={[styles.txtContent, {
+                            fontSize: 13 * g.rh
+                        }]}
+                        numberOfLines={1}
+                    >
+                        {(lang.content.phone + "") + ": "}
+                    </Text>
+                    {
+                        (!this.checkNullOrUndefined(phoneNumber)) ?
+                            <Text
+                                style={[styles.txtContent, {
+                                    fontFamily: 'Roboto-Regular',
+                                    fontSize: 13 * g.rh
+                                }]}
+                                numberOfLines={1}
+                                textDecorationLine={'underline'}
+                            >
+                                {dataModal.owner.phoneNumber}
+                            </Text> : null
+                    }
+                </View>
+            </View>
+        )
+    }
     render() {
         const dataModal = this.props.project;
         const { lang } = this.props.lang;
-        if (this.state.loading) return <View><Text>Loading...!</Text></View>
+        if (this.state.loading) return <Loading/>
         reactotronReactNative.log("dataModal", dataModal);
         const listImages = (dataModal.images === undefined || dataModal.images.length === 0) ? [imagesDefault, imagesDefault, imagesDefault, imagesDefault, imagesDefault] : dataModal.images;
-        // const listImages1 = [imagesDefault, imagesDefault, imagesDefault, imagesDefault, imagesDefault];
         const isEmptyImages = (dataModal.images === undefined || dataModal.images.length === 0) ? true : false;
         return (
             <View style={styles.container}>
@@ -119,7 +189,9 @@ export default class ProjectDetail extends React.PureComponent {
                     style={styles.header}>
                     <View style={styles.header2}>
                         <Text style={styles.txtTitle}
-                            numberOfLines={1}>{(dataModal.name + " ").toUpperCase()}</Text>
+                            numberOfLines={1}>
+                            {(dataModal.name + " ").toUpperCase()}
+                        </Text>
                     </View>
                     <View style={styles.hr} />
 
@@ -129,19 +201,25 @@ export default class ProjectDetail extends React.PureComponent {
                             fontFamily: 'Roboto-BoldCondensed',
                             fontSize: 16 * g.rh
                         }]}
-                            numberOfLines={1}>{("*" + lang.content.projectInfo + "") + ": "}</Text>
+                            numberOfLines={1}>
+                            {("*" + lang.content.projectInfo + "") + ": "}
+                        </Text>
 
                     </View>
                     <View style={[styles.bgContent, { paddingLeft: 15 * g.rw }]}>
                         {
                             dataModal.category && <View style={{ flexDirection: 'row' }}>
                                 <Text style={[styles.txtContent, { fontSize: 13 * g.rh }]}
-                                    numberOfLines={1}>{lang.content.category + ": "}</Text>
+                                    numberOfLines={1}>
+                                    {lang.content.category + ": "}
+                                </Text>
                                 <Text style={[styles.txtContent, {
                                     fontSize: 13 * g.rh,
                                     fontFamily: 'Roboto-Regular'
                                 }]}
-                                    numberOfLines={1}>{(dataModal.category.name)}</Text>
+                                    numberOfLines={1}>
+                                    {(dataModal.category.name)}
+                                </Text>
                             </View>
                         }
                         {
@@ -255,7 +333,7 @@ export default class ProjectDetail extends React.PureComponent {
                                         onPress={() => this.onPressImages(listImages, index, isEmptyImages)}
                                     >
                                         <Image
-                                            style={{ width: 50, height: 50, marginRight: 5, borderWidth: 0.5 }}
+                                            style={{ width: 50, height: 50, marginRight: 5, borderWidth: 0.5, borderColor: "black" }}
                                             source={(isEmptyImages) ? item : { uri: configUrl.urlImage + item }}
                                             resizeMode="center"
                                         />
@@ -278,82 +356,8 @@ export default class ProjectDetail extends React.PureComponent {
                         </Text>
 
                     </View>
-                    {
-                        dataModal.owner ?
-                            <View style={{ backgroundColor: 'transparent', paddingLeft: 15 * g.rw, marginTop: 13 }}>
-                                <View style={{ flexDirection: 'row' }}>
-                                    <Text style={[styles.txtContent, {
-                                        fontSize: 13 * g.rh
-                                    }]}
-                                        numberOfLines={1}>{(lang.content.name + "") + ": "}</Text>
-                                    {dataModal.owner.name && <Text style={[styles.txtContent, {
-                                        fontFamily: 'Roboto-Regular',
-                                        fontSize: 13 * g.rh
-                                    }]} numberOfLines={1}
-                                        textDecorationLine={'underline'}>{"" + (dataModal.owner.name ? dataModal.owner.name : '')}</Text>}
-                                </View>
-                                <View style={{ flexDirection: 'row' }}>
-                                    <Text style={[styles.txtContent, {
-                                        fontSize: 13 * g.rh
-                                    }]}
-                                        numberOfLines={1}>{("Mail") + ": "}</Text>
-                                    {dataModal.owner.email && <Text style={[styles.txtContent, {
-                                        fontFamily: 'Roboto-Regular', fontSize: 13 * g.rh
-                                    }]} numberOfLines={1}
-                                        textDecorationLine={'underline'}>{"" + (dataModal.owner.email ? dataModal.owner.email : '')}</Text>
-                                    }
-                                </View>
-                                <View style={{ flexDirection: 'row' }}>
-                                    <Text style={[styles.txtContent, {
-                                        fontSize: 13 * g.rh
-                                    }]}
-                                        numberOfLines={1}>{(lang.content.phone + "") + ": "}</Text>
-                                    {dataModal.owner.phoneNumber && <Text style={[styles.txtContent, {
-                                        fontFamily: 'Roboto-Regular',
-                                        fontSize: 13 * g.rh
-                                    }]} numberOfLines={1}
-                                        textDecorationLine={'underline'}>{"" + (dataModal.owner.phoneNumber ? dataModal.owner.phoneNumber : '')}</Text>
-                                    }
-                                </View>
-                            </View>
-                            :
-                            <View style={{ backgroundColor: 'transparent', paddingLeft: 15 * g.rw }}>
-                                <View style={{ flexDirection: 'row' }}>
-                                    <Text style={[styles.txtContent, {
-                                        fontSize: 13 * g.rh
-                                    }]}
-                                        numberOfLines={1}>{(lang.content.name + "") + ": "}</Text>
-                                    {<Text style={[styles.txtContent, {
-                                        fontFamily: 'Roboto-Regular',
-                                        fontSize: 13 * g.rh
-                                    }]} numberOfLines={1}
-                                        textDecorationLine={'underline'} />}
-                                </View>
-                                <View style={{ flexDirection: 'row' }}>
-                                    <Text style={[styles.txtContent, {
-                                        fontSize: 13 * g.rh
-                                    }]}
-                                        numberOfLines={1}>{("Mail") + ": "}</Text>
-                                    {<Text style={[styles.txtContent, {
-                                        fontFamily: 'Roboto-Regular', fontSize: 13 * g.rh
-                                    }]} numberOfLines={1}
-                                        textDecorationLine={'underline'} />
-                                    }
-                                </View>
-                                <View style={{ flexDirection: 'row' }}>
-                                    <Text style={[styles.txtContent, {
-                                        fontSize: 13 * g.rh
-                                    }]}
-                                        numberOfLines={1}>{(lang.content.phone + "") + ": "}</Text>
-                                    {<Text style={[styles.txtContent, {
-                                        fontFamily: 'Roboto-Regular',
-                                        fontSize: 13 * g.rh
-                                    }]} numberOfLines={1}
-                                        textDecorationLine={'underline'} />
-                                    }
-                                </View>
-                            </View>
-                    }
+
+                    {this.renderOwner()}
 
                     <View style={styles.bgBottom}>
                         <TouchableOpacity style={{ alignSelf: 'center', marginLeft: 5 * g.rw }}

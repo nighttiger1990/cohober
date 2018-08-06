@@ -15,6 +15,11 @@ export const loading = () => {
         type: "LOADING_PROJECT",
     }
 };
+export const loadingGetNear = () => {
+    return {
+        type: "LOADING_PROJECT_NEAR",
+    }
+};
 export const getDataFail = () => {
     return {
         type: 'FETCH_DATA_FAILURE'
@@ -136,8 +141,6 @@ function typeName(data) {
     }
 }
 export const createProjectAsync = async (data, token) => {
-    reactotronReactNative.log("createProjectAsync data",data);
-    reactotronReactNative.log("createProjectAsync token",token);
     try {
         return await fetch('http://api.cohober.vn/api/projects', {
             method: 'POST',
@@ -155,25 +158,16 @@ export const createProjectAsync = async (data, token) => {
     }
 
 };
-export const createProject = (data) => {
+export const createProject = (data, callback) => {
     return async (dispatch) => {
         dispatch(loading());
         try {
             let token = await AsyncStorage.getItem('token');
             let projects = await createProjectAsync(data, token);
+            reactotronReactNative.log("projects", projects);
             if (projects.id) {
                 dispatch(addSuccess());
-                dispatch(NavigationActions.back());
-
-                Toast.show('Thành công', Toast.SHORT, Toast.TOP, {
-                    height: 50,
-                    width: 400,
-                    backgroundColor: '#ffca00',
-                    opacity: 0.5,
-                    textAlign: 'center',
-                    lines: 1,
-                    borderRadius: 3
-                });
+                callback("Thành công");
                 if (data.type == 'idea') {
                     dispatch(getProjects("idea"));
                 } else if (data.type == 'raiseFunding') {
@@ -364,6 +358,7 @@ export const measure = (lat1, lon1, lat2, lon2) => {
 };
 export const getProjectByNearMeProject = (type) => {
     return async (dispatch) => {
+        dispatch(loadingGetNear())
         try {
             let data = [];
             let token = await AsyncStorage.getItem('token');
@@ -380,7 +375,7 @@ export const getProjectByNearMeProject = (type) => {
 
                     if (projects) {
                         console.log(projects)
-                        dispatch(getProjects(type));
+                        // dispatch(getProjects(type));
                         for (let i = 0; i < projects.length; i++) {
                             let p = projects[i];
                             // console.log(dataLL[1] + "," + dataLL[0] + "," + projects[i].location.coordinates[1] + "," + projects[i].location.coordinates[0]);
