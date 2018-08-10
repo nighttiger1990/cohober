@@ -22,13 +22,10 @@ export default class NearBy extends React.PureComponent {
         },
             this.onlyLoading = 1;
     }
-    // componentWillMount() {
-    //     this.getData()
-    // }
+
     componentDidMount() {
         this.getData();
         this.onlyLoading = 2;
-        // this.props.onFetch(this.props.functions.type);
     }
     imageMaker(type) {
         if (type === 'idea') {
@@ -65,7 +62,9 @@ export default class NearBy extends React.PureComponent {
                                 backgroundColor: 'transparent',
                                 color: '#595959',
                                 fontSize: 9
-                            }}> {this.measure(this.state.location[1], this.state.location[0], item.location.coordinates[1], item.location.coordinates[0]) ? (this.measure(this.state.location[1], this.state.location[0], item.location.coordinates[1], item.location.coordinates[0])) : " "}</Text>
+                            }}>
+                                {this.measure(this.state.location[1], this.state.location[0], item.location.coordinates[1], item.location.coordinates[0]) ? (this.measure(this.state.location[1], this.state.location[0], item.location.coordinates[1], item.location.coordinates[0])) : " "}
+                            </Text>
                         </View>
 
                     </View>

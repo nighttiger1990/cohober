@@ -4,8 +4,8 @@ import { Button, Container, Content, Form, Header, Input, Item, Left, Right, Tit
 import Toast, { DURATION } from 'react-native-easy-toast';
 import validate from 'validate.js';
 import * as g from '../../util';
-import HComponent from "../common/HComponent";
 import styles from './register.style'
+import reactotronReactNative from 'reactotron-react-native';
 
 export default class Register extends React.PureComponent {
     static navigationOptions = {
@@ -40,10 +40,11 @@ export default class Register extends React.PureComponent {
                 phone: this.state.phone,
                 name: this.state.name
             };
+
             if (this.state.confirmPassword === this.state.password) {
                 if (validate.isNumber(parseFloat(this.state.phone))) {
                     if (!validate.isEmpty(this.state.name) && validate.isNumber(parseFloat(this.state.phone))) {
-                        this.props.onSignUp(data);
+                        this.props.onSignUp(data,(message) => this.showToast(message));
                     } else {
                         this.refs.toast.show(this.props.lang.type === 'vi' ? "Vui lòng nhập họ và tên" : "Please type full name");
                     }
@@ -54,6 +55,10 @@ export default class Register extends React.PureComponent {
                 this.refs.toast.show(this.props.lang.type === 'vi' ? "Mật khẩu không trùng khớp" : "Password not match");
             }
         }
+    }
+    showToast(message) {
+        reactotronReactNative.log("qqqqq", message);
+        this.refs.toast.show(message);
     }
 
     componentDidMount() {

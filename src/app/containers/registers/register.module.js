@@ -9,7 +9,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onSignUp: (data) => dispatch(actions.signup(data))
+        onSignUp: (data, callback) => dispatch(actions.signup(data, callback))
     }
 };
-export default {mapStateToProps, mapDispatchToProps};
+export default { mapStateToProps, mapDispatchToProps };

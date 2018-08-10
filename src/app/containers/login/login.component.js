@@ -2,6 +2,7 @@ import { ActivityIndicator, AsyncStorage, Image, Text, TouchableOpacity, View } 
 import React from "react";
 import styles from './login.style';
 import * as g from '../../util';
+import reactotronReactNative from "reactotron-react-native";
 
 class Login extends React.PureComponent {
     static navigationOptions = {
@@ -33,6 +34,7 @@ class Login extends React.PureComponent {
     }
 
     render() {
+        reactotronReactNative.log("login")
         if (this.props.auth.isLoading || this.state.isLoading) {
             return (
                 <View style={{

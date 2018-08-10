@@ -23,10 +23,7 @@ import QuanLyDangTin from './containers/quan-ly-dang-tin/index';
 import FullScreenImage from './containers/fullscreen-image';
 
 const AppNavigator = StackNavigator({
-    // Home: {
-    //     screen: Home,
-    //     navigationOptions: null
-    // },
+    
     Login: {
         screen: Login
     },

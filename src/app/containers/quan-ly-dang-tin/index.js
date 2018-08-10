@@ -1,64 +1,70 @@
 import React, { Component } from 'react';
 import actions from "../../actions";
-import { StyleSheet, AsyncStorage } from "react-native";
+import { StyleSheet, AsyncStorage, ActivityIndicator, Dimensions } from "react-native";
 import * as g from '../../util';
-import Toast from 'react-native-toast-native';
 import { Content } from 'native-base';
 import TypeFunction from '../components/typeFunctions/type';
 import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
 import Header from './Header';
 import { connect } from 'react-redux';
 import reactotronReactNative from 'reactotron-react-native';
-import { fetchMyProject } from '../../actions/quan-ly-dang-tin';
+import { fetchMyProject, deleteProject } from '../../actions/quan-ly-dang-tin';
 import Loading from '../components/loading';
-const data = [
-    {
-        type: 'idea',
-        name: 'xxxxx'
-    },
-    {
-        type: 'raiseFunding',
-        name: 'xxxxx'
-    },
-    {
-        type: 'docu',
-        name: 'xxxxx'
-    },
-    {
-        type: 'idea',
-        name: 'xxxxx'
-    }
-];
+const height = Dimensions.get("window").height;
+const width = Dimensions.get("window").width;
 class QuanLyDangTin extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            typeVisiable: false
+            typeVisiable: false,
+            bds: [],
+            idea: [],
+            docu: [],
+            goivon: [],
+            location: [],
         }
+        this.fixLoadMoreFirst = 0;
     }
 
     static navigationOptions = {
         header: null
     };
     componentDidMount() {
-        AsyncStorage.getItem("token", (err, result) => {
-            if (err) {
-                reactotronReactNative.log("err get token QLDT", err);
-                return;
-            } else {
-                let axios = {
-                    headers: {
-                        "Content-Type": "application/json; charset=utf-8",
-                        "Accept": "application/json",
-                        "Authorization": result,
-                        "Accept": "application/json"
-                    },
-                    method: 'GET',
-                    url: "http://api.cohober.vn/myproject"
-                }
-                this.props.getMyProject(axios)
-            }
-        })
+        reactotronReactNative.log("componentDidMount");
+        try {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    let lnglat = {
+                        1: position.coords.longitude,
+                        2: position.coords.latitude,
+                    };
+                    this.state.location = Object.values(lnglat);
+                    AsyncStorage.getItem("token", (err, result) => {
+                        if (err) {
+                            reactotronReactNative.log("err get token QLDT", err);
+                            return;
+                        } else {
+                            let axios = {
+                                headers: {
+                                    "Content-Type": "application/json; charset=utf-8",
+                                    "Accept": "application/json",
+                                    "Authorization": result,
+                                    "Accept": "application/json"
+                                },
+                                method: 'GET',
+                                url: "http://api.cohober.vn/myproject"
+                            }
+                            this.props.getMyProject(axios)
+                        }
+                    })
+                },
+                (error) => reactotronReactNative.log(this.props.lang.content.checkLocation + "")
+            );
+
+        } catch (error) {
+            console.log(error)
+        }
+
     }
     renderTitle() {
         const data = this.props.lang.content;
@@ -71,7 +77,6 @@ class QuanLyDangTin extends Component {
         return title;
     }
     imageMaker(type) {
-        console.log("type", type)
         switch (type) {
             case "idea":
                 return require('../../assets/icons/icon_light.png');
@@ -90,6 +95,24 @@ class QuanLyDangTin extends Component {
     goToDetail(id) {
         this.props.navigation.navigate('ProjectDetail', { id: id });
     }
+    componentWillUnMount() {
+        navigator.geolocation.stopObserving();
+        this.props.deleteProject();
+    }
+    componentWillReceiveProps(nextProps) {
+        reactotronReactNative.log("componentWillReceiveProps", nextProps.myproject);
+        if (nextProps.myproject.data !== this.props.myproject.data) {
+            this.state.bds = [...this.state.bds, ...nextProps.myproject.bds.slice(0, 15)];
+            this.state.goivon = [...this.state.goivon, ...nextProps.myproject.goivon.slice(0, 15)];
+            this.state.idea = [...this.state.idea, ...nextProps.myproject.idea.slice(0, 15)];
+            this.state.docu = [...this.state.docu, ...nextProps.myproject.docu.slice(0, 15)];
+        }
+    }
+    shouldComponentUpdate(nextProps, nextState) {
+        reactotronReactNative.log("shouldComponentUpdate", Object.keys(nextProps.myproject).filter(k => nextProps.myproject[k] !== this.props.myproject[k]))
+        
+        return true
+    }
 
     renderItem(item) {
         return (
@@ -104,7 +127,9 @@ class QuanLyDangTin extends Component {
                             <Image
                                 style={{ width: 10 * g.rw, height: 10 * g.rh, resizeMode: 'contain' }}
                                 source={require('../../assets/icons/pin.png')} />
-                            <Text style={styles.textViTri}>vị trí khoảng cách</Text>
+                            <Text style={styles.textViTri}>
+                                {this.measure(this.state.location[1], this.state.location[0], item.location.coordinates[1], item.location.coordinates[0]) ? (this.measure(this.state.location[1], this.state.location[0], item.location.coordinates[1], item.location.coordinates[0])) : " "}
+                            </Text>
                         </View>
 
                     </View>
@@ -114,43 +139,132 @@ class QuanLyDangTin extends Component {
             </TouchableOpacity>
         )
     }
+    getData() {
+        switch (this.props.functions.type) {
+            case "idea":
+                return this.state.idea
+            case "raiseFunding":
+                return this.state.goivon
+            case "docu":
+                return this.state.docu
+            default:
+                return this.state.bds
+        }
+    }
+    getData1() {
+        switch (this.props.functions.type) {
+            case "idea":
+                return this.props.myproject.idea
+            case "raiseFunding":
+                return this.props.myproject.goivon
+            case "docu":
+                return this.props.myproject.docu
+            default:
+                return this.props.myproject.bds
+        }
+    }
+    getDataRender(start, end, array1, array2) {
+        array1 = [...array1, ...array2.slice(start, end)]
+    }
+    handleLoadMore = () => {
+        reactotronReactNative.log("qqqq");
+        // if (this.fixLoadMoreFirst === 0) {
+        //     this.fixLoadMoreFirst = 1;
+        //     return;
+        // }
 
+        // let { idea, docu, goivon, bds } = this.state;
+        // let myproject = this.props.myproject;
+        // switch (this.props.functions.type) {
+        //     case "idea":
+        //         if (idea.length < myproject.idea.length) {
+        //             this.setState({
+        //                 idea: [...idea, ...myproject.idea.slice(idea.length, idea.length + 15)],
+        //             });
+        //         }
+        //         break;
+        //     case "raiseFunding":
+        //         if (goivon.length < myproject.goivon.length) {
+        //             this.setState({
+        //                 goivon: [...goivon, ...myproject.goivon.slice(goivon.length, goivon.length + 15)],
+        //             });
+        //         }
+        //         break;
+        //     case "docu":
+        //         if (docu.length < myproject.docu.length) {
+        //             this.setState({
+        //                 docu: [...idea, ...myproject.docu.slice(docu.length, docu.length + 15)],
+        //             });
+        //         }
+        //         break;
+        //     default:
+        //         reactotronReactNative.log("www", this.state.bds.length);
+        //         if (bds.length < myproject.bds.length) {
+        //             this.setState({
+        //                 bds: [...bds, ...myproject.bds.slice(bds.length, bds.length + 2)],
+        //             });
+        //         }
+        //         break;
+        // }
+    }
+    measure(lat1, lon1, lat2, lon2) {
+        const R = 6378.137;
+        const dLat = lat2 * Math.PI / 180 - lat1 * Math.PI / 180;
+        const dLon = lon2 * Math.PI / 180 - lon1 * Math.PI / 180;
+        const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        const d = R * c;
+        if (Math.round(d) > 1) {
+            return Math.round(d) + "Km"; // meters
+        } else if (Math.round(d * 1000) > 1) {
+            return Math.round(d * 1000) + "m"
+        } else {
+            return "0m"
+        }
+    }
     render() {
-        reactotronReactNative.log("xxx", this.props);
-        let { isLoading, isLoaded, data } = this.props.myproject;
-        if (isLoading === true) return <Loading/>
-        return (
-            <View style={styles.container}>
-                <Header
-                    showType={() => this.setState({ typeVisiable: !this.state.typeVisiable })}
-                    typeVisible={this.state.typeVisible}
-                    navigation={this.props.navigation}
-                    title={this.renderTitle()}
-                />
-                <Content>
-                    <View style={styles.bgHr} />
+        let { isLoading } = this.props.myproject;
+        reactotronReactNative.log("ae", this.state.bds.length);
+
+        if (this.props.myproject.data === null) {
+            return <Loading />
+        } else {
+            let data = this.getData();
+            return (
+                <View style={styles.container}>
+                    <Header
+                        showType={() => this.setState({ typeVisiable: !this.state.typeVisiable })}
+                        navigation={this.props.navigation}
+                        title={this.renderTitle()}
+                    />
+
                     <FlatList
-                        style={{ flex: 1, paddingLeft: 15 * g.rw, marginBottom: 28 * g.rh }}
+                        style={{ paddingLeft: 15 * g.rw, width: width, marginBottom: 28 * g.rh, height: height - 72 * g.rh }}
                         renderItem={item => this.renderItem(item.item)}
                         data={data}
                         shouldRasterizeIOS={true}
                         renderToHardwareTextureAndroid={true}
                         keyExtractor={item => item.id}
+                        onEndReached={() => this.handleLoadMore()}
+                        onEndReachedThreshold={0.1}
+                        bounces={false}
                     />
-                </Content>
 
-                {
-                    this.state.typeVisiable && <TypeFunction txtIdea={this.props.lang.content.idea}
-                        txtRaiseFunding={this.props.lang.content.raiseFunding}
-                        txtRealEstale={this.props.lang.content.realEstale}
-                        txtSecondHand={this.props.lang.content.secondHand}
-                        getListProject={this.props.onFetch}
-                        onChangeFunction={this.props.onChangeFunction}
-                        currentFunction={this.props.functions.type}
-                        typeFunctionVisible={(res) => this.setState({ typeVisiable: res })} />
-                }
-            </View>
-        )
+                    {
+                        this.state.typeVisiable && <TypeFunction txtIdea={this.props.lang.content.idea}
+                            txtRaiseFunding={this.props.lang.content.raiseFunding}
+                            txtRealEstale={this.props.lang.content.realEstale}
+                            txtSecondHand={this.props.lang.content.secondHand}
+                            getListProject={this.props.onFetch}
+                            onChangeFunction={this.props.onChangeFunction}
+                            currentFunction={this.props.functions.type}
+                            typeFunctionVisible={(res) => this.setState({ typeVisiable: res })} />
+                    }
+                </View>
+            )
+        }
     }
 
 }
@@ -166,7 +280,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         onFetch: (type) => dispatch(actions.getProjectByIdUser(type)),
-        getMyProject: (axios) => dispatch(fetchMyProject(axios))
+        getMyProject: (axios) => dispatch(fetchMyProject(axios)),
+        deleteProject: () => dispatch(deleteProject())
     }
 };
 export default connect(mapStateToProps, mapDispatchToProps)(QuanLyDangTin);
