@@ -87,43 +87,79 @@ export const logoutSuccess = () => {
         type: types.LOGGED_OUT
     }
 };
-export const signUpAsync = async (data) => {
+// export const signUpAsync = async (data) => {
+//     try {
+//         const device = deviceInfo();
+//         let lang = await AsyncStorage.getItem('lang');
+//         reactotronReactNative.log("xxxx",data);
+//         console.log("data", data, device, lang);
+//         return await fetch('http://api.cohober.vn/api/users/registers', {
+//             method: 'POST',
+//             headers: {
+//                 'Accept': 'application/json',
+//                 'Content-Type': 'application/json; charset=UTF-8'
+//             },
+//             body: lang ? JSON.stringify({
+//                 "email": data.username,
+//                 "password": data.password,
+//                 "phoneNumber": data.phone + "",
+//                 "name": data.name,
+//                 "platform": device.platform,
+//                 "deviceId": device.deviceId,
+//                 "language": lang
+//             }) : JSON.stringify({
+//                 "email": data.username,
+//                 "password": data.password,
+//                 "phoneNumber": data.phone + "",
+//                 "name": data.name,
+//                 "platform": device.platform,
+//                 "deviceId": device.deviceId
+//             })
+//         })
+//             .then(async (response) => {
+//                 reactotronReactNative.log("response", response)
+//                 return await response.json();
+//             }).then(async (res) => {
+//                 reactotronReactNative.log("res", res)
+//                 return await res
+//             })
+//     } catch (error) {
+//         reactotronReactNative.log("err", error)
+//     }
+
+// };
+export const signUpAsync1 = async (data) => {
     try {
         const device = deviceInfo();
         let lang = await AsyncStorage.getItem('lang');
+        reactotronReactNative.log("xxxx", data);
         console.log("data", data, device, lang);
-        return await fetch('http://api.cohober.vn/api/users/registers', {
+        return await fetch('http://api.cohober.vn/api/users/register', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json; charset=UTF-8'
             },
-            body: lang ? JSON.stringify({
+            body: JSON.stringify({
                 "email": data.username,
                 "password": data.password,
+                "confirmpassword": data.password,
                 "phoneNumber": data.phone + "",
                 "name": data.name,
-                "platform": device.platform,
-                "deviceId": device.deviceId,
-                "language": lang
-            }) : JSON.stringify({
-                "email": data.username,
-                "password": data.password,
-                "phoneNumber": data.phone + "",
-                "name": data.name,
-                "platform": device.platform,
-                "deviceId": device.deviceId
+                // "platform": device.platform,
+                // "deviceId": device.deviceId,
+                // "language": lang
             })
         })
             .then(async (response) => {
-                console.log("response", response)
+                reactotronReactNative.log("response", response)
                 return await response.json();
             }).then(async (res) => {
-                console.log("res", res)
+                reactotronReactNative.log("res", res)
                 return await res
             })
     } catch (error) {
-        console.log("err", error)
+        reactotronReactNative.log("err", error)
     }
 
 };
@@ -230,10 +266,10 @@ export const refeshToken = () => {
     }
 };
 export const signIn = (data) => {
-    reactotronReactNative.log("data",data);
+    reactotronReactNative.log("data", data);
     return async (dispatch) => {
         try {
-            
+
             let lang = await AsyncStorage.getItem('lang');
             if (data.password !== null && (data.password + "").length >= 6) {
 
@@ -251,7 +287,7 @@ export const signIn = (data) => {
                             const resetAction = NavigationActions.reset({
                                 index: 0,
                                 actions: [
-                                    NavigationActions.navigate({routeName: 'Home'})
+                                    NavigationActions.navigate({ routeName: 'Home' })
                                 ]
                             });
                             dispatch(resetAction);
@@ -406,62 +442,36 @@ export const loginFB = () => {
 
     }
 };
-export const signup = (data) => {
-    reactotronReactNative.log("data",data);
+export const signup = (data, callback) => {
     return async (dispatch) => {
         try {
             dispatch(loading());
             let lang = await AsyncStorage.getItem('lang');
-            const errors = validation({
-                email: data.username,
-                password: data.password,
-                confirmPassword: data.confirmPassword,
-                phone: data.phone
-            }, constraints);
-            //console.log(errors);
+            // const errors = validation({
+            //     email: data.username,
+            //     password: data.password,
+            //     confirmPassword: data.confirmPassword,
+            //     phone: data.phone
+            // }, constraints);
+            // //console.log(errors);
 
 
             if (data.name === "" || data.name == null) {
-                Toast.show(lang === 'vi' ? "Tên không được để trống " : "Name is not emty", Toast.SHORT, Toast.TOP, {
-                    height: 50,
-                    width: 400,
-                    backgroundColor: '#ffca00',
-                    opacity: 0.5,
-                    textAlign: 'center',
-                    lines: 1,
-                    borderRadius: 3
-                });
                 dispatch(dismissLoading())
+                callback(lang === 'vi' ? "Tên không được để trống " : "Name is not emty")
             } else {
                 if (data.password === data.confirmPassword) {
-                    let user = await signUpAsync(data);
-                    reactotronReactNative.log("user",user);
+                    let user = await signUpAsync1(data);
+
                     try {
                         if (user.id) {
-                            Toast.show(lang === 'vi' ? "Đăng ký thành công. Vui lòng vào mail kích hoạt tài khoản" : "Registration successful. Please  check mail to activation account", Toast.SHORT, Toast.TOP, {
-                                height: 50,
-                                width: 400,
-                                backgroundColor: '#ffca00',
-                                opacity: 0.5,
-                                textAlign: 'center',
-                                lines: 1,
-                                borderRadius: 3
-                            });
                             dispatch(dismissLoading());
+                            callback(lang === 'vi' ? "Đăng ký thành công. Vui lòng vào mail kích hoạt tài khoản" : "Registration successful. Please  check mail to activation account")
+
                             dispatch(NavigationActions.back())
                         } else {
-                            for (msg of user) {
-                                Toast.show(msg.msg + " ", Toast.SHORT, Toast.TOP, {
-                                    height: 50,
-                                    width: 400,
-                                    backgroundColor: '#ffca00',
-                                    opacity: 0.5,
-                                    textAlign: 'center',
-                                    lines: 1,
-                                    borderRadius: 3
-                                });
-                            }
-                            dispatch(dismissLoading())
+                            dispatch(dismissLoading());
+                            callback(user[0].msg)
                         }
                     } catch (error) {
                         console.log(error);
@@ -469,16 +479,7 @@ export const signup = (data) => {
 
                     }
                 } else {
-                    Toast.show(lang === 'vi' ? 'Mật khẩu không trùng khớp' : 'Passwords do not match', Toast.SHORT, Toast.TOP, {
-                        height: 50,
-                        width: 400,
-                        backgroundColor: '#ffca00',
-                        opacity: 0.5,
-                        textAlign: 'center',
-                        lines: 1,
-                        borderRadius: 3
-                    });
-
+                    callback(lang === 'vi' ? 'Mật khẩu không trùng khớp' : 'Passwords do not match')
                 }
             }
         } catch (error) {

@@ -17,9 +17,14 @@ export const success = (data) => {
         data
     }
 };
+export const deleteProject = () => {
+    return {
+        type: 'DELETE'
+
+    }
+};
 export const fetchMyProject = (axiosObj) => {
     return (dispatch) => {
-        dispatch(loading());
         handleRequest(
             axiosObj,
             (data) => {

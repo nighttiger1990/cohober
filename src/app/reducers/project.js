@@ -7,7 +7,9 @@ const defaultState = {
     nearby: null,
     project: null,
     isLoadingNear: true,
-    isLoadedNear: false
+    isLoadedNear: false,
+
+
 };
 
 export default function reducer(state = defaultState, action) {
@@ -24,10 +26,13 @@ export default function reducer(state = defaultState, action) {
                 isLoadedNear: false
             };
         case 'FETCH_PROJECT_DATA_SUCCESS':
+           
             return {
                 ...state,
                 isLoading: false,
                 data: action.data,
+                
+
             };
         case 'FETCH_DATA_FAILURE':
             return {
@@ -38,7 +43,7 @@ export default function reducer(state = defaultState, action) {
             return {
                 ...state,
                 isLoading: false,
-                isLoaded:true
+                isLoaded: true
             };
         case 'FETCH_NEARBY_DATA':
             return {
