@@ -110,6 +110,7 @@ class QuanLyDangTin extends Component {
     }
     shouldComponentUpdate(nextProps, nextState) {
         reactotronReactNative.log("shouldComponentUpdate", Object.keys(nextProps.myproject).filter(k => nextProps.myproject[k] !== this.props.myproject[k]))
+
         
         return true
     }
