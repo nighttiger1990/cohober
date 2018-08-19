@@ -138,8 +138,6 @@ export default class RealEstale extends React.Component {
                     } catch (er) {
                         console.log(er)
                     }
-
-
                 },
                 (error) => {
                     this.showToast(this.props.lang.content.checkLocation + " ")

@@ -4,7 +4,6 @@ import styles from "./projectDetail.style";
 import * as g from "../../util";
 import moment from "moment";
 import imagesDefault from '../../assets/image/no-image.png';
-import reactotronReactNative from 'reactotron-react-native';
 import configUrl from '../../util/configUrl';
 import { NavigationActions } from 'react-navigation';
 import Loading from '../components/loading';
@@ -41,7 +40,6 @@ export default class ProjectDetail extends React.PureComponent {
         // console.log(this)
     }
     onPressImages(listImages, index, isEmptyImages) {
-        reactotronReactNative.log("navigate", this.props.navigation);
         const navigateAction = NavigationActions.navigate({
             routeName: 'FullScreenImage',
 
@@ -129,7 +127,7 @@ export default class ProjectDetail extends React.PureComponent {
                                 {dataModal.owner.name}
                             </Text> : null
                     }
-                    
+
                 </View>
                 <View style={{ flexDirection: 'row' }}>
                     <Text
@@ -179,10 +177,9 @@ export default class ProjectDetail extends React.PureComponent {
     render() {
         const dataModal = this.props.project;
         const { lang } = this.props.lang;
-        if (this.state.loading) return <Loading/>
-        reactotronReactNative.log("dataModal", dataModal);
-        const listImages = (dataModal.images === undefined || dataModal.images.length === 0) ? [imagesDefault, imagesDefault, imagesDefault, imagesDefault, imagesDefault] : dataModal.images;
-        const isEmptyImages = (dataModal.images === undefined || dataModal.images.length === 0) ? true : false;
+        if (this.state.loading) return <Loading />
+        const isEmptyImages = (dataModal.images === undefined || dataModal.images === null || dataModal.images.length === 0) ? true : false;
+        const listImages = (isEmptyImages === true) ? [imagesDefault, imagesDefault, imagesDefault, imagesDefault, imagesDefault] : dataModal.images;
         return (
             <View style={styles.container}>
                 <View
