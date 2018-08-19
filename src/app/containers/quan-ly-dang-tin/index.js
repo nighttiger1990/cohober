@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import actions from "../../actions";
-import { StyleSheet, AsyncStorage, ActivityIndicator, Dimensions } from "react-native";
+import { StyleSheet, AsyncStorage, ActivityIndicator, Dimensions, StatusBar } from "react-native";
 import * as g from '../../util';
 import { Content } from 'native-base';
 import TypeFunction from '../components/typeFunctions/type';
@@ -12,6 +12,7 @@ import { fetchMyProject, deleteProject } from '../../actions/quan-ly-dang-tin';
 import Loading from '../components/loading';
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
+const ITEM_HEIGHT = 55 * g.rh + 1;
 class QuanLyDangTin extends Component {
     constructor(props) {
         super(props);
@@ -96,11 +97,13 @@ class QuanLyDangTin extends Component {
         this.props.navigation.navigate('ProjectDetail', { id: id });
     }
     componentWillUnMount() {
+        reactotronReactNative.log("un mount");
         navigator.geolocation.stopObserving();
         this.props.deleteProject();
     }
     componentWillReceiveProps(nextProps) {
         reactotronReactNative.log("componentWillReceiveProps", nextProps.myproject);
+        if (nextProps.myproject.data === null) return;
         if (nextProps.myproject.data !== this.props.myproject.data) {
             this.state.bds = [...this.state.bds, ...nextProps.myproject.bds.slice(0, 15)];
             this.state.goivon = [...this.state.goivon, ...nextProps.myproject.goivon.slice(0, 15)];
@@ -111,7 +114,7 @@ class QuanLyDangTin extends Component {
     shouldComponentUpdate(nextProps, nextState) {
         reactotronReactNative.log("shouldComponentUpdate", Object.keys(nextProps.myproject).filter(k => nextProps.myproject[k] !== this.props.myproject[k]))
 
-        
+
         return true
     }
 
@@ -152,61 +155,41 @@ class QuanLyDangTin extends Component {
                 return this.state.bds
         }
     }
-    getData1() {
+
+    handleLoadMore = () => {
+        let { idea, docu, goivon, bds } = this.state;
+        let myproject = this.props.myproject;
         switch (this.props.functions.type) {
             case "idea":
-                return this.props.myproject.idea
+                if (idea.length < myproject.idea.length) {
+                    this.setState({
+                        idea: [...idea, ...myproject.idea.slice(idea.length, idea.length + 15)],
+                    });
+                }
+                break;
             case "raiseFunding":
-                return this.props.myproject.goivon
+                if (goivon.length < myproject.goivon.length) {
+                    this.setState({
+                        goivon: [...goivon, ...myproject.goivon.slice(goivon.length, goivon.length + 15)],
+                    });
+                }
+                break;
             case "docu":
-                return this.props.myproject.docu
+                if (docu.length < myproject.docu.length) {
+                    this.setState({
+                        docu: [...idea, ...myproject.docu.slice(docu.length, docu.length + 15)],
+                    });
+                }
+                break;
             default:
-                return this.props.myproject.bds
+                reactotronReactNative.log("www", this.state.bds.length);
+                if (bds.length < myproject.bds.length) {
+                    this.setState({
+                        bds: [...bds, ...myproject.bds.slice(bds.length, bds.length + 2)],
+                    });
+                }
+                break;
         }
-    }
-    getDataRender(start, end, array1, array2) {
-        array1 = [...array1, ...array2.slice(start, end)]
-    }
-    handleLoadMore = () => {
-        reactotronReactNative.log("qqqq");
-        // if (this.fixLoadMoreFirst === 0) {
-        //     this.fixLoadMoreFirst = 1;
-        //     return;
-        // }
-
-        // let { idea, docu, goivon, bds } = this.state;
-        // let myproject = this.props.myproject;
-        // switch (this.props.functions.type) {
-        //     case "idea":
-        //         if (idea.length < myproject.idea.length) {
-        //             this.setState({
-        //                 idea: [...idea, ...myproject.idea.slice(idea.length, idea.length + 15)],
-        //             });
-        //         }
-        //         break;
-        //     case "raiseFunding":
-        //         if (goivon.length < myproject.goivon.length) {
-        //             this.setState({
-        //                 goivon: [...goivon, ...myproject.goivon.slice(goivon.length, goivon.length + 15)],
-        //             });
-        //         }
-        //         break;
-        //     case "docu":
-        //         if (docu.length < myproject.docu.length) {
-        //             this.setState({
-        //                 docu: [...idea, ...myproject.docu.slice(docu.length, docu.length + 15)],
-        //             });
-        //         }
-        //         break;
-        //     default:
-        //         reactotronReactNative.log("www", this.state.bds.length);
-        //         if (bds.length < myproject.bds.length) {
-        //             this.setState({
-        //                 bds: [...bds, ...myproject.bds.slice(bds.length, bds.length + 2)],
-        //             });
-        //         }
-        //         break;
-        // }
     }
     measure(lat1, lon1, lat2, lon2) {
         const R = 6378.137;
@@ -226,9 +209,6 @@ class QuanLyDangTin extends Component {
         }
     }
     render() {
-        let { isLoading } = this.props.myproject;
-        reactotronReactNative.log("ae", this.state.bds.length);
-
         if (this.props.myproject.data === null) {
             return <Loading />
         } else {
@@ -239,19 +219,28 @@ class QuanLyDangTin extends Component {
                         showType={() => this.setState({ typeVisiable: !this.state.typeVisiable })}
                         navigation={this.props.navigation}
                         title={this.renderTitle()}
+                        goBack={() => {
+                            this.props.navigation.goBack();
+                            this.props.deleteProject();
+                        }}
                     />
 
-                    <FlatList
-                        style={{ paddingLeft: 15 * g.rw, width: width, marginBottom: 28 * g.rh, height: height - 72 * g.rh }}
-                        renderItem={item => this.renderItem(item.item)}
-                        data={data}
-                        shouldRasterizeIOS={true}
-                        renderToHardwareTextureAndroid={true}
-                        keyExtractor={item => item.id}
-                        onEndReached={() => this.handleLoadMore()}
-                        onEndReachedThreshold={0.1}
-                        bounces={false}
-                    />
+                    <View style={{ width: width, height: height - 72 * g.rh - StatusBar.currentHeight }}>
+                        <FlatList
+                            renderItem={item => this.renderItem(item.item)}
+                            data={data}
+                            shouldRasterizeIOS={true}
+                            renderToHardwareTextureAndroid={true}
+                            keyExtractor={item => item.id}
+                            getItemLayout={(data, index) => (
+                                { length: ITEM_HEIGHT, offset: ITEM_HEIGHT * index, index }
+                            )}
+                            onEndReached={() => this.handleLoadMore()}
+                            onEndReachedThreshold={0.1}
+                            bounces={false}
+                        />
+                    </View>
+
 
                     {
                         this.state.typeVisiable && <TypeFunction txtIdea={this.props.lang.content.idea}
