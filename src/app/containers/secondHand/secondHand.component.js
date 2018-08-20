@@ -1,6 +1,6 @@
 import React from 'react';
-import {Platform, Text, TouchableOpacity, View,ScrollView,Image,Picker} from 'react-native';
-import {Button, Content, Form, Header, Icon, Input, Item, Left, Right, Title} from 'native-base';
+import { Platform, Text, TouchableOpacity, View, ScrollView, Image, Picker } from 'react-native';
+import { Button, Content, Form, Header, Icon, Input, Item, Left, Right, Title } from 'native-base';
 import Loading from "../components/loading";
 import Toobar from '../components/toolbar';
 import * as g from '../../util/index';
@@ -8,7 +8,7 @@ import validate from 'validate.js';
 import DatePicker from "../components/datepicker";
 import moment from "moment";
 import ImagePicker from 'react-native-image-crop-picker';
-import Toast from 'react-native-toast-native';
+import Toast, { DURATION } from 'react-native-easy-toast';
 export default class SecondHand extends React.Component {
     static navigationOptions = {
         header: null
@@ -17,62 +17,66 @@ export default class SecondHand extends React.Component {
         super(props);
         this.state = {
             loading: true,
-            image:[],
-            location:[],
+            image: [],
+            location: [],
             type: "docu",
-            name:"",
+            name: "",
             endDate: moment().add(1, 'year').format("YYYY-MM-DD"),
             startDate: moment().format("YYYY-MM-DD") + "",
             detail: "",
             note: "",
             date: new Date(),
-            address:"",
-            price:0
+            address: "",
+            price: 0
         }
     }
 
     componentDidMount() {
-        setTimeout(() => this.setState({loading: false}), 3000);
+        setTimeout(() => this.setState({ loading: false }), 3000);
     }
-    handleImage(){
-        if(Platform.OS==='android'){
+    handleImage() {
+        if (Platform.OS === 'android') {
             ImagePicker.openPicker({
                 multiple: true,
                 mediaType: "photo",
-                maxFiles:5,
-                minFiles:1,
-                includeBase64:true
-              }).then(images => {
-                   let imageData=[];
-                   imageData.push(images[0].data)
-                 this.setState({image:this.state.image.concat(imageData)})
+                maxFiles: 5,
+                minFiles: 1,
+                includeBase64: true
+            }).then(images => {
+                let imageData = [];
+                imageData.push(images[0].data)
+                this.setState({ image: this.state.image.concat(imageData) })
                 //console.log(this.state.image);
-              });
-        }else{
+            });
+        } else {
             ImagePicker.openPicker({
                 multiple: true,
                 mediaType: "photo",
-                maxFiles:5,
-                minFiles:1,
-                includeBase64:true
-              }).then(images => {
-                   let imageData=[];
-                   for(var i=0;i< images.length;i++){
+                maxFiles: 5,
+                minFiles: 1,
+                includeBase64: true
+            }).then(images => {
+                let imageData = [];
+                for (var i = 0; i < images.length; i++) {
                     imageData.push(images[i].data)
-                   }
-                   Promise.all(imageData).then(()=>{
-                    this.setState({image:this.state.image.concat(imageData)})
-                   })
-                 
-                
-              });
+                }
+                Promise.all(imageData).then(() => {
+                    this.setState({ image: this.state.image.concat(imageData) })
+                })
+
+
+            });
         }
-       
+
     }
     componentWillUnMount() {
         navigator.geolocation.stopObserving();
     }
-    
+    removeImage(index) {
+        let array = this.state.image;
+        array.splice(index, 1);
+        this.setState({ image: array })
+    }
     componentWillMount() {
         try {
             navigator.geolocation.getCurrentPosition(
@@ -82,41 +86,34 @@ export default class SecondHand extends React.Component {
                         let lnglat = {
                             1: position.coords.longitude,
                             2: position.coords.latitude,
-    
+
                         };
-                        this.setState({location: Object.values(lnglat)})
+                        this.setState({ location: Object.values(lnglat) })
                     } catch (er) {
                         console.log(er)
                     }
-    
-    
                 },
-                (error) => Toast.show(this.props.lang.content.checkLocation + " ", Toast.SHORT, Toast.TOP, {
-                    height: 50,
-                    width: 400,
-                    backgroundColor: '#ffca00',
-                    opacity: 0.5,
-                    textAlign: 'center',
-                    lines: 1,
-                    borderRadius: 3
-                })
+                (error) => {
+                    this.showToast(this.props.lang.content.checkLocation + " ")
+                }
             );
         } catch (error) {
             console.log(error)
         }
-    
+
     }
-    onAdd(){
-        let {name,address,image,price,detail,type,startDate,endDate} =this.state;
-        let data= {
-            name:name,
-            address:address,
-            image:image,
-            price:price,
-            detail:detail,
-            type:type,
-            startDate:startDate,
-            endDate:endDate
+    onAdd() {
+        let { name, address, image, price, detail, type, startDate, endDate, location } = this.state;
+        let data = {
+            name: name,
+            address: address,
+            image: image,
+            price: price,
+            detail: detail,
+            type: type,
+            startDate: startDate,
+            endDate: endDate,
+            location: location
         };
         this.props.onAdd(data);
         try {
@@ -127,19 +124,12 @@ export default class SecondHand extends React.Component {
                     let lnglat = {
                         1: position.coords.longitude,
                         2: position.coords.latitude,
-    
                     };
-                    this.setState({location: Object.values(lnglat)})
+                    this.setState({ location: Object.values(lnglat) })
                 },
-                (error) => Toast.show(this.props.lang.content.checkLocation + " ", Toast.SHORT, Toast.TOP, {
-                    height: 50,
-                    width: 400,
-                    backgroundColor: '#ffca00',
-                    opacity: 0.5,
-                    textAlign: 'center',
-                    lines: 1,
-                    borderRadius: 3
-                })
+                (error) => {
+                    this.showToast(this.props.lang.content.checkLocation + " ")
+                }
             );
         } catch (error) {
             console.log(error)
@@ -147,40 +137,39 @@ export default class SecondHand extends React.Component {
 
     }
     render() {
-        console.log(''+this.props.lang)
-        if (this.state.loading) return (<Loading/>);
-        else return (<View style={{flex:1}}>
+        if (this.state.loading) return (<Loading />);
+        else return (<View style={{ flex: 1 }}>
             <Toobar leftPress={() => this.props.navigation.goBack()}
-                    imageLeft={require('../../assets/icons/login_back.png')}
-                    title={(this.props.lang.type==="vi"?"Thêm Đồ Cũ ":"Add Second hand "+this.props.lang.content.secondHand + "").toUpperCase()}/>
-             <Content>
-                <Content style={{flex:1}}>
-                    <View style={{backgroundColor: '#cfcfcf', height: 35 * g.rh}}/>
+                imageLeft={require('../../assets/icons/login_back.png')}
+                title={(this.props.lang.type === "vi" ? "Thêm Đồ Cũ " : "Add Second hand " + this.props.lang.content.secondHand + "").toUpperCase()} />
+            <Content>
+                <Content style={{ flex: 1 }}>
+                    <View style={{ backgroundColor: '#cfcfcf', height: 35 * g.rh }} />
 
-                    <Form style={{flex: 1, marginTop: 25 * g.rh, padding: 10}}>
-                        <View style={{flexDirection: 'row'}}>
-                            <View style={{alignSelf: 'center', flex: 1 / 3}}>
+                    <Form style={{ flex: 1, marginTop: 25 * g.rh, padding: 10 }}>
+                        <View style={{ flexDirection: 'row' }}>
+                            <View style={{ alignSelf: 'center', flex: 1 / 3 }}>
                                 <Text style={{
                                     fontFamily: 'Roboto-BoldCondensed',
                                     color: '#595959',
                                     fontWeight: 'bold'
-                                }}>{this.props.lang.type==="vi"?"Tên sản phẩm":"Name product"}</Text>
+                                }}>{this.props.lang.type === "vi" ? "Tên sản phẩm" : "Name product"}</Text>
                             </View>
                             <Item regular
-                                  style={{backgroundColor: '#cfcfcf', flex: 1, borderRadius: 6 * (g.rh + g.rw)}}
-                                  error={validate.isEmpty(this.state.name)}>
+                                style={{ backgroundColor: '#cfcfcf', flex: 1, borderRadius: 6 * (g.rh + g.rw) }}
+                                error={validate.isEmpty(this.state.name)}>
                                 <Input
-                                    placeholder={(this.props.lang.content.typeInp + ' ' + this.props.lang.type==='vi'?"Tên sản phẩm":"Name product").toLowerCase()}
-                                    returnKeyType={'next'} style={{fontSize: 18, fontFamily: 'Roboto-Condensed'}}
+                                    placeholder={(this.props.lang.content.typeInp + ' ' + this.props.lang.type === 'vi' ? "Tên sản phẩm" : "Name product").toLowerCase()}
+                                    returnKeyType={'next'} style={{ fontSize: 18, fontFamily: 'Roboto-Condensed' }}
                                     onChangeText={(text) => {
-                                        this.setState({name: text})
-                                    }}/>
+                                        this.setState({ name: text })
+                                    }} />
                             </Item>
                         </View>
-                       
-                      
-                        <View style={{flexDirection: 'row', marginTop: 10 * g.rh}}>
-                            <View style={{alignSelf: 'center', flex: 1 / 3}}>
+
+
+                        <View style={{ flexDirection: 'row', marginTop: 10 * g.rh }}>
+                            <View style={{ alignSelf: 'center', flex: 1 / 3 }}>
                                 <Text style={{
                                     fontFamily: 'Roboto-BoldCondensed',
                                     color: '#595959',
@@ -188,7 +177,7 @@ export default class SecondHand extends React.Component {
                                     fontSize: 15 * g.rw
                                 }}>{this.props.lang.content.timeStart + ""}</Text>
                             </View>
-                            <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+                            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
                                 <Item regular style={{
                                     backgroundColor: '#cfcfcf',
                                     flex: 3 / 4,
@@ -196,9 +185,9 @@ export default class SecondHand extends React.Component {
                                     marginRight: 4 * g.rw
                                 }}>
                                     <Input placeholder={(this.props.lang.content.startDate + "").toLowerCase()}
-                                           disabled={true} value={this.state.startDate ? this.state.startDate : ''}
-                                           onChangeText={(text) => this.setState({startDate: text})}
-                                           style={{fontSize: 18, fontFamily: 'Roboto-Condensed',}}/>
+                                        disabled={true} value={this.state.startDate ? this.state.startDate : ''}
+                                        onChangeText={(text) => this.setState({ startDate: text })}
+                                        style={{ fontSize: 18, fontFamily: 'Roboto-Condensed', }} />
                                 </Item>
                                 <DatePicker
                                     style={{
@@ -229,13 +218,13 @@ export default class SecondHand extends React.Component {
                                         }
                                     }}
                                     onDateChange={(date) => {
-                                        this.setState({startDate: date});
+                                        this.setState({ startDate: date });
                                     }}
                                 />
                             </View>
                         </View>
-                        <View style={{flexDirection: 'row', marginTop: 10 * g.rh}}>
-                            <View style={{alignSelf: 'center', flex: 1 / 3}}>
+                        <View style={{ flexDirection: 'row', marginTop: 10 * g.rh }}>
+                            <View style={{ alignSelf: 'center', flex: 1 / 3 }}>
                                 <Text style={{
                                     fontFamily: 'Roboto-BoldCondensed',
                                     color: '#595959',
@@ -243,7 +232,7 @@ export default class SecondHand extends React.Component {
                                     fontSize: 15 * g.rw
                                 }}>{(this.props.lang.content.timeEnd + "")}</Text>
                             </View>
-                            <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+                            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
                                 <Item regular style={{
                                     backgroundColor: '#cfcfcf',
                                     flex: 3 / 4,
@@ -251,9 +240,9 @@ export default class SecondHand extends React.Component {
                                     marginRight: 4 * g.rw
                                 }}>
                                     <Input placeholder={(this.props.lang.content.endDate + "").toLowerCase()}
-                                           disabled={true} value={this.state.endDate ? this.state.endDate : ''}
-                                           style={{fontSize: 18, fontFamily: 'Roboto-Condensed',}}
-                                           onChangeText={(text) => this.setState({endDate: text})}/>
+                                        disabled={true} value={this.state.endDate ? this.state.endDate : ''}
+                                        style={{ fontSize: 18, fontFamily: 'Roboto-Condensed', }}
+                                        onChangeText={(text) => this.setState({ endDate: text })} />
                                 </Item>
 
                                 <DatePicker
@@ -285,80 +274,80 @@ export default class SecondHand extends React.Component {
                                         }
                                     }}
                                     onDateChange={(date) => {
-                                        this.setState({endDate: date});
+                                        this.setState({ endDate: date });
                                     }}
                                 />
                             </View>
                         </View>
-                        <View style={{flexDirection: 'row', marginTop: 10 * g.rh}}>
-                            <View style={{alignSelf: 'center', flex: 1 / 3}}>
+                        <View style={{ flexDirection: 'row', marginTop: 10 * g.rh }}>
+                            <View style={{ alignSelf: 'center', flex: 1 / 3 }}>
                                 <Text style={{
                                     fontFamily: 'Roboto-BoldCondensed',
                                     color: '#595959',
                                     fontWeight: 'bold',
                                     fontSize: 15 * g.rw
-                                }}>{this.props.lang.type=="vi"?"Địa chỉ":"Address"}</Text>
+                                }}>{this.props.lang.type == "vi" ? "Địa chỉ" : "Address"}</Text>
                             </View>
                             <Item regular
-                                  style={{backgroundColor: '#cfcfcf', flex: 1, borderRadius: 6 * (g.rh + g.rw)}}
-                                 >
+                                style={{ backgroundColor: '#cfcfcf', flex: 1, borderRadius: 6 * (g.rh + g.rw) }}
+                            >
                                 <Input
-                                    placeholder={(this.props.lang.type=="vi"?"nhập địa chỉ":"type address").toLowerCase()}
-                                    returnKeyType={'next'}  multiline={false}
-                                    style={{fontSize: 18, fontFamily: 'Roboto-Condensed'}}
-                                    onChangeText={(text) => this.setState({address: text})}/>
+                                    placeholder={(this.props.lang.type == "vi" ? "nhập địa chỉ" : "type address").toLowerCase()}
+                                    returnKeyType={'next'} multiline={false}
+                                    style={{ fontSize: 18, fontFamily: 'Roboto-Condensed' }}
+                                    onChangeText={(text) => this.setState({ address: text })} />
                             </Item>
                         </View>
-                       
-                        <View style={{flexDirection: 'row', marginTop: 10 * g.rh}}>
-                            <View style={{alignSelf: 'center', flex: 1 / 3}}>
+
+                        <View style={{ flexDirection: 'row', marginTop: 10 * g.rh }}>
+                            <View style={{ alignSelf: 'center', flex: 1 / 3 }}>
                                 <Text style={{
                                     fontFamily: 'Roboto-BoldCondensed',
                                     color: '#595959',
                                     fontWeight: 'bold',
                                     fontSize: 15 * g.rw
-                                }}>{this.props.lang.type==="vi"?"Giá":"Price"}</Text>
+                                }}>{this.props.lang.type === "vi" ? "Giá" : "Price"}</Text>
                             </View>
                             <Item regular
-                                  style={{backgroundColor: '#cfcfcf', flex: 1, borderRadius: 6 * (g.rh + g.rw)}}
-                                  error={!validate.isNumber(parseFloat(this.state.price))}>
+                                style={{ backgroundColor: '#cfcfcf', flex: 1, borderRadius: 6 * (g.rh + g.rw) }}
+                                error={!validate.isNumber(parseFloat(this.state.price))}>
                                 <Input
-                                    placeholder={(this.props.lang.type==="vi"?"Nhập giá": "type price").toLowerCase()}
+                                    placeholder={(this.props.lang.type === "vi" ? "Nhập giá" : "type price").toLowerCase()}
                                     returnKeyType={'next'} keyboardType={'numeric'} multiline={false}
-                                    style={{fontSize: 18, fontFamily: 'Roboto-Condensed'}}
-                                    onChangeText={(text) => this.setState({price: (text)})}/>
+                                    style={{ fontSize: 18, fontFamily: 'Roboto-Condensed' }}
+                                    onChangeText={(text) => this.setState({ price: (text) })} />
                             </Item>
                         </View>
-                        <View style={{flexDirection: 'row', marginTop: 10 * g.rh}}>
-                            <View style={{alignSelf: 'center', flex: 1 / 3}}>
+                        <View style={{ flexDirection: 'row', marginTop: 10 * g.rh }}>
+                            <View style={{ alignSelf: 'center', flex: 1 / 3 }}>
                                 <Text style={{
                                     fontFamily: 'Roboto-BoldCondensed',
                                     color: '#595959',
                                     fontWeight: 'bold',
                                     fontSize: 15 * g.rw
-                                }}>{this.props.lang.type==="vi"?"Mô tả":"Description" + ""}</Text>
+                                }}>{this.props.lang.type === "vi" ? "Mô tả" : "Description" + ""}</Text>
                             </View>
                             <Item regular
-                                  style={{backgroundColor: '#cfcfcf', flex: 1, borderRadius: 6 * (g.rh + g.rw)}}
-                                  error={validate.isEmpty(this.state.detail)}>
-                                <Input placeholder={(this.props.lang.type==='vi'?"Nhập mô tả":"type description" + "").toLowerCase()}
-                                       enablesReturnKeyAutomatically={true} returnKeyType={'done'} multiline={true}
-                                       style={{fontSize: 18, fontFamily: 'Roboto-Condensed', minHeight: 100 * g.rh}}
-                                       onChangeText={(text) => this.setState({detail: text})}/>
+                                style={{ backgroundColor: '#cfcfcf', flex: 1, borderRadius: 6 * (g.rh + g.rw) }}
+                                error={validate.isEmpty(this.state.detail)}>
+                                <Input placeholder={(this.props.lang.type === 'vi' ? "Nhập mô tả" : "type description" + "").toLowerCase()}
+                                    enablesReturnKeyAutomatically={true} returnKeyType={'done'} multiline={true}
+                                    style={{ fontSize: 18, fontFamily: 'Roboto-Condensed', minHeight: 100 * g.rh }}
+                                    onChangeText={(text) => this.setState({ detail: text })} />
                             </Item>
                         </View>
-                        <ScrollView style={{marginTop:10*g.rh}} horizontal={true}>
-                        <View style={{flexDirection:"row-reverse",alignItems:'center'}}>
-                            {
-                                this.state.image.length>0&&this.state.image.map((value,index)=>{  return(<Image key={index} source={{uri:"data:image/png;base64,"+value}} style={{resizeMode:'contain',width:30*g.rh,height:30*g.rh,margin:10}}/>)})
-                            }{
-                                this.state.image.length<5&&<TouchableOpacity style={{width:50*g.rh,height:50*g.rh,borderRadius:4,backgroundColor:'#ccc',alignItems:'center',justifyContent:'center'}} onPress={()=>this.handleImage()}>
-                                    <Text style={{fontSize:40,color:'#000',backgroundColor:'transparent'}}>{"+"}</Text>
-                                </TouchableOpacity>
-                            }
-                        </View>
+                        <ScrollView style={{ marginTop: 10 * g.rh }} horizontal={true}>
+                            <View style={{ flexDirection: "row-reverse", alignItems: 'center' }}>
+                                {
+                                    this.state.image.length > 0 && this.state.image.map((value, index) => { return (<Image key={index} source={{ uri: "data:image/png;base64," + value }} style={{ resizeMode: 'contain', width: 30 * g.rh, height: 30 * g.rh, margin: 10 }} />) })
+                                }{
+                                    this.state.image.length < 5 && <TouchableOpacity style={{ width: 50 * g.rh, height: 50 * g.rh, borderRadius: 4, backgroundColor: '#ccc', alignItems: 'center', justifyContent: 'center' }} onPress={() => this.handleImage()}>
+                                        <Text style={{ fontSize: 40, color: '#000', backgroundColor: 'transparent' }}>{"+"}</Text>
+                                    </TouchableOpacity>
+                                }
+                            </View>
                         </ScrollView>
-                        <TouchableOpacity style={{marginTop: 15 * g.rh}} onPress={() => this.onAdd()}>
+                        <TouchableOpacity style={{ marginTop: 15 * g.rh }} onPress={() => this.onAdd()}>
                             <View style={{
                                 height: 65 * g.rh,
                                 backgroundColor: '#ffca00',
@@ -372,12 +361,17 @@ export default class SecondHand extends React.Component {
                                     fontWeight: 'bold',
                                     fontFamily: 'Roboto-BoldCondensed'
                                 }}>{(
-                                    (this.props.lang.type=="vi"?"thêm ":"add ")+this.props.lang.content.secondHand).toUpperCase()}</Text>
+                                    (this.props.lang.type == "vi" ? "thêm " : "add ") + this.props.lang.content.secondHand).toUpperCase()}</Text>
                             </View>
                         </TouchableOpacity>
                     </Form>
                 </Content>
             </Content>
-        </View>)
+            <Toast
+                ref="toast"
+                position='top'
+                positionValue={10} />
+        </View>
+        )
     }
 }

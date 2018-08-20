@@ -24,7 +24,8 @@ class HeaderQuanLyDangTin extends Component {
             <Header style={{ backgroundColor: '#ffca00', height: 72 * g.rh }} androidStatusBarColor="#ffca00">
                 <Left>
                     <Button transparent delayLongPress={500} onPress={() => {
-                        this.props.navigation.goBack()
+                        // 
+                        this.props.goBack();
                     }}>
                         <Image style={{ width: 25 * g.rw, height: 25 * g.rh, resizeMode: 'contain' }}
                             source={require('../../assets/icons/login_back.png')} />
