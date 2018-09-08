@@ -2,11 +2,12 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 platform :ios, '8.0'
 
+install! 'cocoapods', :deterministic_uuids => false
+target 'Cohober' do
+  rn_path = '../node_modules/react-native'
+  rn_maps_path = '../node_modules/react-native-maps'
 
-target ‘Cohober’ do
-  rn_path = “../node_modules/react-native”
-
-  pod “yoga", :path => "#{rn_path}/ReactCommon/yoga"
+  pod "yoga", :path => "#{rn_path}/ReactCommon/yoga"
   pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
   pod 'React', path: rn_path, subspecs: [
     'Core',
@@ -22,9 +23,19 @@ target ‘Cohober’ do
     'RCTWebSocket',
     'BatchedBridge'
   ]
-
-  pod 'GoogleMaps'  # Remove this line if you don't want to support GoogleMaps on iOS
-
+  pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
+  pod 'GooglePlaces'
+  pod 'GoogleMaps'
+  pod 'GooglePlacePicker'
+  # pod 'RNImageCropPicker', :path =>  '../node_modules/react-native-image-crop-picker'
+  # react-native-maps dependencies
+  # pod 'react-native-maps', path: rn_maps_path
+  # pod 'react-native-google-maps', path: rn_maps_path  # Remove this line if you don't want to support GoogleMaps on iOS
+  pod 'Google-Maps-iOS-Utils'
+  # pod 'Bolts'
+  # pod 'FBSDKCoreKit'
+  # pod 'FBSDKLoginKit'
+  # pod 'FBSDKShareKit'
 end
 
 post_install do |installer|
@@ -34,7 +45,6 @@ post_install do |installer|
         config.build_settings['CLANG_ENABLE_MODULES'] = 'No'
       end
     end
-    
     if target.name == "React"
       target.remove_from_project
     end

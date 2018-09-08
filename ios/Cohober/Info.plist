@@ -54,6 +54,8 @@
 				<true/>
 			</dict>
 		</dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>Cohober sẽ sử dụng máy ảnh của bạn để chụp </string>
@@ -113,5 +115,25 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+  <key>CFBundleURLTypes</key>
+  <array>
+    <dict>
+      <key>CFBundleURLSchemes</key>
+      <array>
+        <string>fb2209542119281385</string>
+      </array>
+    </dict>
+  </array>
+  <key>FacebookAppID</key>
+  <string>2209542119281385</string>
+  <key>FacebookDisplayName</key>
+  <string>Cohober</string>
+  <key>LSApplicationQueriesSchemes</key>
+  <array>
+    <string>fbapi</string>
+    <string>fb-messenger-share-api</string>
+    <string>fbauth2</string>
+    <string>fbshareextension</string>
+  </array>
 </dict>
 </plist>

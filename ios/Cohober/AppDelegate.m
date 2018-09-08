@@ -12,6 +12,7 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 @import GoogleMaps;
+@import GooglePlaces;
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 
 @implementation AppDelegate
@@ -22,6 +23,7 @@
                            didFinishLaunchingWithOptions:launchOptions];
 
   NSURL *jsCodeLocation;
+  [GMSPlacesClient provideAPIKey:@"AIzaSyB0T-s0azv8_CK-3-62Ns0he1MBfMvBazM"];
   [GMSServices provideAPIKey:@"AIzaSyB0T-s0azv8_CK-3-62Ns0he1MBfMvBazM"];
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
 
