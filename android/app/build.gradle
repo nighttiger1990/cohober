@@ -173,6 +173,7 @@ dependencies {
     compile project(':react-native-device-info')
     compile project(':react-native-vector-icons')
     compile project(':react-native-maps')
+    compile project(':react-native-android-location-services-dialog-box')
     compile 'com.google.android.gms:play-services-base:10.0.1'
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.google.android.gms:play-services-maps:10.0.1'
