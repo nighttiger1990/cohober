@@ -34,7 +34,6 @@ class Login extends React.PureComponent {
     }
 
     render() {
-        reactotronReactNative.log("login")
         if (this.props.auth.isLoading || this.state.isLoading) {
             return (
                 <View style={{
