@@ -262,7 +262,7 @@ export default class RealEstale extends React.Component {
                     imageLeft={require('../../assets/icons/login_back.png')}
                     title={(this.props.lang.type === "vi" ? "Thêm bất động sản" : "Add " + this.props.lang.content.realEstale + "").toUpperCase()} />
                 <Content style={{ flex: 1 }}>
-                    <View style={{ backgroundColor: '#cfcfcf', height: 35 * g.rh }} />
+                    {/* <View style={{ backgroundColor: '#cfcfcf', height: 35 * g.rh }} /> */}
 
                     <Form style={{ flex: 1, marginTop: 25 * g.rh, padding: 10 }}>
                         <View style={{ flexDirection: 'row' }}>
