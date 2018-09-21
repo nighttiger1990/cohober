@@ -59,7 +59,7 @@ const defaultState = {
             realEstale: 'Real estale',
             secondHand: 'Second hand',
             docu:"Second hand",
-            quanlydangtin:"Manager dang tin",
+            quanlydangtin:"Manager news",
             images:"Images"
         }
     }
@@ -130,7 +130,7 @@ export default function reducer(state = defaultState, action) {
                         realEstale: 'Real estale',
                         secondHand: 'Second hand',
                         docu:"Second hand",
-                        quanlydangtin:"Manager dang tin",
+                        quanlydangtin:"Manager news",
                         images:"Images"
                     }
                 }
