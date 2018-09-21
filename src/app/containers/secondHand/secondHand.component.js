@@ -9,6 +9,7 @@ import DatePicker from "../components/datepicker";
 import moment from "moment";
 import ImagePicker from 'react-native-image-crop-picker';
 import Toast, { DURATION } from 'react-native-easy-toast';
+import reactotronReactNative from 'reactotron-react-native';
 const MB = 2;
 const oneMB = 1048576;
 export default class SecondHand extends React.Component {
@@ -37,7 +38,9 @@ export default class SecondHand extends React.Component {
         setTimeout(() => this.setState({ loading: false }), 3000);
     }
     showToast(message) {
+        reactotronReactNative.log("loi cai deo gi")
         this.refs.toast.show(message);
+        reactotronReactNative.log("loi cai deo gi 1")
     }
     handleImage() {
         if (Platform.OS === 'android') {
@@ -133,6 +136,7 @@ export default class SecondHand extends React.Component {
                     location: location
                 };
                 this.props.onAdd(data, (message) => {
+                    // await this.props.getListProject(this.props.functions.type);
                     this.showToast(message);
                     setTimeout(() => {
                         this.props.navigation.goBack();

@@ -25,6 +25,7 @@ class QuanLyDangTin extends Component {
             location: [],
         }
         this.fixLoadMoreFirst = 0;
+
     }
 
     static navigationOptions = {
