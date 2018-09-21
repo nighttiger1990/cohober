@@ -3983,6 +3983,10 @@ react-native-google-places@^2.4.2:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/react-native-google-places/-/react-native-google-places-2.4.2.tgz#ac4cf3391481ecd89803282554e209f0bfefc31e"
 
+react-native-gps-state@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-gps-state/-/react-native-gps-state-1.1.0.tgz#9bf077cb2793f1518094ddecd53904ba2e76b852"
+
 react-native-image-crop-picker@^0.20.0:
   version "0.20.0"
   resolved "https://registry.yarnpkg.com/react-native-image-crop-picker/-/react-native-image-crop-picker-0.20.0.tgz#29b8df35eb17ff7ad61524ec09832f49e552427d"

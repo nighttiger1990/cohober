@@ -12,7 +12,7 @@ import MapContainer from './component/maps/mapscontainer';
 import * as g from '../../util';
 import reactotronReactNative from 'reactotron-react-native';
 import { NavigationActions } from 'react-navigation';
-
+import GPSState from 'react-native-gps-state';
 export default class Home extends React.PureComponent {
     static navigationOptions = {
         header: null,
@@ -78,12 +78,21 @@ export default class Home extends React.PureComponent {
             modalVisible: false,
             dataModal: null,
             typeFunctionVisible: false,
-            showSearch:false
+            showSearch: false
 
         }
     }
+    componentWillMount() {
+        reactotronReactNative.log("componentWillMount")
+        GPSState.getStatus().then((status) => {
+            reactotronReactNative.log("componentWillMount", status);
+        });
+    }
 
     componentDidMount() {
+        GPSState.addListener((status) => {
+            reactotronReactNative.log("xxxx", status);
+        })
         if (this.props.functions.type) {
             this.setState({ type: this.props.functions.type })
         }
