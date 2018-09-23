@@ -164,7 +164,6 @@ export const createProject = (data, callback) => {
         try {
             let token = await AsyncStorage.getItem('token');
             let projects = await createProjectAsync(data, token);
-            reactotronReactNative.log("projects", projects);
             if (projects.id) {
                 dispatch(addSuccess());
                 callback("Thành công");
