@@ -31,9 +31,6 @@ export default class SignIn extends React.PureComponent {
     }
 
     signIn() {
-        reactotronReactNative.log("dataxxx", this.state, this.props.lang);
-        reactotronReactNative.log("data111", this.validate(this.state.username));
-
         
         if (!this.validate(this.state.username)) {
             // email lỗi

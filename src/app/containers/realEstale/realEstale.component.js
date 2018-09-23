@@ -205,7 +205,8 @@ export default class RealEstale extends React.Component {
                     image: image
                 }
                 reactotronReactNative.log("data", data);
-                this.props.onAdd(data, (message) => {
+                this.props.onAdd(data, async (message) => {
+                    await this.props.getListProject(this.props.functions.type);
                     this.showToast(message);
                     setTimeout(() => {
                         this.props.navigation.goBack();

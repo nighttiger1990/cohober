@@ -15,6 +15,7 @@ import reactotronReactNative from 'reactotron-react-native';
 import { NavigationActions } from 'react-navigation';
 import LocationServicesDialogBox from "react-native-android-location-services-dialog-box";
 
+import GPSState from 'react-native-gps-state';
 export default class Home extends React.PureComponent {
     static navigationOptions = {
         header: null,
@@ -80,12 +81,19 @@ export default class Home extends React.PureComponent {
             modalVisible: false,
             dataModal: null,
             typeFunctionVisible: false,
-            showSearch:false
+            showSearch: false
 
         }
     }
+    componentWillMount() {
+        reactotronReactNative.log("componentWillMount")
+        GPSState.getStatus().then((status) => {
+            reactotronReactNative.log("componentWillMount", status);
+        });
+    }
 
     componentDidMount() {
+<<<<<<< HEAD
         LocationServicesDialogBox.checkLocationServicesIsEnabled({
             message: "<h2 style='color: #0af13e'>Use Location ?</h2>This app wants to change your device settings:<br/>- Use GPS.",
             ok: "YES",
@@ -103,6 +111,11 @@ export default class Home extends React.PureComponent {
                 this.toast.show("Location "+status) //  status => {enabled: false, status: "disabled"} or {enabled: true, status: "enabled"}
             });
         });
+=======
+        GPSState.addListener((status) => {
+            reactotronReactNative.log("xxxx", status);
+        })
+>>>>>>> 0dfa8a1972cb266b349e1452127f629927a1a9a7
         if (this.props.functions.type) {
             this.setState({ type: this.props.functions.type })
         }

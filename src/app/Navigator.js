@@ -10,7 +10,7 @@ import History from './containers/histories/history';
 import Notification from './containers/notifications/notification';
 import Setting from './containers/settings/setting';
 import Idea from './containers/idea/idea';
-import RaiseFunding from './containers/raisefundings/raisefunding';
+import RaiseFunding from './containers/raisefundings/raisefunding.component';
 import Category from './containers/category/categories';
 import DetailNotification from './containers/notifications/detail';
 import AddCategory from './containers/addcategory/addcategory';
@@ -23,7 +23,7 @@ import QuanLyDangTin from './containers/quan-ly-dang-tin/index';
 import FullScreenImage from './containers/fullscreen-image';
 
 const AppNavigator = StackNavigator({
-    
+
     Login: {
         screen: Login
     },
