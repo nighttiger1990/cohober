@@ -182,7 +182,8 @@ export default class ProjectDetail extends React.PureComponent {
         const isEmptyImages = (dataModal.images === undefined || dataModal.images === null || dataModal.images.length === 0) ? true : false;
         const listImages = (isEmptyImages === true) ? [imagesDefault, imagesDefault, imagesDefault, imagesDefault, imagesDefault] : dataModal.images;
         let owner = this.props.project.owner;
-         reactotronReactNative.log("OWNER",this.props)
+        let loggedUser = this.props.loggedUser;
+        reactotronReactNative.log("OWNER",this.props)
         return (
             <View style={styles.container}>
                 <View
@@ -192,34 +193,35 @@ export default class ProjectDetail extends React.PureComponent {
                             numberOfLines={1}>
                             {(dataModal.name + " ").toUpperCase()}
                         </Text>
-                        <TouchableOpacity
-                            style={{flex: 1, justifyContent: "center", alignItems: "center"}}
-                            onPress={() => {
-                                // reactotronReactNative.log("OWNER",owner.id)
-                                AsyncStorage.getItem("token", (err, result) => {
-                                    if (err) {
-                                        reactotronReactNative.log("err get token QLDT", err);
-                                        return;
-                                    } else {
-                                        let axios = {
-                                            headers: {
-                                                "Content-Type": "application/json; charset=utf-8",
-                                                "Accept": "application/json",
-                                                "Authorization": result,
-                                                "Accept": "application/json"
-                                            },
-                                            method: 'GET',
-                                            url: "http://api.cohober.vn/myproject"
-                                        }
-                                        this.props.deleteProject(dataModal.id)
-                                        this.props.getMyProject(axios)
-                                        this.handleClose()
-                                    }
-                                })
-                            }}
-                         >
-                            <Text style={{textAlign: "center", textAlignVertical: "center", color: "red"}} >Xóa</Text>
-                        </TouchableOpacity>
+                        {owner && (owner.id === loggedUser.id) &&
+                            <TouchableOpacity
+                                style={{flex: 1, justifyContent: "center", alignItems: "center"}}
+                                onPress={() => {
+                                    // AsyncStorage.getItem("token", (err, result) => {
+                                    //     if (err) {
+                                    //         reactotronReactNative.log("err get token QLDT", err);
+                                    //         return;
+                                    //     } else {
+                                    //         let axios = {
+                                    //             headers: {
+                                    //                 "Content-Type": "application/json; charset=utf-8",
+                                    //                 "Accept": "application/json",
+                                    //                 "Authorization": result,
+                                    //                 "Accept": "application/json"
+                                    //             },
+                                    //             method: 'GET',
+                                    //             url: "http://api.cohober.vn/myproject"
+                                    //         }
+                                    //         this.props.deleteProject(dataModal.id)
+                                    //         this.props.getMyProject(axios)
+                                    //         this.handleClose()
+                                    //     }
+                                    // })
+                                }}
+                            >
+                                <Text style={{textAlign: "center", textAlignVertical: "center", color: "red"}} >Xóa</Text>
+                            </TouchableOpacity>
+                        }
                     </View>
                     <View style={styles.hr} />
 
