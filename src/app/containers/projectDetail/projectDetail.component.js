@@ -197,26 +197,26 @@ export default class ProjectDetail extends React.PureComponent {
                             <TouchableOpacity
                                 style={{flex: 1, justifyContent: "center", alignItems: "center"}}
                                 onPress={() => {
-                                    // AsyncStorage.getItem("token", (err, result) => {
-                                    //     if (err) {
-                                    //         reactotronReactNative.log("err get token QLDT", err);
-                                    //         return;
-                                    //     } else {
-                                    //         let axios = {
-                                    //             headers: {
-                                    //                 "Content-Type": "application/json; charset=utf-8",
-                                    //                 "Accept": "application/json",
-                                    //                 "Authorization": result,
-                                    //                 "Accept": "application/json"
-                                    //             },
-                                    //             method: 'GET',
-                                    //             url: "http://api.cohober.vn/myproject"
-                                    //         }
-                                    //         this.props.deleteProject(dataModal.id)
-                                    //         this.props.getMyProject(axios)
-                                    //         this.handleClose()
-                                    //     }
-                                    // })
+                                    AsyncStorage.getItem("token", (err, result) => {
+                                        if (err) {
+                                            reactotronReactNative.log("err get token QLDT", err);
+                                            return;
+                                        } else {
+                                            let axios = {
+                                                headers: {
+                                                    "Content-Type": "application/json; charset=utf-8",
+                                                    "Accept": "application/json",
+                                                    "Authorization": result,
+                                                    "Accept": "application/json"
+                                                },
+                                                method: 'GET',
+                                                url: "http://api.cohober.vn/myproject"
+                                            }
+                                            this.props.deleteProject(dataModal.id)
+                                            this.props.getMyProject(axios)
+                                            this.handleClose()
+                                        }
+                                    })
                                 }}
                             >
                                 <Text style={{textAlign: "center", textAlignVertical: "center", color: "red"}} >Xóa</Text>

@@ -1,4 +1,4 @@
-const defaultState = {
+git addconst defaultState = {
     lang: {
         type: 'en',
         content: {
