@@ -92,7 +92,6 @@ class RaiseFunding extends React.PureComponent {
     }
 
     componentDidMount() {
-
         this.props.onGetCategory();
         setTimeout(() => this.setState({isLoading: false}), 3000)
     }

@@ -408,3 +408,33 @@ export const getProjectByIdUser = (type) => {
         //get data
     }
 }
+
+export const deleteProject = async (id, token) => {
+    return await fetch('http://api.cohober.vn/deleteProject', {
+        method: 'POST',
+        headers: {
+            'Authorization': token
+        },
+        body: JSON.stringify({
+            "projectId": id
+        })
+    }).then(async (response) => {
+        return await response.json()
+    }).then(async (res) => {
+        return await res
+    })
+};
+
+export const asyncDeleteProject = (id) => {
+    return async (dispatch) => {
+        try {
+            let token = await AsyncStorage.getItem('token');
+            let projects = await deleteProject(id, token);
+            if (projects.id) {
+                return 0
+            } else return 1;
+        } catch (error) {
+            console.log(error)
+        }
+    }
+};

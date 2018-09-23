@@ -1,4 +1,5 @@
 import actions from "../../actions";
+import reactotronReactNative from 'reactotron-react-native';
 
 const mapStateToProps = (state) => {
     return {

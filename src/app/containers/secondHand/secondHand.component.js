@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Platform, Text, TouchableOpacity, View, ScrollView, Image, Picker } from 'react-native';
 import { Button, Content, Form, Header, Icon, Input, Item, Left, Right, Title } from 'native-base';
 import Loading from "../components/loading";
@@ -9,6 +9,8 @@ import DatePicker from "../components/datepicker";
 import moment from "moment";
 import ImagePicker from 'react-native-image-crop-picker';
 import Toast, { DURATION } from 'react-native-easy-toast';
+const MB = 2;
+const oneMB = 1048576;
 export default class SecondHand extends React.Component {
     static navigationOptions = {
         header: null
@@ -34,6 +36,9 @@ export default class SecondHand extends React.Component {
     componentDidMount() {
         setTimeout(() => this.setState({ loading: false }), 3000);
     }
+    showToast(message) {
+        this.refs.toast.show(message);
+    }
     handleImage() {
         if (Platform.OS === 'android') {
             ImagePicker.openPicker({
@@ -44,6 +49,10 @@ export default class SecondHand extends React.Component {
                 includeBase64: true
             }).then(images => {
                 let imageData = [];
+                if (images[0].size / oneMB > MB) {
+                    this.showToast(this.props.lang.type === 'vi' ? "Chất lượng ảnh < 2MB" : "Size image < 2MB");
+                    return;
+                }
                 imageData.push(images[0].data)
                 this.setState({ image: this.state.image.concat(imageData) })
                 //console.log(this.state.image);
@@ -104,18 +113,51 @@ export default class SecondHand extends React.Component {
     }
     onAdd() {
         let { name, address, image, price, detail, type, startDate, endDate, location } = this.state;
-        let data = {
-            name: name,
-            address: address,
-            image: image,
-            price: price,
-            detail: detail,
-            type: type,
-            startDate: startDate,
-            endDate: endDate,
-            location: location
-        };
-        this.props.onAdd(data);
+
+        let start = moment(this.state.startDate).unix();
+        let end = moment(this.state.endDate).unix();
+        if (start > end) {
+            this.showToast(this.props.lang.type === 'vi' ? "Thời gian đến phải lớn hơn thời gian bắt đầu" : "End time must be greater than start time");
+            this.CustomButton.turnOffLoading();
+        } else {
+            if (name && detail && type && address && price) {
+                let data = {
+                    name: name,
+                    address: address,
+                    image: image,
+                    price: parseFloat(price),
+                    detail: detail,
+                    type: type,
+                    startDate: startDate,
+                    endDate: endDate,
+                    location: location
+                };
+                this.props.onAdd(data, (message) => {
+                    this.showToast(message);
+                    setTimeout(() => {
+                        this.props.navigation.goBack();
+                    }, 2000)
+                });
+            } else {
+                if (!name) {
+                    this.showToast(this.props.lang.type === 'vi' ? "Tên không được để trống" : "Name is not emty")
+                    this.CustomButton.turnOffLoading();
+                } else if (!detail) {
+                    this.showToast(this.props.lang.type === 'vi' ? "Nội dung không được để trống" : "Content is not emty");
+                    this.CustomButton.turnOffLoading();
+                } else if (!address) {
+                    this.showToast(this.props.lang.type === 'vi' ? "Địa chỉ không được để trống" : "Address is not emty")
+                    this.CustomButton.turnOffLoading();
+                } else if (!price) {
+                    this.showToast(this.props.lang.type === 'vi' ? "Giá không được để trống" : "Price is not emty");
+                    this.CustomButton.turnOffLoading();
+                } else {
+                    this.showToast(this.props.lang.type === 'vi' ? "Không thành công. Thử lại" : "Unsuccessfuly. Try again")
+                    this.CustomButton.turnOffLoading();
+                }
+            }
+
+        }
         try {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
@@ -339,31 +381,35 @@ export default class SecondHand extends React.Component {
                         <ScrollView style={{ marginTop: 10 * g.rh }} horizontal={true}>
                             <View style={{ flexDirection: "row-reverse", alignItems: 'center' }}>
                                 {
-                                    this.state.image.length > 0 && this.state.image.map((value, index) => { return (<Image key={index} source={{ uri: "data:image/png;base64," + value }} style={{ resizeMode: 'contain', width: 30 * g.rh, height: 30 * g.rh, margin: 10 }} />) })
-                                }{
+                                    this.state.image.length > 0 && this.state.image.map((value, index) => {
+                                        return (
+                                            <View style={{ width: 50 * g.rh, height: 50 * g.rh }} key={index}>
+                                                <Image
+
+                                                    source={{ uri: "data:image/png;base64," + value }}
+                                                    style={{ resizeMode: 'contain', width: 30 * g.rh, height: 30 * g.rh, margin: 10 }}
+                                                />
+                                                <TouchableOpacity style={{ position: 'absolute', right: 0, top: 0 }} onPress={() => this.removeImage(index)}>
+                                                    <Icon name="ios-close-circle-outline" style={{ color: "red", fontSize: 20 }} />
+                                                </TouchableOpacity>
+                                            </View>
+
+                                        )
+                                    })
+                                }
+                                {
                                     this.state.image.length < 5 && <TouchableOpacity style={{ width: 50 * g.rh, height: 50 * g.rh, borderRadius: 4, backgroundColor: '#ccc', alignItems: 'center', justifyContent: 'center' }} onPress={() => this.handleImage()}>
                                         <Text style={{ fontSize: 40, color: '#000', backgroundColor: 'transparent' }}>{"+"}</Text>
                                     </TouchableOpacity>
                                 }
                             </View>
                         </ScrollView>
-                        <TouchableOpacity style={{ marginTop: 15 * g.rh }} onPress={() => this.onAdd()}>
-                            <View style={{
-                                height: 65 * g.rh,
-                                backgroundColor: '#ffca00',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                borderRadius: 6 * (g.rh + g.rw)
-                            }}>
-                                <Text style={{
-                                    color: '#303030',
-                                    fontSize: 16,
-                                    fontWeight: 'bold',
-                                    fontFamily: 'Roboto-BoldCondensed'
-                                }}>{(
-                                    (this.props.lang.type == "vi" ? "thêm " : "add ") + this.props.lang.content.secondHand).toUpperCase()}</Text>
-                            </View>
-                        </TouchableOpacity>
+                        <CustomButton
+                            lang={this.props.lang}
+                            addData={() => this.onAdd()}
+                            ref={(ref) => this.CustomButton = ref}
+                        />
+
                     </Form>
                 </Content>
             </Content>
@@ -373,5 +419,51 @@ export default class SecondHand extends React.Component {
                 positionValue={10} />
         </View>
         )
+    }
+}
+class CustomButton extends Component {
+    state = { loading: false }
+    addData() {
+        if (this.state.loading === true) return;
+        this.setState({ loading: true });
+        this.props.addData();
+    }
+    turnOffLoading() {
+        this.setState({ loading: false })
+    }
+
+    render() {
+        let lang = this.props.lang;
+        return (
+            <TouchableOpacity
+                style={{ marginTop: 15 * g.rh }}
+                onPress={() => this.addData()}
+                disabled={this.state.loading}
+            >
+
+                <View style={{
+                    height: 65 * g.rh,
+                    backgroundColor: '#ffca00',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderRadius: 6 * (g.rh + g.rw)
+                }}>
+                    {
+                        (this.state.loading) ?
+                            <Loading color={"white"} /> :
+                            <Text style={{
+                                color: '#303030',
+                                fontSize: 16,
+                                fontWeight: 'bold',
+                                fontFamily: 'Roboto-BoldCondensed'
+                            }}>{(
+                                (lang.type == "vi" ? "thêm " : "add ") + lang.content.secondHand).toUpperCase()}
+                            </Text>
+                    }
+
+                </View>
+            </TouchableOpacity>
+        )
+
     }
 }

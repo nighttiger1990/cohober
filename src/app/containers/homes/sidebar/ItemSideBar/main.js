@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Alert, AsyncStorage, Image, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, AsyncStorage, Image, Modal, StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native';
 
 let g = require('../../../../util/index');
 export default class MainSideBar extends PureComponent {
@@ -54,12 +54,12 @@ export default class MainSideBar extends PureComponent {
                 </View>
 
             </View>)
-            
+
         } else return (<View />)
     }
 
     render() {
-        console.log("lang",this.props.lang)
+        console.log("lang", this.props.lang)
         try {
             if (this.props.user) {
                 if ((this.props.user.email + "").toLowerCase() === 'quoctoan.ipp@gmail.com') {
@@ -73,7 +73,7 @@ export default class MainSideBar extends PureComponent {
             console.log(error)
         }
         return (
-            <View style={{ flex: 1, backgroundColor: '#fff' }}>
+            <ScrollView style={{ flex: 1, backgroundColor: '#fff' }}>
                 <View style={{ backgroundColor: '#cfcfcf', height: 40 * g.rh }}>
                 </View>
                 <View style={styles.mainList}>
@@ -154,7 +154,7 @@ export default class MainSideBar extends PureComponent {
                     <TouchableOpacity onPress={() => requestAnimationFrame(() => {
                         //this.props.signOut();
                         //    this.setState({modalVisiable:true})
-                        Alert.alert(this.props.lang.type === 'vi' ? 'Đăng xuất khỏi Cohober?' : 'Sign out of Cohober?', ' ', [
+                        Alert.alert(this.props.lang.type === 'vi' ? 'Đăng xuất khỏi Cohober?' : 'Log out of Cohober?', ' ', [
                             {
                                 style: 'cancel',
                                 text: this.props.lang.content.cancel + " ",
@@ -177,7 +177,7 @@ export default class MainSideBar extends PureComponent {
                     <View style={styles.hr} />
                 </View>
                 <TouchableOpacity
-                    style={{ marginLeft: 20 * g.rw, position: 'absolute', bottom: 0, marginBottom: 20 * g.rh }}
+                    style={{ marginLeft: 20 * g.rw, marginBottom: 20 * g.rh }}
                     onPress={this.handleChaneLang}>
                     {
                         this.iconLang()
@@ -204,7 +204,8 @@ export default class MainSideBar extends PureComponent {
                         </View>
                     </Modal>
                 }
-            </View>)
+            </ScrollView>
+        )
     }
 }
 

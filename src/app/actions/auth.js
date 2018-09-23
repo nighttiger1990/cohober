@@ -165,11 +165,8 @@ export const signUpAsync1 = async (data) => {
 };
 export const signInAsync = async (data) => {
     try {
-        console.log("run")
         let lang = await AsyncStorage.getItem('lang');
-        console.log("lang", lang);
         const device = deviceInfo();
-        console.log("device", device);
 
         return await fetch('http://api.cohober.vn/api/users/login', {
             method: 'POST',
@@ -194,7 +191,7 @@ export const signInAsync = async (data) => {
                 'name': data.name
             })
         }).then(async (response) => {
-            console.log("response", response)
+            reactotronReactNative.log("response", response)
             return await response.json();
         }).then(async (res) => {
             console.log("res", res)
@@ -272,7 +269,7 @@ export const signIn = (data) => {
 
             let lang = await AsyncStorage.getItem('lang');
             if (data.password !== null && (data.password + "").length >= 6) {
-
+ 
                 dispatch(loading());
                 try {
                     let user = await signInAsync(data);

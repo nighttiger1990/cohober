@@ -142,15 +142,20 @@ const styles = StyleSheet.create({
     header2: {
         alignContent: 'center',
         justifyContent: 'center',
-        height: 45 * g.rh,
+        height: 50 * g.rh,
         width: g.sw - 110 * g.rw,
-        alignSelf: 'center'
+        alignSelf: 'center',
+        display: "flex",
+        flexDirection: "row"
     },
     txtTitle: {
         fontFamily: 'Roboto-BoldCondensed',
         color: '#e29600',
         alignSelf: 'center',
         fontSize: 20 * g.rh,
+        flex: 6,
+        textAlign: "center",
+        textAlignVertical: "center"
     },
     hr: {
         height: 1,
