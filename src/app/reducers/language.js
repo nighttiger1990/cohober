@@ -1,4 +1,4 @@
-const defaultState = {
+git addconst defaultState = {
     lang: {
         type: 'en',
         content: {
@@ -53,13 +53,13 @@ const defaultState = {
             ok: 'OK',
             invalidEmail: 'Invalid email',
             checkLocation: 'Please check the location',
-            projectInfo: "Project info",
+            projectInfo: "Project Info",
             contact: 'Contact',
             content: 'Content',
-            realEstale: 'Real estale',
-            secondHand: 'Second hand',
-            docu:"Second hand",
-            quanlydangtin:"Manager news",
+            realEstale: 'Real Estale',
+            secondHand: 'Second-hand',
+            docu:"Second-hand",
+            quanlydangtin:"Project Manager",
             images:"Images"
         }
     }
@@ -127,10 +127,10 @@ export default function reducer(state = defaultState, action) {
                         projectInfo: "Project info",
                         contact: "Contact",
                         content: 'Content',
-                        realEstale: 'Real estale',
-                        secondHand: 'Second hand',
-                        docu:"Second hand",
-                        quanlydangtin:"Manager news",
+                        realEstale: 'Real Estale',
+                        secondHand: 'Second-hand',
+                        docu:"Second-hand",
+                        quanlydangtin:"Project Manager",
                         images:"Images"
                     }
                 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityIndicator, Image, Linking, StatusBar, TouchableOpacity, View, LayoutAnimation } from 'react-native';
+import { ActivityIndicator, Image, Linking, StatusBar, TouchableOpacity, View, LayoutAnimation, DeviceEventEmitter  } from 'react-native';
 import { Body, Button, Drawer, Header, Left, Right, Title } from 'native-base';
 import SideBar from './sidebar/index';
 import ActionButton from 'react-native-action-button';
@@ -9,9 +9,12 @@ import SearchResult from './component/searchResult/searchResult';
 import TypeFunction from '../components/typeFunctions/type';
 import MapContainer from './component/maps/mapscontainer';
 // import ProjectDetail from './projectsdetail/projectdetail';
+import Toast, { DURATION } from 'react-native-easy-toast'
 import * as g from '../../util';
 import reactotronReactNative from 'reactotron-react-native';
 import { NavigationActions } from 'react-navigation';
+import LocationServicesDialogBox from "react-native-android-location-services-dialog-box";
+
 import GPSState from 'react-native-gps-state';
 export default class Home extends React.PureComponent {
     static navigationOptions = {
@@ -90,9 +93,29 @@ export default class Home extends React.PureComponent {
     }
 
     componentDidMount() {
+<<<<<<< HEAD
+        LocationServicesDialogBox.checkLocationServicesIsEnabled({
+            message: "<h2 style='color: #0af13e'>Use Location ?</h2>This app wants to change your device settings:<br/>- Use GPS.",
+            ok: "YES",
+            cancel: "NO",
+            enableHighAccuracy: false, // true => GPS AND NETWORK PROVIDER, false => GPS OR NETWORK PROVIDER
+            showDialog: true, // false => Opens the Location access page directly
+            openLocationServices: true, // false => Directly catch method is called if location services are turned off
+            preventOutSideTouch: true, // true => To prevent the location services window from closing when it is clicked outside
+            preventBackClick: true, // true => To prevent the location services popup from closing when it is clicked back button
+            providerListener: true // true ==> Trigger locationProviderStatusChange listener when the location state changes
+        }).then(function(success) {
+            this.toast.show(success)
+        }).catch((error) => {
+            DeviceEventEmitter.addListener('locationProviderStatusChange', function(status) { // only trigger when "providerListener" is enabled
+                this.toast.show("Location "+status) //  status => {enabled: false, status: "disabled"} or {enabled: true, status: "enabled"}
+            });
+        });
+=======
         GPSState.addListener((status) => {
             reactotronReactNative.log("xxxx", status);
         })
+>>>>>>> 0dfa8a1972cb266b349e1452127f629927a1a9a7
         if (this.props.functions.type) {
             this.setState({ type: this.props.functions.type })
         }
@@ -104,6 +127,7 @@ export default class Home extends React.PureComponent {
 
     componentWillUnMount() {
         navigator.geolocation.stopObserving();
+        LocationServicesDialogBox.stopListener();
     }
 
     componentWillReceiveProps(nextProps) {
@@ -139,6 +163,11 @@ export default class Home extends React.PureComponent {
         if (this.props.project.isLoading) {
 
             return (<View style={[styles.no_touch, { backgroundColor: '#ffffff00' }]}>
+                <Toast
+                    ref={(ref) => this.toast = ref}
+                    position='top'
+                    positionValue={10} 
+                />
                 <ActivityIndicator
                     animating={true}
                     color='#ffca00'
@@ -157,6 +186,11 @@ export default class Home extends React.PureComponent {
                         onChangeLang={this.props.onChangeLang} />}
                     onClose={() => this.closeDrawer()}>
                     <View>
+                        <Toast
+                            ref={(ref) => this.toast = ref}
+                            position='top'
+                            positionValue={10} 
+                        />
                         <StatusBar hidden={false} backgroundColor={'#ffca00'} barStyle={'dark-content'} />
                         <View style={{ position: 'absolute' }}>
                             {

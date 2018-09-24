@@ -180,7 +180,9 @@ export default class RealEstale extends React.Component {
         }
     }
     showToast(message) {
-        this.refs.toast.show(message);
+        if(this.toast){
+            this.toast.show(message);
+        }
     }
     addData() {
         const { name, detail, type, startDate, endDate, location, direaction, address, area, price, image } = this.state;
@@ -263,7 +265,7 @@ export default class RealEstale extends React.Component {
                     imageLeft={require('../../assets/icons/login_back.png')}
                     title={(this.props.lang.type === "vi" ? "Thêm bất động sản" : "Add " + this.props.lang.content.realEstale + "").toUpperCase()} />
                 <Content style={{ flex: 1 }}>
-                    <View style={{ backgroundColor: '#cfcfcf', height: 35 * g.rh }} />
+                    {/* <View style={{ backgroundColor: '#cfcfcf', height: 35 * g.rh }} /> */}
 
                     <Form style={{ flex: 1, marginTop: 25 * g.rh, padding: 10 }}>
                         <View style={{ flexDirection: 'row' }}>
@@ -621,9 +623,10 @@ export default class RealEstale extends React.Component {
                         TYPES={DIREACTIONS} />
                 }
                 <Toast
-                    ref="toast"
+                    ref={(ref) => this.toast = ref}
                     position='top'
-                    positionValue={10} />
+                    positionValue={10} 
+                />
 
             </View>
         )

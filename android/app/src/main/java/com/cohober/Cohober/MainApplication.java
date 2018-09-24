@@ -18,6 +18,7 @@ import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.toast.RCTToastPackage;
 import com.arttitude360.reactnative.rngoogleplaces.RNGooglePlacesPackage;
+import com.showlocationservicesdialogbox.LocationServicesDialogBoxPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -35,13 +36,14 @@ public class MainApplication extends Application implements ReactApplication {
             return Arrays.<ReactPackage>asList(
                     new RNDeviceInfo(),
                     new MainReactPackage(),
-            new GPSStatePackage(),
+                    new GPSStatePackage(),
                     new PickerPackage(),
                     new FBSDKPackage(mCallbackManager),
                     new VectorIconsPackage(),
                     new MapsPackage(),
                     new RCTToastPackage(),
-                    new RNGooglePlacesPackage()
+                    new RNGooglePlacesPackage(),
+                    new LocationServicesDialogBoxPackage()
             );
         }
 
