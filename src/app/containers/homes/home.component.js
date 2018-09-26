@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityIndicator, Image, Linking, StatusBar, TouchableOpacity, View, LayoutAnimation, DeviceEventEmitter  } from 'react-native';
+import { ActivityIndicator, Image, Linking, StatusBar, TouchableOpacity, View, LayoutAnimation, DeviceEventEmitter, Platform } from 'react-native';
 import { Body, Button, Drawer, Header, Left, Right, Title } from 'native-base';
 import SideBar from './sidebar/index';
 import ActionButton from 'react-native-action-button';
@@ -85,33 +85,30 @@ export default class Home extends React.PureComponent {
 
         }
     }
-    componentWillMount() {
-        reactotronReactNative.log("componentWillMount")
-        GPSState.getStatus().then((status) => {
-            reactotronReactNative.log("componentWillMount", status);
-        });
-    }
+    
 
     componentDidMount() {
-        LocationServicesDialogBox.checkLocationServicesIsEnabled({
-            message: "<h2 style='color: #0af13e'>Use Location ?</h2>This app wants to change your device settings:<br/>- Use GPS.",
-            ok: "YES",
-            cancel: "NO",
-            enableHighAccuracy: false, // true => GPS AND NETWORK PROVIDER, false => GPS OR NETWORK PROVIDER
-            showDialog: true, // false => Opens the Location access page directly
-            openLocationServices: true, // false => Directly catch method is called if location services are turned off
-            preventOutSideTouch: true, // true => To prevent the location services window from closing when it is clicked outside
-            preventBackClick: true, // true => To prevent the location services popup from closing when it is clicked back button
-            providerListener: true // true ==> Trigger locationProviderStatusChange listener when the location state changes
-        }).then(function(success) {
-            this.toast.show(success)
-        }).catch((error) => {
-            DeviceEventEmitter.addListener('locationProviderStatusChange', function(status) { // only trigger when "providerListener" is enabled
-                this.toast.show("Location "+status) //  status => {enabled: false, status: "disabled"} or {enabled: true, status: "enabled"}
+        if (Platform.OS === "android") {
+            LocationServicesDialogBox.checkLocationServicesIsEnabled({
+                message: "<h2 style='color: #0af13e'>Use Location ?</h2>This app wants to change your device settings:<br/>- Use GPS.",
+                ok: "YES",
+                cancel: "NO",
+                enableHighAccuracy: false, // true => GPS AND NETWORK PROVIDER, false => GPS OR NETWORK PROVIDER
+                showDialog: true, // false => Opens the Location access page directly
+                openLocationServices: true, // false => Directly catch method is called if location services are turned off
+                preventOutSideTouch: true, // true => To prevent the location services window from closing when it is clicked outside
+                preventBackClick: true, // true => To prevent the location services popup from closing when it is clicked back button
+                providerListener: true // true ==> Trigger locationProviderStatusChange listener when the location state changes
+            }).then(function (success) {
+                this.toast.show(success)
+            }).catch((error) => {
+                DeviceEventEmitter.addListener('locationProviderStatusChange', function (status) { // only trigger when "providerListener" is enabled
+                    this.toast.show("Location " + status) //  status => {enabled: false, status: "disabled"} or {enabled: true, status: "enabled"}
+                });
             });
-        });
+        }
+
         GPSState.addListener((status) => {
-            reactotronReactNative.log("xxxx", status);
         })
         if (this.props.functions.type) {
             this.setState({ type: this.props.functions.type })
@@ -124,7 +121,9 @@ export default class Home extends React.PureComponent {
 
     componentWillUnMount() {
         navigator.geolocation.stopObserving();
-        LocationServicesDialogBox.stopListener();
+        if (Platform.OS === "android") {
+            LocationServicesDialogBox.stopListener();
+        }
     }
 
     componentWillReceiveProps(nextProps) {
@@ -163,7 +162,7 @@ export default class Home extends React.PureComponent {
                 <Toast
                     ref={(ref) => this.toast = ref}
                     position='top'
-                    positionValue={10} 
+                    positionValue={10}
                 />
                 <ActivityIndicator
                     animating={true}
@@ -173,6 +172,7 @@ export default class Home extends React.PureComponent {
                 />
             </View>)
         } else {
+            reactotronReactNative.log("location",this.props.locations);
             return (
                 <Drawer
                     ref={(ref) => {
@@ -186,7 +186,7 @@ export default class Home extends React.PureComponent {
                         <Toast
                             ref={(ref) => this.toast = ref}
                             position='top'
-                            positionValue={10} 
+                            positionValue={10}
                         />
                         <StatusBar hidden={false} backgroundColor={'#ffca00'} barStyle={'dark-content'} />
                         <View style={{ position: 'absolute' }}>

@@ -1,4 +1,5 @@
 import RNGooglePlaces from 'react-native-google-places';
+import reactotronReactNative from 'reactotron-react-native';
 
 export const getCurrentAddressData = (data) => {
     return {
@@ -8,7 +9,7 @@ export const getCurrentAddressData = (data) => {
 };
 export const toggleSearchResultModal = (data) => {
     return (dispatch) => {
-        dispatch({type: 'SEARCH_RESULT_MODAL', data})
+        dispatch({ type: 'SEARCH_RESULT_MODAL', data })
     }
 };
 export const getNameAddress = () => {
@@ -18,13 +19,14 @@ export const getNameAddress = () => {
 };
 export const getAddressPredictions = (data) => {
     return (dispatch) => {
-        console.log(data);
+        reactotronReactNative.log("ât", data);
         RNGooglePlaces.getAutocompletePredictions(data)
             .then((results) => {
+                reactotronReactNative.log("ât", results);
                 console.log(JSON.stringify(results));
-                dispatch({type: 'FETCH_LIST_SEARCH_RESULT', data: results})
+                dispatch({ type: 'FETCH_LIST_SEARCH_RESULT', data: results })
             })
-            .catch((error) => console.log(error.message));
+            .catch((error) => console.log(error));
     }
 };
 export const getSelectedAddress = (id) => {

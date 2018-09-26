@@ -105,7 +105,6 @@ export default class NearBy extends React.PureComponent {
         navigator.geolocation.stopObserving();
     }
     shouldComponentUpdate(nextProps) {
-        reactotronReactNative.log("khac nhau", Object.keys(nextProps).filter(k => nextProps[k] !== this.props[k]));
         if (nextProps.functions !== this.props.functions) return false;
         return true
     }
@@ -163,7 +162,6 @@ export default class NearBy extends React.PureComponent {
     }
 
     render() {
-        reactotronReactNative.log("xxxxxx", this.onlyLoading);
         const { isLoadingNear, isLoadedNear } = this.props.project;
         const data = this.props.lang.content;
         let title = "";

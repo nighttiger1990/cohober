@@ -24,7 +24,6 @@ const TYPES = [{
     key: 'bds_doi'
 }
 ];
-
 const DIREACTIONS = [
     { key: 'north' },
     {
@@ -49,7 +48,6 @@ export default class RealEstale extends React.Component {
     static navigationOptions = {
         header: null
     };
-
     constructor(props) {
         super(props);
         this.state = {
@@ -75,46 +73,26 @@ export default class RealEstale extends React.Component {
 
         }
     }
-
     componentDidMount() {
         setTimeout(() => this.setState({ loading: false }), 3000);
     }
     handleImage() {
-        if (Platform.OS === 'android') {
-            ImagePicker.openPicker({
-                multiple: true,
-                mediaType: "photo",
-                maxFiles: 5,
-                minFiles: 1,
-                includeBase64: true
-            }).then(images => {
-                reactotronReactNative.log("images", images[0].size / oneMB);
-                if (images[0].size / oneMB > MB) {
-                    this.showToast(this.props.lang.type === 'vi' ? "Chất lượng ảnh < 2MB" : "Size image < 2MB");
-                    return;
-                }
-                let imageData = [];
-                imageData.push(images[0].data)
-                this.setState({ image: this.state.image.concat(imageData) })
-            });
-        } else {
-            ImagePicker.openPicker({
-                multiple: true,
-                mediaType: "photo",
-                maxFiles: 5,
-                minFiles: 1,
-                includeBase64: true
-            }).then(images => {
-                let imageData = [];
-                for (var i = 0; i < images.length; i++) {
-                    imageData.push(images[i].data)
-                }
-                Promise.all(imageData).then(() => {
-                    this.setState({ image: this.state.image.concat(imageData) })
-                })
-            });
-        }
-
+        ImagePicker.openPicker({
+            multiple: false,
+            mediaType: "photo",
+            maxFiles: 5,
+            minFiles: 1,
+            includeBase64: true
+        }).then(images => {
+            console.log("xxxx", images);
+            if (images.size / oneMB > MB) {
+                this.showToast(this.props.lang.type === 'vi' ? "Chất lượng ảnh < 2MB" : "Size image < 2MB");
+                return;
+            }
+            let imageData = [];
+            imageData.push(images.data)
+            this.setState({ image: this.state.image.concat(imageData) })
+        });
     }
     componentWillUnMount() {
         navigator.geolocation.stopObserving();
@@ -180,7 +158,7 @@ export default class RealEstale extends React.Component {
         }
     }
     showToast(message) {
-        if(this.toast){
+        if (this.toast) {
             this.toast.show(message);
         }
     }
@@ -204,7 +182,6 @@ export default class RealEstale extends React.Component {
                     price: parseFloat(price),
                     image: image
                 }
-                reactotronReactNative.log("data", data);
                 this.props.onAdd(data, async (message) => {
                     await this.props.getListProject(this.props.functions.type);
                     this.showToast(message);
@@ -625,7 +602,7 @@ export default class RealEstale extends React.Component {
                 <Toast
                     ref={(ref) => this.toast = ref}
                     position='top'
-                    positionValue={10} 
+                    positionValue={10}
                 />
 
             </View>

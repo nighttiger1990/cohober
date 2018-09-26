@@ -2701,6 +2701,10 @@ jest-mock@^22.1.0:
   version "22.1.0"
   resolved "https://registry.yarnpkg.com/jest-mock/-/jest-mock-22.1.0.tgz#87ec21c0599325671c9a23ad0e05c86fb5879b61"
 
+jest-react-native@^18.0.0:
+  version "18.0.0"
+  resolved "https://registry.yarnpkg.com/jest-react-native/-/jest-react-native-18.0.0.tgz#77dd909f069324599f227c58c61c2e62168726ba"
+
 jest-regex-util@^22.1.0:
   version "22.1.0"
   resolved "https://registry.yarnpkg.com/jest-regex-util/-/jest-regex-util-22.1.0.tgz#5daf2fe270074b6da63e5d85f1c9acc866768f53"
@@ -3085,6 +3089,10 @@ lodash.times@^4.3.2:
   version "4.3.2"
   resolved "https://registry.yarnpkg.com/lodash.times/-/lodash.times-4.3.2.tgz#3e1f2565c431754d54ab57f2ed1741939285ca1d"
 
+lodash@4.17.10:
+  version "4.17.10"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
+
 lodash@4.17.4, lodash@^4.0.0, lodash@^4.10.1, lodash@^4.11.1, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.16.6, lodash@^4.17.4, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.6.1:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
@@ -3096,10 +3104,6 @@ lodash@^3.5.0:
 lodash@^4.17.5:
   version "4.17.5"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.5.tgz#99a92d65c0272debe8c96b6057bc8fbfa3bed511"
-
-lodash@~4.11.1:
-  version "4.11.2"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.11.2.tgz#d6b4338b110a58e21dae5cebcfdbbfd2bc4cdb3b"
 
 longest@^1.0.1:
   version "1.0.1"
@@ -3352,22 +3356,23 @@ native-base-shoutem-theme@0.2.2:
     lodash "^4.10.1"
     prop-types "^15.5.10"
 
-native-base@2.3.7:
-  version "2.3.7"
-  resolved "https://registry.yarnpkg.com/native-base/-/native-base-2.3.7.tgz#3a974d1aedef9b68fcbe8a9140358cc5349caeb2"
+native-base@^2.8.0:
+  version "2.8.0"
+  resolved "https://registry.yarnpkg.com/native-base/-/native-base-2.8.0.tgz#6043d01dd6f79540105f07afea456d5c01d72ebd"
   dependencies:
     blueimp-md5 "^2.5.0"
     clamp "^1.0.1"
     color "~1.0.3"
     fs-extra "^2.0.0"
-    lodash "~4.11.1"
+    jest-react-native "^18.0.0"
+    lodash "4.17.10"
     native-base-shoutem-theme "0.2.2"
     print-message "^2.1.0"
     prop-types "^15.5.10"
     react-native-drawer "2.5.0"
-    react-native-easy-grid "0.1.15"
-    react-native-keyboard-aware-scroll-view "0.4.2"
-    react-native-vector-icons "~4.4.2"
+    react-native-easy-grid "0.2.0"
+    react-native-keyboard-aware-scroll-view "0.5.0"
+    react-native-vector-icons "4.6.0"
     react-tween-state "^0.1.5"
     tween-functions "^1.0.1"
 
@@ -3919,6 +3924,10 @@ react-native-action-button@2.8.3:
   dependencies:
     prop-types "^15.5.10"
 
+react-native-android-location-services-dialog-box@^2.7.0:
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/react-native-android-location-services-dialog-box/-/react-native-android-location-services-dialog-box-2.7.0.tgz#c6ae35ffa0c5f936a25a30e7325e5a244d2308b3"
+
 react-native-device-info@0.13.0:
   version "0.13.0"
   resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-0.13.0.tgz#81051eebd3db6959e4f1d2cb0ae8df74105040cf"
@@ -3946,9 +3955,9 @@ react-native-drawer@2.5.0:
     prop-types "^15.5.8"
     tween-functions "^1.0.1"
 
-react-native-easy-grid@0.1.15:
-  version "0.1.15"
-  resolved "https://registry.yarnpkg.com/react-native-easy-grid/-/react-native-easy-grid-0.1.15.tgz#02939ae032d74662b50c9540d902c79866ba638a"
+react-native-easy-grid@0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-easy-grid/-/react-native-easy-grid-0.2.0.tgz#4718031aa1baaa2613b829fc807da288eb0d2797"
   dependencies:
     lodash "^4.11.1"
 
@@ -3995,9 +4004,9 @@ react-native-iphone-x-helper@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.0.2.tgz#7dbca530930f7c1ce8633cc8fd13ba94102992e1"
 
-react-native-keyboard-aware-scroll-view@0.4.2:
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/react-native-keyboard-aware-scroll-view/-/react-native-keyboard-aware-scroll-view-0.4.2.tgz#f8777e5ab14ac8416d86376f15a99dd59e87522f"
+react-native-keyboard-aware-scroll-view@0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/react-native-keyboard-aware-scroll-view/-/react-native-keyboard-aware-scroll-view-0.5.0.tgz#57ab933089375bf62f4324797e8be949ad97849d"
   dependencies:
     prop-types "^15.6.0"
     react-native-iphone-x-helper "^1.0.1"
@@ -4005,6 +4014,12 @@ react-native-keyboard-aware-scroll-view@0.4.2:
 react-native-maps@0.19.0:
   version "0.19.0"
   resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-0.19.0.tgz#ce94fad1cf360e335cb4338a68c95f791e869074"
+
+react-native-onesignal@^3.2.6:
+  version "3.2.7"
+  resolved "https://registry.yarnpkg.com/react-native-onesignal/-/react-native-onesignal-3.2.7.tgz#8e3245b720af68af7d01ff572c56cbb3521b88f5"
+  dependencies:
+    invariant "^2.2.2"
 
 react-native-tab-view@^0.0.74:
   version "0.0.74"
@@ -4024,17 +4039,17 @@ react-native-vector-icons@4.5.0:
     prop-types "^15.5.10"
     yargs "^8.0.2"
 
-react-native-vector-icons@~4.4.2:
-  version "4.4.2"
-  resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-4.4.2.tgz#090f42ee0396c4cc4eae0ddaa518028ba8df40c7"
+react-native-vector-icons@4.6.0:
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-4.6.0.tgz#e4014311ffa6de397d914ffc31b7097a874cc8d5"
   dependencies:
     lodash "^4.0.0"
     prop-types "^15.5.10"
     yargs "^8.0.2"
 
-react-native@0.49.3:
-  version "0.49.3"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.49.3.tgz#0ca459ee49f9c59e8326b2ced9e34c59333a2f26"
+react-native@^0.49.3:
+  version "0.49.5"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.49.5.tgz#89f0fe93a8da4db2670c4bd0d81131a2ff617f27"
   dependencies:
     absolute-path "^0.0.0"
     art "^0.10.0"

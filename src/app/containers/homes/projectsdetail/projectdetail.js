@@ -46,8 +46,6 @@ const PROJECT_DETAIL = ({ modalVisible, onRequestClose, lang, dataModal, handleC
 
         }
     }
-    reactotronReactNative.log("dataModal", dataModal);
-    reactotronReactNative.log("Lang xxxx", lang.content);
     if (dataModal === null) return <View><Text>Loading...!!!</Text></View>
     const listImages = (dataModal.images === undefined || dataModal.images.length === 0) ? [imagesDefault, imagesDefault, imagesDefault, imagesDefault, imagesDefault] : dataModal.images;
     // const listImages1 = [imagesDefault, imagesDefault, imagesDefault, imagesDefault, imagesDefault];

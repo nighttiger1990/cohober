@@ -5,7 +5,6 @@ import { fetchMyProject } from '../../actions/quan-ly-dang-tin';
 import reactotronReactNative from "reactotron-react-native";
 
 const mapStateToProps = (state) => {
-    reactotronReactNative.log("OWNERRRRR",state)    
     return {
         project: state.project.project,
         lang: state.language,

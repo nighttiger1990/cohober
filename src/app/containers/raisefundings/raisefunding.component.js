@@ -221,7 +221,7 @@ class RaiseFunding extends React.Component {
                         <Right />
                     </Header>
                     <Content>
-                        <View style={{ backgroundColor: '#cfcfcf', height: 35 * g.rh }} />
+                        {/* <View style={{ backgroundColor: '#cfcfcf', height: 35 * g.rh }} /> */}
 
                         <Form style={{ flex: 1, marginTop: 25 * g.rh, padding: 10 }}>
                             <View style={{ flexDirection: 'row' }}>

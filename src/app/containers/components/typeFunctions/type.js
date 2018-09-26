@@ -7,7 +7,6 @@ import reactotronReactNative from "reactotron-react-native";
 export default TypeFunction = ({ txtIdea = "Ý tưởng", txtRaiseFunding = "Gọi vốn", txtRealEstale = "Bất động sản", txtSecondHand = "Đồ cũ", getListProject, onChangeFunction, currentFunction, typeFunctionVisible }) => {
     if (getListProject === undefined) {
         getListProject = () => {
-            reactotronReactNative.log("mmmm")
         }
     }
     return (

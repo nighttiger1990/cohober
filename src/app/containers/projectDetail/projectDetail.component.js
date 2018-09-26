@@ -183,7 +183,6 @@ export default class ProjectDetail extends React.PureComponent {
         const listImages = (isEmptyImages === true) ? [imagesDefault, imagesDefault, imagesDefault, imagesDefault, imagesDefault] : dataModal.images;
         let owner = this.props.project.owner;
         let loggedUser = this.props.loggedUser;
-        reactotronReactNative.log("OWNER",this.props)
         return (
             <View style={styles.container}>
                 <View
@@ -199,7 +198,6 @@ export default class ProjectDetail extends React.PureComponent {
                                 onPress={() => {
                                     AsyncStorage.getItem("token", (err, result) => {
                                         if (err) {
-                                            reactotronReactNative.log("err get token QLDT", err);
                                             return;
                                         } else {
                                             let axios = {

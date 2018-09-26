@@ -38,48 +38,25 @@ export default class SecondHand extends React.Component {
         setTimeout(() => this.setState({ loading: false }), 3000);
     }
     showToast(message) {
-        reactotronReactNative.log("loi cai deo gi")
         this.refs.toast.show(message);
-        reactotronReactNative.log("loi cai deo gi 1")
     }
     handleImage() {
-        if (Platform.OS === 'android') {
-            ImagePicker.openPicker({
-                multiple: true,
-                mediaType: "photo",
-                maxFiles: 5,
-                minFiles: 1,
-                includeBase64: true
-            }).then(images => {
-                let imageData = [];
-                if (images[0].size / oneMB > MB) {
-                    this.showToast(this.props.lang.type === 'vi' ? "Chất lượng ảnh < 2MB" : "Size image < 2MB");
-                    return;
-                }
-                imageData.push(images[0].data)
-                this.setState({ image: this.state.image.concat(imageData) })
-                //console.log(this.state.image);
-            });
-        } else {
-            ImagePicker.openPicker({
-                multiple: true,
-                mediaType: "photo",
-                maxFiles: 5,
-                minFiles: 1,
-                includeBase64: true
-            }).then(images => {
-                let imageData = [];
-                for (var i = 0; i < images.length; i++) {
-                    imageData.push(images[i].data)
-                }
-                Promise.all(imageData).then(() => {
-                    this.setState({ image: this.state.image.concat(imageData) })
-                })
-
-
-            });
-        }
-
+        ImagePicker.openPicker({
+            multiple: false,
+            mediaType: "photo",
+            maxFiles: 5,
+            minFiles: 1,
+            includeBase64: true
+        }).then(images => {
+            console.log("xxxx", images);
+            if (images.size / oneMB > MB) {
+                this.showToast(this.props.lang.type === 'vi' ? "Chất lượng ảnh < 2MB" : "Size image < 2MB");
+                return;
+            }
+            let imageData = [];
+            imageData.push(images.data)
+            this.setState({ image: this.state.image.concat(imageData) })
+        });
     }
     componentWillUnMount() {
         navigator.geolocation.stopObserving();
@@ -190,7 +167,7 @@ export default class SecondHand extends React.Component {
                 title={(this.props.lang.type === "vi" ? "Thêm Đồ Cũ " : "Add Second hand " + this.props.lang.content.secondHand + "").toUpperCase()} />
             <Content>
                 <Content style={{ flex: 1 }}>
-                    <View style={{ backgroundColor: '#cfcfcf', height: 35 * g.rh }} />
+                    {/* <View style={{ backgroundColor: '#cfcfcf', height: 35 * g.rh }} /> */}
 
                     <Form style={{ flex: 1, marginTop: 25 * g.rh, padding: 10 }}>
                         <View style={{ flexDirection: 'row' }}>

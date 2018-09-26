@@ -74,8 +74,8 @@ export default class MainSideBar extends PureComponent {
         }
         return (
             <ScrollView style={{ flex: 1, backgroundColor: '#fff' }}>
-                <View style={{ backgroundColor: '#cfcfcf', height: 40 * g.rh }}>
-                </View>
+                {/* <View style={{ backgroundColor: '#cfcfcf', height: 40 * g.rh }}> */}
+                {/* </View> */}
                 <View style={styles.mainList}>
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('History')}>
                         <View style={styles.item}>

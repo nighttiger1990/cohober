@@ -32,7 +32,6 @@ class QuanLyDangTin extends Component {
         header: null
     };
     componentDidMount() {
-        reactotronReactNative.log("componentDidMount");
         try {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
@@ -98,12 +97,10 @@ class QuanLyDangTin extends Component {
         this.props.navigation.navigate('ProjectDetail', { id: id });
     }
     componentWillUnMount() {
-        reactotronReactNative.log("un mount");
         navigator.geolocation.stopObserving();
         this.props.deleteProject();
     }
     componentWillReceiveProps(nextProps) {
-        reactotronReactNative.log("componentWillReceiveProps", nextProps.myproject);
         if (nextProps.myproject.data === null) return;
         if (nextProps.myproject.data !== this.props.myproject.data) {
             this.state.bds = [...this.state.bds, ...nextProps.myproject.bds.slice(0, 15)];
@@ -112,12 +109,7 @@ class QuanLyDangTin extends Component {
             this.state.docu = [...this.state.docu, ...nextProps.myproject.docu.slice(0, 15)];
         }
     }
-    shouldComponentUpdate(nextProps, nextState) {
-        reactotronReactNative.log("shouldComponentUpdate", Object.keys(nextProps.myproject).filter(k => nextProps.myproject[k] !== this.props.myproject[k]))
-
-
-        return true
-    }
+   
 
     renderItem(item) {
         return (

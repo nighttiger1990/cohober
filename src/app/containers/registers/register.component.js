@@ -57,7 +57,6 @@ export default class Register extends React.PureComponent {
         }
     }
     showToast(message) {
-        reactotronReactNative.log("qqqqq", message);
         this.refs.toast.show(message);
     }
 
