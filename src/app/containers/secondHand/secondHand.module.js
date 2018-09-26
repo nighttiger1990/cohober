@@ -2,13 +2,16 @@ import actions from "../../actions";
 
 const mapStateToProps = (state) => {
     return {
-        lang: state.language.lang
+        lang: state.language.lang,
+        functions: state.functions,
     };
 };
 const mapDispatchToProps = (dispatch) => {
     return {
-        onAdd: (data) => dispatch(actions.createProject(data))
-        
+        onAdd: (data, callback) => dispatch(actions.createProject(data, callback)),
+        getListProject: (type) => {
+            dispatch(actions.getProjects(type))
+        },
     }
 };
-export default {mapStateToProps, mapDispatchToProps};
+export default { mapStateToProps, mapDispatchToProps };

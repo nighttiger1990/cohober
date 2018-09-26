@@ -180,7 +180,9 @@ export default class RealEstale extends React.Component {
         }
     }
     showToast(message) {
-        this.refs.toast.show(message);
+        if(this.toast){
+            this.toast.show(message);
+        }
     }
     addData() {
         const { name, detail, type, startDate, endDate, location, direaction, address, area, price, image } = this.state;
@@ -203,7 +205,8 @@ export default class RealEstale extends React.Component {
                     image: image
                 }
                 reactotronReactNative.log("data", data);
-                this.props.onAdd(data, (message) => {
+                this.props.onAdd(data, async (message) => {
+                    await this.props.getListProject(this.props.functions.type);
                     this.showToast(message);
                     setTimeout(() => {
                         this.props.navigation.goBack();
@@ -620,9 +623,10 @@ export default class RealEstale extends React.Component {
                         TYPES={DIREACTIONS} />
                 }
                 <Toast
-                    ref="toast"
+                    ref={(ref) => this.toast = ref}
                     position='top'
-                    positionValue={10} />
+                    positionValue={10} 
+                />
 
             </View>
         )

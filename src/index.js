@@ -12,7 +12,6 @@ class App extends Component {
     }
 
     render() {
-        reactotronReactNative.log("hello")
         return (
             <AppNavigator navigation={addNavigationHelpers({
                 dispatch: this.props.dispatch,

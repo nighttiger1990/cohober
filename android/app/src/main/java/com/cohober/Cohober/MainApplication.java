@@ -7,6 +7,7 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.react.ReactApplication;
+import br.com.dopaminamob.gpsstate.GPSStatePackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -17,6 +18,7 @@ import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.toast.RCTToastPackage;
 import com.arttitude360.reactnative.rngoogleplaces.RNGooglePlacesPackage;
+import com.showlocationservicesdialogbox.LocationServicesDialogBoxPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -34,12 +36,14 @@ public class MainApplication extends Application implements ReactApplication {
             return Arrays.<ReactPackage>asList(
                     new RNDeviceInfo(),
                     new MainReactPackage(),
+                    new GPSStatePackage(),
                     new PickerPackage(),
                     new FBSDKPackage(mCallbackManager),
                     new VectorIconsPackage(),
                     new MapsPackage(),
                     new RCTToastPackage(),
-                    new RNGooglePlacesPackage()
+                    new RNGooglePlacesPackage(),
+                    new LocationServicesDialogBoxPackage()
             );
         }
 

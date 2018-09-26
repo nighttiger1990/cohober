@@ -290,6 +290,7 @@ export const signIn = (data) => {
                             dispatch(resetAction);
                         } else {
                             let m = "";
+                            reactotronReactNative.log("user info 1", user);
                             for (msg of user) {
                                 m = m + msg.msg + "\n"
                             }

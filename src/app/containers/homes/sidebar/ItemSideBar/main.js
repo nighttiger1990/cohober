@@ -154,7 +154,7 @@ export default class MainSideBar extends PureComponent {
                     <TouchableOpacity onPress={() => requestAnimationFrame(() => {
                         //this.props.signOut();
                         //    this.setState({modalVisiable:true})
-                        Alert.alert(this.props.lang.type === 'vi' ? 'Đăng xuất khỏi Cohober?' : 'Sign out of Cohober?', ' ', [
+                        Alert.alert(this.props.lang.type === 'vi' ? 'Đăng xuất khỏi Cohober?' : 'Log out of Cohober?', ' ', [
                             {
                                 style: 'cancel',
                                 text: this.props.lang.content.cancel + " ",

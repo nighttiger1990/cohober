@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Linking, Modal, Text, TouchableOpacity, View, ScrollView } from 'react-native';
+import { Image, Linking, AsyncStorage, Modal, Text, TouchableOpacity, View, ScrollView } from 'react-native';
 import styles from "./projectDetail.style";
 import * as g from "../../util";
 import moment from "moment";
@@ -7,6 +7,7 @@ import imagesDefault from '../../assets/image/no-image.png';
 import configUrl from '../../util/configUrl';
 import { NavigationActions } from 'react-navigation';
 import Loading from '../components/loading';
+import reactotronReactNative from "reactotron-react-native";
 
 export default class ProjectDetail extends React.PureComponent {
     static navigationOptions = {
@@ -28,7 +29,7 @@ export default class ProjectDetail extends React.PureComponent {
         this.props.onFollowProject(id);
 
     });
-    handleClose = () => {
+    handleClose = (refresh=false) => {
         this.props.navigation.goBack();
     };
     constructor(props) {
@@ -180,6 +181,9 @@ export default class ProjectDetail extends React.PureComponent {
         if (this.state.loading) return <Loading />
         const isEmptyImages = (dataModal.images === undefined || dataModal.images === null || dataModal.images.length === 0) ? true : false;
         const listImages = (isEmptyImages === true) ? [imagesDefault, imagesDefault, imagesDefault, imagesDefault, imagesDefault] : dataModal.images;
+        let owner = this.props.project.owner;
+        let loggedUser = this.props.loggedUser;
+        reactotronReactNative.log("OWNER",this.props)
         return (
             <View style={styles.container}>
                 <View
@@ -189,6 +193,35 @@ export default class ProjectDetail extends React.PureComponent {
                             numberOfLines={1}>
                             {(dataModal.name + " ").toUpperCase()}
                         </Text>
+                        {owner && (owner.id === loggedUser.id) &&
+                            <TouchableOpacity
+                                style={{flex: 1, justifyContent: "center", alignItems: "center"}}
+                                onPress={() => {
+                                    AsyncStorage.getItem("token", (err, result) => {
+                                        if (err) {
+                                            reactotronReactNative.log("err get token QLDT", err);
+                                            return;
+                                        } else {
+                                            let axios = {
+                                                headers: {
+                                                    "Content-Type": "application/json; charset=utf-8",
+                                                    "Accept": "application/json",
+                                                    "Authorization": result,
+                                                    "Accept": "application/json"
+                                                },
+                                                method: 'GET',
+                                                url: "http://api.cohober.vn/myproject"
+                                            }
+                                            this.props.deleteProject(dataModal.id)
+                                            this.props.getMyProject(axios)
+                                            this.handleClose()
+                                        }
+                                    })
+                                }}
+                            >
+                                <Text style={{textAlign: "center", textAlignVertical: "center", color: "red"}} >Xóa</Text>
+                            </TouchableOpacity>
+                        }
                     </View>
                     <View style={styles.hr} />
 
