@@ -25,6 +25,7 @@ PODS:
     - GooglePlaces (= 2.7.0)
   - GooglePlaces (2.7.0):
     - GoogleMaps/Base (= 2.7.0)
+  - QBImagePickerController (3.4.0)
   - React (0.49.5):
     - React/Core (= 0.49.5)
   - React/BatchedBridge (0.49.5):
@@ -63,6 +64,11 @@ PODS:
     - React/RCTBlob
   - RNDeviceInfo (0.9.3):
     - React
+  - RNImageCropPicker (0.20.3):
+    - QBImagePickerController
+    - React/Core
+    - RSKImageCropper
+  - RSKImageCropper (2.2.1)
   - yoga (0.49.5.React)
 
 DEPENDENCIES:
@@ -83,6 +89,7 @@ DEPENDENCIES:
   - React/RCTVibration (from `../node_modules/react-native`)
   - React/RCTWebSocket (from `../node_modules/react-native`)
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
+  - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -91,12 +98,16 @@ SPEC REPOS:
     - GoogleMaps
     - GooglePlacePicker
     - GooglePlaces
+    - QBImagePickerController
+    - RSKImageCropper
 
 EXTERNAL SOURCES:
   React:
     :path: "../node_modules/react-native"
   RNDeviceInfo:
     :path: "../node_modules/react-native-device-info"
+  RNImageCropPicker:
+    :path: "../node_modules/react-native-image-crop-picker"
   yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -105,10 +116,13 @@ SPEC CHECKSUMS:
   GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
   GooglePlacePicker: 59ea44db173c58486ad6123993e81feefcbce9c3
   GooglePlaces: 3d06e6c99654545b4738ce49648745779c25f2ef
+  QBImagePickerController: d54cf93db6decf26baf6ed3472f336ef35cae022
   React: bfd693e2d08a61bf1dc056bba3f5c01a13a3cc31
   RNDeviceInfo: b375b3374cda3203d6d48cea8c07e46ba1169e26
+  RNImageCropPicker: 32ca4b9fef4e1b7b85ba69494242122948117e06
+  RSKImageCropper: 98296ad26b41753f796b6898d015509598f13d97
   yoga: 17521bbb0dd54a47c0b3ac43253e78cdac7488e0
 
-PODFILE CHECKSUM: 101d9cb4b5f5ceeb6d8b8d1579436564d111360b
+PODFILE CHECKSUM: f6745324fdc89654256c30715e94f3bd2534c12e
 
 COCOAPODS: 1.5.2

@@ -70,10 +70,6 @@
 		22AA4D58215B3BCB00A04AE1 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22AA4D54215B3BCB00A04AE1 /* FBSDKLoginKit.framework */; };
 		22AA4D5B215B3CA300A04AE1 /* RSKImageCropper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22AA4D59215B3CA300A04AE1 /* RSKImageCropper.framework */; };
 		22AA4D5C215B3CA300A04AE1 /* QBImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22AA4D5A215B3CA300A04AE1 /* QBImagePicker.framework */; };
-		22AA4DAD215B3F2D00A04AE1 /* RSKImageCropper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22AA4DAC215B3D6900A04AE1 /* RSKImageCropper.framework */; };
-		22AA4DAE215B3F2D00A04AE1 /* RSKImageCropper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 22AA4DAC215B3D6900A04AE1 /* RSKImageCropper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		22AA4DB1215B3F5900A04AE1 /* QBImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22AA4D7D215B3D4F00A04AE1 /* QBImagePicker.framework */; };
-		22AA4DB2215B3F5900A04AE1 /* QBImagePicker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 22AA4D7D215B3D4F00A04AE1 /* QBImagePicker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -277,34 +273,6 @@
 			remoteGlobalIDString = 9350E0F11CE3B0920041D815;
 			remoteInfo = RCTFBSDK;
 		};
-		22AA4D7C215B3D4F00A04AE1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 22AA4D74215B3D4F00A04AE1 /* QBImagePicker.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = AAA8FE031ACDA079002A9710;
-			remoteInfo = QBImagePicker;
-		};
-		22AA4DAB215B3D6900A04AE1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 22AA4DA6215B3D6900A04AE1 /* RSKImageCropper.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A5BE393D1B32B49D00ECDF88;
-			remoteInfo = RSKImageCropper;
-		};
-		22AA4DAF215B3F2D00A04AE1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 22AA4DA6215B3D6900A04AE1 /* RSKImageCropper.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A5BE393C1B32B49D00ECDF88;
-			remoteInfo = RSKImageCropper;
-		};
-		22AA4DB3215B3F5900A04AE1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 22AA4D74215B3D4F00A04AE1 /* QBImagePicker.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = AAA8FE021ACDA079002A9710;
-			remoteInfo = QBImagePicker;
-		};
 		22D68B721FB58BEA00E4B943 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 945A25FDA8534BF3A62E5197 /* RCTOneSignal.xcodeproj */;
@@ -468,8 +436,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				22AA4DAE215B3F2D00A04AE1 /* RSKImageCropper.framework in Embed Frameworks */,
-				22AA4DB2215B3F5900A04AE1 /* QBImagePicker.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -562,8 +528,6 @@
 		22AA4D54215B3BCB00A04AE1 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../../../../Documents/FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		22AA4D59215B3CA300A04AE1 /* RSKImageCropper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RSKImageCropper.framework; path = "../node_modules/react-native-image-crop-picker/ios/ImageCropPickerSDK/RSKImageCropper.framework"; sourceTree = "<group>"; };
 		22AA4D5A215B3CA300A04AE1 /* QBImagePicker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QBImagePicker.framework; path = "../node_modules/react-native-image-crop-picker/ios/ImageCropPickerSDK/QBImagePicker.framework"; sourceTree = "<group>"; };
-		22AA4D74215B3D4F00A04AE1 /* QBImagePicker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = QBImagePicker.xcodeproj; path = "../node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker.xcodeproj"; sourceTree = "<group>"; };
-		22AA4DA6215B3D6900A04AE1 /* RSKImageCropper.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RSKImageCropper.xcodeproj; path = "../node_modules/react-native-image-crop-picker/ios/RSKImageCropper/RSKImageCropper.xcodeproj"; sourceTree = "<group>"; };
 		22C428272D8F40549BDB7C09 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		2535D3F206164340BDA0E4D7 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* Cohober-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Cohober-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -627,7 +591,6 @@
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
-				22AA4DAD215B3F2D00A04AE1 /* RSKImageCropper.framework in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
@@ -643,7 +606,6 @@
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				22AA4D57215B3BCB00A04AE1 /* FBSDKCoreKit.framework in Frameworks */,
 				81487955DA9642D39D7E39B4 /* libAirMaps.a in Frameworks */,
-				22AA4DB1215B3F5900A04AE1 /* QBImagePicker.framework in Frameworks */,
 				22AA4D58215B3BCB00A04AE1 /* FBSDKLoginKit.framework in Frameworks */,
 				F9F4EE6F4A1E447C962CBA8F /* libRNVectorIcons.a in Frameworks */,
 				3C5EE9476042BAE35ACA914F /* libPods-Cohober.a in Frameworks */,
@@ -913,22 +875,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		22AA4D75215B3D4F00A04AE1 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				22AA4D7D215B3D4F00A04AE1 /* QBImagePicker.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		22AA4DA7215B3D6900A04AE1 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				22AA4DAC215B3D6900A04AE1 /* RSKImageCropper.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		22D68B621FB58BEA00E4B943 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1013,8 +959,6 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				22AA4DA6215B3D6900A04AE1 /* RSKImageCropper.xcodeproj */,
-				22AA4D74215B3D4F00A04AE1 /* QBImagePicker.xcodeproj */,
 				22AA4D42215B3AB900A04AE1 /* RCTFBSDK.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
@@ -1146,8 +1090,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				22AA4DB0215B3F2D00A04AE1 /* PBXTargetDependency */,
-				22AA4DB4215B3F5900A04AE1 /* PBXTargetDependency */,
 			);
 			name = Cohober;
 			productName = "Hello World";
@@ -1248,10 +1190,6 @@
 					ProjectRef = EC47DE71FB464BD0BC454D1E /* imageCropPicker.xcodeproj */;
 				},
 				{
-					ProductGroup = 22AA4D75215B3D4F00A04AE1 /* Products */;
-					ProjectRef = 22AA4D74215B3D4F00A04AE1 /* QBImagePicker.xcodeproj */;
-				},
-				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
 				},
@@ -1322,10 +1260,6 @@
 				{
 					ProductGroup = 22A906C61F99E04F00B5C971 /* Products */;
 					ProjectRef = CB494CB4A0194C4C982DE0DE /* RNVectorIcons.xcodeproj */;
-				},
-				{
-					ProductGroup = 22AA4DA7215B3D6900A04AE1 /* Products */;
-					ProjectRef = 22AA4DA6215B3D6900A04AE1 /* RSKImageCropper.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -1491,20 +1425,6 @@
 			fileType = archive.ar;
 			path = libRCTFBSDK.a;
 			remoteRef = 22AA4D46215B3AB900A04AE1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		22AA4D7D215B3D4F00A04AE1 /* QBImagePicker.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = QBImagePicker.framework;
-			remoteRef = 22AA4D7C215B3D4F00A04AE1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		22AA4DAC215B3D6900A04AE1 /* RSKImageCropper.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = RSKImageCropper.framework;
-			remoteRef = 22AA4DAB215B3D6900A04AE1 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		22D68B731FB58BEA00E4B943 /* libRCTOneSignal.a */ = {
@@ -1786,12 +1706,16 @@
 				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
 				"${PODS_ROOT}/GooglePlacePicker/Frameworks/GooglePlacePicker.framework/Resources/GooglePlacePicker.bundle",
 				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/QBImagePickerController/QBImagePicker.bundle",
+				"${PODS_ROOT}/RSKImageCropper/RSKImageCropper/RSKImageCropperStrings.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlacePicker.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlaces.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/QBImagePicker.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RSKImageCropperStrings.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1861,16 +1785,6 @@
 			isa = PBXTargetDependency;
 			target = 13B07F861A680F5B00A75B9A /* Cohober */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
-		};
-		22AA4DB0215B3F2D00A04AE1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = RSKImageCropper;
-			targetProxy = 22AA4DAF215B3F2D00A04AE1 /* PBXContainerItemProxy */;
-		};
-		22AA4DB4215B3F5900A04AE1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = QBImagePicker;
-			targetProxy = 22AA4DB3215B3F5900A04AE1 /* PBXContainerItemProxy */;
 		};
 		2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

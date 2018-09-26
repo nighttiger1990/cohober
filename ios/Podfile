@@ -27,7 +27,7 @@ target 'Cohober' do
   pod 'GooglePlaces'
   pod 'GoogleMaps'
   pod 'GooglePlacePicker'
-  # pod 'RNImageCropPicker', :path =>  '../node_modules/react-native-image-crop-picker'
+   pod 'RNImageCropPicker', :path =>  '../node_modules/react-native-image-crop-picker'
   # react-native-maps dependencies
   # pod 'react-native-maps', path: rn_maps_path
   # pod 'react-native-google-maps', path: rn_maps_path  # Remove this line if you don't want to support GoogleMaps on iOS
