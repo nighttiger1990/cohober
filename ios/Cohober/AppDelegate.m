@@ -23,8 +23,8 @@
                            didFinishLaunchingWithOptions:launchOptions];
 
   NSURL *jsCodeLocation;
-  [GMSPlacesClient provideAPIKey:@"AIzaSyB0T-s0azv8_CK-3-62Ns0he1MBfMvBazM"];
-  [GMSServices provideAPIKey:@"AIzaSyB0T-s0azv8_CK-3-62Ns0he1MBfMvBazM"];
+  [GMSPlacesClient provideAPIKey:@"AIzaSyAInJ5tZkM4B8Aqt3Aa0PbxEDOjBdD3leg"];
+  [GMSServices provideAPIKey:@"AIzaSyAInJ5tZkM4B8Aqt3Aa0PbxEDOjBdD3leg"];
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
 
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
